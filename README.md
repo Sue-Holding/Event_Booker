@@ -15,3 +15,16 @@ This project is still a work in progress – I’ll be updating the repo as I go
 🚀 Come back soon to see how I’ve been getting on and for the deployed version!
 
 Thanks for dropping by! 🙌
+
+## Endpoints  
+|                   |       |                                          |
+|------------------|--------|----------------------------------------|
+|Action            | Method | URL                                    |
+|Test server       | GET	| http://localhost:5050/                 |
+|Register	       | POST   | http://localhost:5050/auth/register    |
+|Login	           | POST   | http://localhost:5050/auth/login       |
+|Logout            | POST	| http://localhost:5050/auth/logout      |
+|                  | POST   | http://localhost:5050/|
+|                  | GET	| http://localhost:5050/ |
+|                  | POST   | http://localhost:5050/          |
+|                   | GET	| http://localhost:5050 |
