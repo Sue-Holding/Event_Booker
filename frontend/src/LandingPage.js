@@ -31,6 +31,7 @@ export default function LandingPage() {
 
       if (data.token) {
         localStorage.setItem("token", data.token);
+        window.location.href = "/home"; // redirect to homepage
       }
     } catch (err) {
       setMessage(err.message);
