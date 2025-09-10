@@ -6,3 +6,4 @@ npm install --save-dev nodemon
 
 frontend 
 npm install react-router-dom
+npm install jwt-decode

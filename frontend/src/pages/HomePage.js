@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export default function HomePage() {
   const [user, setUser] = useState(null);
@@ -8,8 +9,15 @@ export default function HomePage() {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    // Example: decode from backend later — for now, just fake user
-    setUser({ name: "Test User", role: "basic" });
+    try {
+      const decoded = jwtDecode(token); // decode the JWT
+      // decoded should have your user ID and role (if backend sends it)
+      // For example, backend could send { id, name, role } in token
+      setUser({ name: decoded.name, role: decoded.role });
+    } catch (err) {
+      console.error("Invalid token");
+      localStorage.removeItem("token");
+    }
   }, []);
 
   return (
