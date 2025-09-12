@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-// import eventRoutes from "./routes/eventRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
 
 
 const app = express();
@@ -19,7 +19,7 @@ app.use(cors({
 
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
-// app.use("/event", eventRoutes);
+app.use("/event", eventRoutes);
 
 
 export default app;

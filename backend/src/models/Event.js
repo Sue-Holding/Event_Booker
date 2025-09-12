@@ -7,6 +7,7 @@ const eventSchema = new mongoose.Schema(
         date: { type: Date, required: true },
         location: { type: String, requried: true },
         organizer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+        category: { type: String, default: "General" }, //kids, music etc
         status: {
             type: String,
             enum: ["pending", "approved", "rejected"],
