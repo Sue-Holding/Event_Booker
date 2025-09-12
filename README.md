@@ -24,7 +24,7 @@ Thanks for dropping by! 🙌
 |Register	       | POST   | http://localhost:5050/auth/register    |
 |Login	           | POST   | http://localhost:5050/auth/login       |
 |Logout            | POST	| http://localhost:5050/auth/logout      |
-|                  | POST   | http://localhost:5050/|
-|                  | GET	| http://localhost:5050/ |
-|                  | POST   | http://localhost:5050/          |
+|Admin dashboard   | POST   | http://localhost:5050/admin/dashboard|
+|List all events   | GET	| http://localhost:5050/event |
+| Single event     | GET   | http://localhost:5050/event/:id         |
 |                   | GET	| http://localhost:5050 |
