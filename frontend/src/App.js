@@ -4,15 +4,25 @@ import HomePage from "./pages/HomePage";
 import UserDashboard from "./pages/UserDashboard";
 import OrganiserDashboard from "./pages/OrganiserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/user-dashboard" element={<UserDashboard />} />
-        <Route path="/organiser-dashboard" element={<OrganiserDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
+        <Route path="/user-dashboard" element={
+          <ProtectedRoute allowedRoles={["attendee"]}>
+          <UserDashboard /></ProtectedRoute> } />
+
+        <Route path="/organiser-dashboard" element={
+          <ProtectedRoute allowedRoles={["organiser"]}>
+          <OrganiserDashboard /></ProtectedRoute> } />
+
+        <Route path="/admin-dashboard" element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+          <AdminDashboard /></ProtectedRoute> } />
       </Routes>
   );
 }
