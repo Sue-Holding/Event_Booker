@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
-// import adminRoutes from "./routes/adminRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 // import eventRoutes from "./routes/eventRoutes.js";
 
 
@@ -18,7 +18,7 @@ app.use(cors({
 // app.use("/", router);
 
 app.use("/auth", authRoutes);
-// app.use("/admin", adminRoutes);
+app.use("/admin", adminRoutes);
 // app.use("/event", eventRoutes);
 
 

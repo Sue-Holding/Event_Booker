@@ -6,7 +6,7 @@ const eventSchema = new mongoose.Schema(
         description: { type: String },
         date: { type: Date, required: true },
         location: { type: String, requried: true },
-        organizer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        organizer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
         status: {
             type: String,
             enum: ["pending", "approved", "rejected"],
