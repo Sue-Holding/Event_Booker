@@ -31,7 +31,11 @@ export default function LandingPage() {
 
       if (data.token) {
         localStorage.setItem("token", data.token);
-        window.location.href = "/home"; // redirect to homepage
+        // window.location.href = "/home"; // redirect to homepage
+        // redirect based on role
+          if (data.role === "admin") window.location.href = "/admin-dashboard";
+          else if (data.role === "organiser") window.location.href = "/organiser-dashboard";
+          else window.location.href = "/user-dashboard";
       }
     } catch (err) {
       setMessage(err.message);

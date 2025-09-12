@@ -25,6 +25,11 @@ Thanks for dropping by! 🙌
 |Login	           | POST   | http://localhost:5050/auth/login       |
 |Logout            | POST	| http://localhost:5050/auth/logout      |
 |Admin dashboard   | POST   | http://localhost:5050/admin/dashboard|
+|                   | GET	| http://localhost:5050/user-dashboard |
+|                   | GET	| http://localhost:5050/organiser-dashboard |
+|                   | GET	| http://localhost:5050//admin-dashboard
 |List all events   | GET	| http://localhost:5050/event |
 | Single event     | GET   | http://localhost:5050/event/:id         |
 |                   | GET	| http://localhost:5050 |
+
+
