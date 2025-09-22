@@ -8,26 +8,25 @@ export const protect = async (req, res, next) => {
         req.headers.authorization && 
         req.headers.authorization.startsWith("Bearer")
     ) {
-        try {
-            token = req.headers.authorization.split(" ")[1];
-
-            // to verify the token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-            // attache user to req and remove password for secruity
-            req.user = await User.findById(decoded.id).select("-password");
-
-            next();
-        } catch (err) {
-            console.error (err);
-            res.status(401).json({ message: "Not authorized, token failed."});
-        }
+      token = req.headers.authorization.split(" ")[1];
     }
-
+     
     if (!token) {
-        res.status(401).json({ message: "Not authorized, token failed."});
+      return res.status(401).json({ message: "Not authorized, token missing." });
     }
-}
+
+    try {
+      // to verify the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      // attach user to req and remove password for secruity
+      req.user = await User.findById(decoded.id).select("-password");
+      next();
+    } catch (err) {
+      console.error (err);
+      res.status(401).json({ message: "Not authorized, token failed."});
+    }
+};
 
 export const authorize = (...roles) => {
   return (req, res, next) => {

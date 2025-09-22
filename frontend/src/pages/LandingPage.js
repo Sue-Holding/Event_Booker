@@ -46,6 +46,19 @@ export default function LandingPage() {
     <div style={{ padding: "2rem" }}>
       <h2>{isLogin ? "Login" : "Register"}</h2>
       <form onSubmit={handleSubmit}>
+        {!isLogin && (
+          <>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+            <br />
+          </>
+        )}
         <input
           type="email"
           name="email"
@@ -64,8 +77,22 @@ export default function LandingPage() {
           required
         />
         <br />
+        {!isLogin && (
+          <>
+            <label>
+              Role:{" "}
+              <select name="role" value={form.role} onChange={handleChange}>
+                <option value="attendee">Attendee</option>
+                <option value="organiser">Organiser</option>
+                {/* <option value="admin">Admin</option> */}
+              </select>
+            </label>
+            <br />
+          </>
+        )}
         <button type="submit">{isLogin ? "Login" : "Register"}</button>
       </form>
+
       <button onClick={() => setIsLogin(!isLogin)}>
         {isLogin ? "Need an account? Register" : "Already have an account? Login"}
       </button>
