@@ -1,7 +1,7 @@
     export default function Footer() {
   return (
     <footer style={styles.footer}>
-      <p>© {new Date().getFullYear()} SusseAjla Event Bookings. All rights reserved.</p>
+      <p>© {new Date().getFullYear()} SusseAjla Event Bookings by Eventure. All rights reserved.</p>
     </footer>
   );
 }

@@ -1,5 +1,7 @@
 // for organiser dashboard
 import { useEffect, useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function OrganiserDashboard() {
   const [user, setUser] = useState(null);
@@ -19,6 +21,7 @@ export default function OrganiserDashboard() {
 
   return (
     <div style={{ padding: "2rem" }}>
+      <Header />
       <h1>Organiser Dashboard</h1>
       {user ? (
         <>
@@ -26,6 +29,7 @@ export default function OrganiserDashboard() {
           <p>Role: {user.role}</p>
           <h3>Your Events</h3>
           {/* Later: list organiser’s events with edit options */}
+        <Footer />
         </>
       ) : (
         <p>Please log in to view your dashboard.</p>
