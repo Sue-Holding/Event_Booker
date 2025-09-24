@@ -22,12 +22,11 @@ export default function OrganiserDashboard() {
   return (
     <div style={{ padding: "2rem" }}>
       <Header />
-      <h1>Admin Dashboard</h1>
+      {/* <h1>Admin Dashboard</h1> */}
       {user ? (
         <>
-          <p>Welcome, {user.name}!</p>
-          <p>Role: {user.role}</p>
-          <h3>ndaaojdjaf</h3>
+          {/* <p>Welcome, {user.name}!</p> */}
+          <p>You are logged in as: {user.role}</p>
           {/* Later: list organiser’s events with edit options */}
         <Footer />
         </>

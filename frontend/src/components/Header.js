@@ -27,7 +27,9 @@ export default function Header() {
   return (
     <header style={styles.header}>
       <nav style={styles.nav}>
+        <p>Welcome, {user.name}!</p>
         <h2 style={styles.logo}>Eventure</h2>
+        
         <ul style={styles.links}>
           <ul style={styles.links}>
               <li><Link to="/dashboard">Home</Link></li>

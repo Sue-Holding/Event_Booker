@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import EventCard from "./EventCard";
 
-export default function MainContent() {
+export default function EventSearch() {
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -42,15 +43,20 @@ export default function MainContent() {
       {filteredEvents.length === 0 ? (
         <p>No events found</p>
       ) : (
-        <ul>
+        <div style={styles.grid}>
           {filteredEvents.map((event) => (
-            <li key={event._id} style={{ marginBottom: "1rem" }}>
-              <strong>{event.title}</strong> - {event.category} <br />
-              {new Date(event.date).toLocaleDateString()} | {event.location}
-            </li>
+            <EventCard key={event._id} event={event} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
 }
+
+const styles = {
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gap: "1rem",
+  },
+};
