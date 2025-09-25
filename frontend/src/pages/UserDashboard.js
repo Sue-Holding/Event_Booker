@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import EventSearch from "../components/EventSearch";
 import FavEvents from "../components/FavEvents";
 import BookedEvents from "../components/BookedEvents";
+import EventDetails from "../components/EventDetails";
 
 export default function UserDashboard() {
   const [user, setUser] = useState(null);
@@ -32,11 +33,15 @@ export default function UserDashboard() {
 
           {/* Nested routes */}
           <Routes>
-            <Route index element={<EventSearch />} /> {/* default */}
+            {/* default */}
+            <Route index element={<EventSearch />} /> 
+            {/* child routes */}
             <Route path="search-events" element={<EventSearch />} />
+            <Route path="events/:id" element={<EventDetails />} />
             <Route path="favourites" element={<FavEvents />} />
             <Route path="booked-events" element={<BookedEvents />} />
           </Routes>
+          {/* <Outlet /> */}
 
           <Footer />
           </div>

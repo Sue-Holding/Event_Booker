@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import EventDetails from "./EventDetails";
 
 export default function EventCard({ event }) {
   return (
@@ -12,7 +14,12 @@ export default function EventCard({ event }) {
       <p>
         <strong>Location:</strong> {event.location}
       </p>
-      <button style={styles.button}>View Details</button>
+
+      {/* relative path */}
+      <Link to={`events/${event._id}`} style={styles.button}>
+        View Details
+      </Link>
+
     </div>
   );
 }
