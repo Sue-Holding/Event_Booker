@@ -15,8 +15,9 @@ export default function EventCard({ event }) {
         <strong>Location:</strong> {event.location}
       </p>
 
-      {/* relative path */}
-      <Link to={`events/${event._id}`} style={styles.button}>
+      {/* absolute path needed */}
+      {/* <Link to={`events/${event._id}`} style={styles.button}> */}
+      <Link to={`/user-dashboard/events/${event._id}`} style={styles.button}>
         View Details
       </Link>
 

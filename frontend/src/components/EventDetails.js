@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function EventDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [event, setEvent] = useState(null);
 
   useEffect(() => {
@@ -22,6 +23,10 @@ export default function EventDetails() {
 
   return (
     <div style={{ padding: "2rem" }}>
+      <button onClick={() => navigate(-1)} style={{ marginBottom: "1rem" }}>
+        ← Back to Search
+      </button>
+
       <h2>{event.title}</h2>
       <p><strong>Category:</strong> {event.category}</p>
       <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
