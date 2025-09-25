@@ -11,6 +11,13 @@ const userSchema = new mongoose.Schema(
             default: "attendee",
         },
         favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+        bookedEvents: [
+            {
+                event: { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
+                bookingRef: String,
+                bookedAt: { type: Date, default: Date.now },
+            }
+            ],
     },
     { timestamps: true }
 );
