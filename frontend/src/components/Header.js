@@ -27,33 +27,43 @@ export default function Header() {
   return (
     <header style={styles.header}>
       <nav style={styles.nav}>
-        {/* <p>Welcome, {user.name}!</p> */}
         {user && <p>Welcome, {user.name}!</p>}
         <h2 style={styles.logo}>Eventure</h2>
         
         <ul style={styles.links}>
           <ul style={styles.links}>
-              <li><Link to="/dashboard">Home</Link></li>
+              {/* <li><Link to="/dashboard">Home</Link></li> */}
 
               {user?.role === "attendee" && (
                 <>
+                  {/* <li><Link to="/search-events">Search Events</Link></li>
                   <li><Link to="/favourites">Favourites</Link></li>
-                  <li><Link to="/booked-events">Booked Events</Link></li>
+                  <li><Link to="/booked-events">Booked Events</Link></li> */}
+                  <li><Link to="/user-dashboard/search-events">Search Events</Link></li>
+                  <li><Link to="/user-dashboard/favourites">Favourites</Link></li>
+                  <li><Link to="/user-dashboard/booked-events">Booked Events</Link></li>
                 </>
               )}
 
               {user?.role === "organiser" && (
                 <>
+                  {/* <li><Link to="/search-events">Search Events</Link></li>
                   <li><Link to="/events/new">Add New Event</Link></li>
-                  <li><Link to="/my-events">My Events</Link></li>
+                  <li><Link to="/my-events">My Events</Link></li> */}
+                  <li><Link to="/organiser-dashboard/search-events">Search Events</Link></li>
+                  <li><Link to="/organiser-dashboard/events/new">Add New Event</Link></li>
+                  <li><Link to="/organiser-dashboard/my-events">My Events</Link></li>
                 </>
               )}
 
               {user?.role === "admin" && (
                 <>
-                  {/* <li><Link to="/admin-dashboard">Dashboard</Link></li> */}
-                  <li><Link to="/search-events">Search Events</Link></li>
-                  <li><Link to="/stats">Stats</Link></li>
+                  {/* <li><Link to="/search-events">Search Events</Link></li>
+                  <li><Link to="/event-stats">Event Stats</Link></li>
+                  <li><Link to="/user-settings">User Settings</Link></li> */}
+                  <li><Link to="/admin-dashboard/search-events">Search Events</Link></li>
+                  <li><Link to="/admin-dashboard/event-stats">Event Stats</Link></li>
+                  <li><Link to="/admin-dashboard/user-settings">User Settings</Link></li>
                 </>
               )}
 

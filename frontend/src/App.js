@@ -12,15 +12,18 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<HomePage />} />
 
-        <Route path="/user-dashboard" element={
+        {/* User Dashboard */}
+        <Route path="/user-dashboard/*" element={
           <ProtectedRoute allowedRoles={["attendee"]}>
           <UserDashboard /></ProtectedRoute> } />
 
-        <Route path="/organiser-dashboard" element={
+        {/* Organiser Dashboard */}
+        <Route path="/organiser-dashboard/*" element={
           <ProtectedRoute allowedRoles={["organiser"]}>
           <OrganiserDashboard /></ProtectedRoute> } />
 
-        <Route path="/admin-dashboard" element={
+        {/* Admin Dashboard */}
+        <Route path="/admin-dashboard/*" element={
           <ProtectedRoute allowedRoles={["admin"]}>
           <AdminDashboard /></ProtectedRoute> } />
       </Routes>

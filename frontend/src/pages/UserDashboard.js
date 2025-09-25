@@ -1,8 +1,11 @@
 // for user / attendee
 import { useEffect, useState } from "react";
+import { Routes, Route, Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import EventSearch from "../components/EventSearch";
+import FavEvents from "../components/FavEvents";
+import BookedEvents from "../components/BookedEvents";
 
 export default function UserDashboard() {
   const [user, setUser] = useState(null);
@@ -21,19 +24,22 @@ export default function UserDashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
-        <Header />
-      {/* <h1>User Dashboard</h1> */}
+    <div>
+      <Header />
       {user ? (
-        <>
-          {/* <p>Welcome, {user.name}!</p> */}
-          <p>You are logged in as: {user.role}</p>
-          {/* <h3>Available Events</h3> */}
-          <EventSearch />
-          {/* Later: list events */}
+          <div style={{ padding: "2rem" }}>
+            <p>You are logged in as: {user.role}</p>
+
+          {/* Nested routes */}
+          <Routes>
+            <Route index element={<EventSearch />} /> {/* default */}
+            <Route path="search-events" element={<EventSearch />} />
+            <Route path="favourites" element={<FavEvents />} />
+            <Route path="booked-events" element={<BookedEvents />} />
+          </Routes>
 
           <Footer />
-        </>
+          </div>
       ) : (
         <p>Please log in to view your dashboard.</p>
       )}

@@ -1,7 +1,11 @@
 // for admin dashboard
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import EventSearch from "../components/EventSearch";
+import EventStats from "../components/EventStats";
+import UserSettings from "../components/UserSettings";
 
 export default function OrganiserDashboard() {
   const [user, setUser] = useState(null);
@@ -20,19 +24,30 @@ export default function OrganiserDashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div>
       <Header />
-      {/* <h1>Admin Dashboard</h1> */}
       {user ? (
-        <>
-          {/* <p>Welcome, {user.name}!</p> */}
-          <p>You are logged in as: {user.role}</p>
-          {/* Later: list organiser’s events with edit options */}
-        <Footer />
-        </>
+          <div style={{ padding: "2rem" }}>
+            <p>You are logged in as: {user.role}</p>
+
+      {/* Nested routes */}
+        <Routes>
+          <Route index element={<EventSearch />} /> {/* default */}
+            <Route path="search-events" element={<EventSearch />} />
+            <Route path="event-stats" element={<EventStats />} />
+            <Route path="user-settings" element={<UserSettings />} />
+      </Routes>
+
+      <Footer />
+          </div>
       ) : (
         <p>Please log in to view your dashboard.</p>
       )}
     </div>
   );
 }
+
+
+
+
+     
