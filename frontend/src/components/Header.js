@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <header style={styles.header}>
       <nav style={styles.nav}>
-        {user && <p>Welcome, {user.name}!</p>}
+        {user && <p>Welcome, {user.name}! Role: {user.role}</p>}
         <h2 style={styles.logo}>Eventure</h2>
         
         <ul style={styles.links}>

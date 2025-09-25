@@ -28,7 +28,6 @@ export default function OrganiserDashboard() {
       <Header />
       {user ? (
           <div style={{ padding: "2rem" }}>
-            <p>You are logged in as: {user.role}</p>
 
       {/* Nested routes */}
         <Routes>
