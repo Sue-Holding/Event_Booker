@@ -17,19 +17,24 @@ This project is still a work in progress – I’ll be updating the repo as I go
 Thanks for dropping by! 🙌
 
 ## Endpoints  
-|                   |       |                                          |
-|------------------|--------|----------------------------------------|
-|Action            | Method | URL                                    |
-|Test server       | GET	| http://localhost:5050/                 |
-|Register	       | POST   | http://localhost:5050/auth/register    |
-|Login	           | POST   | http://localhost:5050/auth/login       |
-|Logout            | POST	| http://localhost:5050/auth/logout      |
-|Admin dashboard   | POST   | http://localhost:5050/admin/dashboard|
-|                   | GET	| http://localhost:5050/user-dashboard |
-|                   | GET	| http://localhost:5050/organiser-dashboard |
-|                   | GET	| http://localhost:5050//admin-dashboard
-|List all events   | GET	| http://localhost:5050/event |
-| Single event     | GET   | http://localhost:5050/event/:id         |
-|                   | GET	| http://localhost:5050 |
+|                         |        |                                                  |
+|-------------------------|--------|--------------------------------------------------|
+| Action                  | Method | URL                                              |
+| Test server             | GET	   | http://localhost:5050/                           |
+| Register	              | POST   | http://localhost:5050/auth/register              |
+| Login	                  | POST   | http://localhost:5050/auth/login                 |
+| Logout                  | POST   | http://localhost:5050/auth/logout                |
+| User Dashboard          | GET	   | http://localhost:5050/user-dashboard             |
+| Organiser Dashboard     | GET	   | http://localhost:5050/organiser-dashboard        |
+| Admin Dashboard         | GET	   | http://localhost:5050//admin-dashboard           |
+| List all events         | GET	   | http://localhost:5050/event                      |
+| Single event            | GET    | http://localhost:5050/event/:eventId             |
+| Fetch all saved events  | GET	   | http://localhost:5050/users/me                   |
+| Save event to fav       | POST   | http://localhost:5050/users/favorites/:id        |
+| Remove event to fav     | DELETE | http://localhost:5050/users/favorites/:eventId   |
+| Book an event           | POST   | http://localhost:5050/users/bookings/:eventId    |
+| Cancel an event         | DELETE | http://localhost:5050/users/bookings/:bookingId  |
+
+
 
 

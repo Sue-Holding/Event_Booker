@@ -52,6 +52,30 @@ export default function EventDetails() {
     setLoading(false);
   };
 
+  const bookEvent = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) return alert("Please log in first!");
+
+  try {
+    // Dummy payment logic (just a confirmation prompt)
+    const confirmed = window.confirm("Proceed with dummy payment?");
+    if (!confirmed) return;
+
+    const res = await fetch(`http://localhost:5050/users/bookings/${id}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Booking failed");
+
+    alert(`✅ Booked! Reference: ${data.bookingRef}`);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
   if (!event) return <p>Loading...</p>;
 
   return (
@@ -74,6 +98,10 @@ export default function EventDetails() {
         style={{ marginTop: "1rem", padding: "0.5rem 1rem" }}
       >
         {isFavourite ? "★ Remove from Favourites" : "☆ Add to Favourites"}
+      </button>
+
+      <button onClick={bookEvent} style={{ marginTop: "1rem" }}>
+        🎟️ Book Event
       </button>
 
     </div>
