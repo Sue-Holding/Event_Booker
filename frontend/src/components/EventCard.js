@@ -12,7 +12,13 @@ export default function EventCard({ event }) {
         {new Date(event.date).toLocaleDateString()}
       </p>
       <p>
+        <strong>Time:</strong> {event.time || "TBA"}
+      </p>
+      <p>
         <strong>Location:</strong> {event.location}
+      </p>
+      <p>
+        <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
       </p>
 
       {/* absolute path needed */}

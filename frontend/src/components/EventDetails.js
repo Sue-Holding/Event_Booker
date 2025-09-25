@@ -30,7 +30,9 @@ export default function EventDetails() {
       <h2>{event.title}</h2>
       <p><strong>Category:</strong> {event.category}</p>
       <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+      <p><strong>Time:</strong> {event.time || "TBA"}</p>
       <p><strong>Location:</strong> {event.location}</p>
+      <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}</p>
       <p><strong>Description:</strong> {event.description}</p>
     </div>
   );

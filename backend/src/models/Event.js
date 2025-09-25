@@ -5,7 +5,9 @@ const eventSchema = new mongoose.Schema(
         title: { type: String, required: true },
         description: { type: String },
         date: { type: Date, required: true },
-        location: { type: String, requried: true },
+        time: { type: String },
+        location: { type: String, required: true },
+        price: { type: Number, default: 0 },
         organizer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
         category: { type: String, default: "General" }, //kids, music etc
         status: {
