@@ -15,7 +15,9 @@ app.use(cors({
     credentials: true,
 }));
 
-// app.use("/", router);
+app.get("/", (req, res) => {
+  res.send("✅ Eventure backend is running!");
+});
 
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
