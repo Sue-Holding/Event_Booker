@@ -11,7 +11,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin: "http://localhost:3000", //frontend server
+    origin: [
+      "http://localhost:3000",  //frontend local
+      "https://eventure-events.netlify.app/" //frontend server
+    ],
     credentials: true,
 }));
 
