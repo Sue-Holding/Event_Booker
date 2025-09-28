@@ -11,11 +11,12 @@ export default function LandingPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const API_URL = process.env.REACT_APP_API_URL;
+    
     const endpoint = isLogin ? "login" : "register";
 
     try {
-      const res = await fetch(`http://localhost:5050/auth/${endpoint}`, {
+      const res = await fetch(`${API_URL}/auth/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function BookedEvents() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +15,7 @@ export default function BookedEvents() {
       }
 
       try {
-        const res = await fetch("http://localhost:5050/users/me", {
+        const res = await fetch(`${API_URL}/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +40,7 @@ export default function BookedEvents() {
     if (!token) return;
 
     try {
-      const res = await fetch(`http://localhost:5050/users/bookings/${bookingId}`, {
+      const res = await fetch(`${API_URL}/users/bookings/${bookingId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

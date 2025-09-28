@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function EventDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ export default function EventDetails() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:5050/event/${id}`);
+        const res = await fetch(`${API_URL}/event/${id}`);
         const data = await res.json();
         setEvent(data);
       } catch (err) {
@@ -23,15 +25,13 @@ export default function EventDetails() {
     fetchEvent();
   }, [id]);
 
-  if (!event) return <p>Loading...</p>;
-
   const toggleFavourite = async () => {
     const token = localStorage.getItem("token");
     if (!token) return alert("You must be logged in");
 
     setLoading(true);
     try {
-      const url = `http://localhost:5050/users/favorites/${id}`;
+      const url = `${API_URL}/users/favorites/${id}`;
       const method = isFavourite ? "DELETE" : "POST";
 
       const res = await fetch(url, {
@@ -61,7 +61,7 @@ export default function EventDetails() {
     const confirmed = window.confirm("Proceed with dummy payment?");
     if (!confirmed) return;
 
-    const res = await fetch(`http://localhost:5050/users/bookings/${id}`, {
+    const res = await fetch(`${API_URL}/users/bookings/${id}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     });

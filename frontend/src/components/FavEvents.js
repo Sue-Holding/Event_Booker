@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function FavEvent() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +15,7 @@ export default function FavEvent() {
       }
 
       try {
-        const res = await fetch("http://localhost:5050/users/me", {
+        const res = await fetch(`${API_URL}/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +40,7 @@ export default function FavEvent() {
       if (!token) return;
 
       try {
-        const res = await fetch(`http://localhost:5050/users/favorites/${eventId}`, {
+        const res = await fetch(`${API_URL}/users/favorites/${eventId}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,

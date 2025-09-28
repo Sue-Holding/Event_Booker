@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function EventSearch() {
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,8 +13,9 @@ export default function EventSearch() {
   // Fetch events from backend
   useEffect(() => {
     const fetchEvents = async () => {
+      
       try {
-        const res = await fetch("http://localhost:5050/event");
+        const res = await fetch(`${API_URL}/event`);
         const data = await res.json();
         setEvents(data);
         setFilteredEvents(data);
