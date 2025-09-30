@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -79,6 +80,9 @@ export default function BookedEvents() {
               <button onClick={() => cancelBooking(b._id)}>
                 ❌ Cancel Booking
               </button>
+              <Link to={`/user-dashboard/events/${b.event._id}`} style={styles.button}>
+                View Details
+              </Link>
             </li>
           ))}
         </ul>
@@ -86,3 +90,15 @@ export default function BookedEvents() {
     </div>
   );
 }
+
+const styles = {
+  button: {
+    marginTop: "0.5rem",
+    padding: "0.5rem 1rem",
+    border: "none",
+    borderRadius: "4px",
+    background: "#007bff",
+    color: "#fff",
+    cursor: "pointer",
+  },
+};
