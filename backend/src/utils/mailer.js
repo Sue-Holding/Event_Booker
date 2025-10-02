@@ -29,7 +29,7 @@ export const sendEmail = async (to, subject, html) => {
       });
 
       const info = await transporter.sendMail({
-        from: process.env.EMAIL_FROM || `"Eventure" <no-reply@eventure.com>`,
+        from: process.env.EMAIL_FROM || `"Eventure <sue.holding55@gmail.com>"`,
         to,
         subject,
         html,
