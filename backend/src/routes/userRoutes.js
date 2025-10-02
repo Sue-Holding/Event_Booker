@@ -4,6 +4,7 @@ import Event from "../models/Event.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { nanoid } from "nanoid";
 import nodemailer from "nodemailer";
+import { sendEmail } from "../utils/mailer.js";
 
 const router = express.Router();
 
@@ -83,39 +84,32 @@ router.post("/bookings/:eventId", protect, async (req, res) => {
     await user.save();
 
     // nodemailer test account
-    const testAccount = await nodemailer.createTestAccount();
-    const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false, // for dev 
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-      tls: {
-        rejectUnauthorized: false, // ignore self-signed certs
-      },
-    });
+    // const testAccount = await nodemailer.createTestAccount();
+    // const transporter = nodemailer.createTransport({
+    //   host: "smtp.ethereal.email",
+    //   port: 587,
+    //   secure: false, // for dev 
+    //   auth: {
+    //     user: testAccount.user,
+    //     pass: testAccount.pass,
+    //   },
+    //   tls: {
+    //     rejectUnauthorized: false, // ignore self-signed certs
+    //   },
+    // });
 
-    try {
-  const info = await transporter.sendMail({
-    from: `"Eventure" <no-reply@eventure.com>`,
-    to: user.email,
-    subject: `Booking Confirmation: ${event.title}`,
-    html: `
+   await sendEmail(
+    user.email,
+    `Booking Confirmation: ${event.title}`,
+    `
       <h3>Booking Confirmed!</h3>
       <p>Event: ${event.title}</p>
       <p>Date: ${new Date(event.date).toLocaleDateString()}</p>
       <p>Location: ${event.location}</p>
       <p>Booking Reference: <strong>${bookingRef}</strong></p>
       <p>Thank you for booking with Eventure!</p>
-    `,
-  });
-
-  console.log("📧 Preview URL:", nodemailer.getTestMessageUrl(info));
-} catch (mailErr) {
-  console.error("❌ Email failed:", mailErr.message);
-}
+    `
+); 
 
     res.json({ message: "Event booked!", bookingRef, event });
   } catch (err) {
@@ -153,7 +147,22 @@ router.delete("/bookings/:bookingId", protect, async (req, res) => {
 
 export default router;
 
-// test user routes
-// router.get("/test", (req, res) => {
-//   res.json({ message: "User routes working" });
-// });
+//     try {
+//   const info = await transporter.sendMail({
+//     from: `"Eventure" <no-reply@eventure.com>`,
+//     to: user.email,
+//     subject: `Booking Confirmation: ${event.title}`,
+//     html: `
+//       <h3>Booking Confirmed!</h3>
+//       <p>Event: ${event.title}</p>
+//       <p>Date: ${new Date(event.date).toLocaleDateString()}</p>
+//       <p>Location: ${event.location}</p>
+//       <p>Booking Reference: <strong>${bookingRef}</strong></p>
+//       <p>Thank you for booking with Eventure!</p>
+//     `,
+//   });
+
+//   console.log("📧 Preview URL:", nodemailer.getTestMessageUrl(info));
+// } catch (mailErr) {
+//   console.error("❌ Email failed:", mailErr.message);
+// }
