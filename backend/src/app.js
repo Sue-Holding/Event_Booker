@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import organiserRoutes from "./routes/organiserRoutes.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/event", eventRoutes);
 app.use("/users", userRoutes);
+app.use("/organiser", organiserRoutes);
 
 
 export default app;

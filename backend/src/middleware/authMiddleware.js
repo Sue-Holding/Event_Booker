@@ -21,6 +21,11 @@ export const protect = async (req, res, next) => {
 
       // attach user to req and remove password for secruity
       req.user = await User.findById(decoded.id).select("-password");
+
+      if (!req.user) {
+        return res.status(401).json({ message: "Not authorized, user not found." });
+      }
+
       next();
     } catch (err) {
       console.error (err);
@@ -28,6 +33,7 @@ export const protect = async (req, res, next) => {
     }
 };
 
+// role based access
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {

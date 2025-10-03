@@ -1,0 +1,156 @@
+import express from "express";
+import Event from "../models/Event.js";
+import User from "../models/User.js";
+import { protect, authorize } from "../middleware/authMiddleware.js";
+import { sendEmail } from "../utils/mailer.js";
+
+const router = express.Router();
+
+// post new event - organiser only - POST http://localhost:5050/organiser/events
+router.post(
+    "/events", 
+    protect, 
+    authorize("organiser"),
+    async (req, res) => {
+  try {
+    const { title, description, date, time, location, category } = req.body;
+
+    if (!title || !date || !location) {
+        return res
+            .status(400)
+            .json({ message: "Title, date and location are required!" });
+    }
+
+    const newEvent = new Event({
+        title,
+        description,
+        date,
+        time,
+        location,
+        category,
+        organizer: req.user.id,
+    });
+
+    const savedEvent = await newEvent.save();
+    res.status(201).json(savedEvent);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// get events made by that organiser - GET http://localhost:5050/organiser/events
+router.get(
+  "/events",
+  protect,
+  authorize("organiser"),
+  async (req, res) => {
+    try {
+      const events = await Event.find({ organizer: req.user.id }).sort({ date: 1 }); // optional: sort by date
+      res.json(events);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+);
+
+
+// amend existing event PUT http://localhost:5050/organiser/events/:eventId
+router.put(
+    "/events/:eventId", 
+    protect, 
+    authorize("organiser"),
+    async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const updates = req.body;
+
+    const event = await Event.findById(eventId);
+    if (!event) return res.status(404).json({ message: "Event not found" });
+    
+    if (event.organizer.toString() !== req.user.id) {
+        return res
+            .status(403)
+            .json({ message: "Not authorized to update this event" });
+    }
+
+    if (event.status === "approved") {
+        event.status = "pending"; // requires re-approval from admin
+    }
+
+    const updatedEvent = await Event.findByIdAndUpdate(eventId, updates, { new: true });
+    res.json(updatedEvent);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+// soft delete / cancel an event DELETE http://localhost:5050/organiser/events/:eventId
+router.delete(
+    "/events/:eventId", 
+    protect, 
+    authorize("organiser"),
+    async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const cancelReason = req.body.cancelReason || "Event was cancelled by the organiser";
+
+    // find event
+    const event = await Event.findById(eventId);
+    if (!event) return res.status(404).json({ message: "Event not found" });
+
+    // check only organiser who created event can delete it
+    if (event.organizer.toString() !== req.user.id) {
+        return res
+            .status(403)
+            .json({ message: "Not authorized to delete this event" });
+    }
+
+    // soft delete "cancelled" status and reason
+    event.status = "cancelled";
+    event.cancelReason = req.body.cancelReason || "Event was cancelled by the organiser";
+    await event.save();
+
+    // Notify all attendees
+    const attendees = await User.find({ "bookedEvents.event": event._id });
+
+    for (const attendee of attendees) {
+    await sendEmail(
+        attendee.email,
+        `Event Cancelled: ${event.title}`,
+        `
+        <h3>We're sorry!</h3>
+        <p>The event <strong>${event.title}</strong> has been cancelled.</p>
+        <p>Reason: ${event.cancelReason}</p>
+        <p>You can check other events on Eventure.</p>
+        `
+    );
+    }
+
+    // notify admin
+    const admins = await User.find({ role: "admin" });
+      for (const admin of admins) {
+        await sendEmail(
+          admin.email,
+          `Event Cancelled by Organiser: ${event.title}`,
+          `
+            <h3>Attention Admin</h3>
+            <p>The organiser <strong>${req.user.name}</strong> has cancelled the event: <strong>${event.title}</strong>.</p>
+            <p>Reason: ${event.cancelReason}</p>
+            <p>Event ID: ${event._id}</p>
+            <p>Please review it on the admin dashboard.</p>
+          `
+        );
+      }
+
+    res.json({ message: "Event cancelled successfully", event });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+export default router;
