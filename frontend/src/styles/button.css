@@ -1,0 +1,21 @@
+.button {
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #007bff, #00d4ff);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #0056b3, #0099cc);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.button:active {
+  transform: scale(0.95);
+}

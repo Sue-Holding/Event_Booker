@@ -1,0 +1,103 @@
+/* 🌈 General Dashboard Layout */
+.dashboard-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  font-family: "Inter", sans-serif;
+  color: #1e1e2f;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.dashboard-container {
+  padding: 2rem;
+  border-radius: 12px;
+  background: #f9f9f9;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 2rem auto;
+  min-height: 80vh;
+  transition: all 0.3s ease;
+}
+
+.dashboard-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ✨ Animated fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🌟 Shared card styling */
+.dashboard-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* 💙 Admin Theme */
+.admin-theme {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: white;
+}
+
+.admin-theme .dashboard-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* 💜 Organiser Theme */
+.organiser-theme {
+  background: linear-gradient(135deg, #7e22ce, #db2777);
+  color: white;
+}
+
+.organiser-theme .dashboard-card {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 🧡 User Theme */
+.user-theme {
+  background: linear-gradient(135deg, #0f766e, #f97316);
+  color: white;
+}
+
+.user-theme .dashboard-card {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 🧭 Role Header Bar */
+.role-banner {
+  text-align: center;
+  padding: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  margin-bottom: 1rem;
+  border-radius: 0 0 1rem 1rem;
+}

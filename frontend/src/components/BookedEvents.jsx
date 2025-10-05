@@ -80,7 +80,7 @@ export default function BookedEvents() {
               <button onClick={() => cancelBooking(b._id)}>
                 ❌ Cancel Booking
               </button>
-              <Link to={`/user-dashboard/events/${b.event._id}`} style={styles.button}>
+              <Link to={`/user-dashboard/events/${b.event._id}`} className="button">
                 View Details
               </Link>
             </li>
@@ -91,14 +91,14 @@ export default function BookedEvents() {
   );
 }
 
-const styles = {
-  button: {
-    marginTop: "0.5rem",
-    padding: "0.5rem 1rem",
-    border: "none",
-    borderRadius: "4px",
-    background: "#007bff",
-    color: "#fff",
-    cursor: "pointer",
-  },
-};
+// const styles = {
+//   button: {
+//     marginTop: "0.5rem",
+//     padding: "0.5rem 1rem",
+//     border: "none",
+//     borderRadius: "4px",
+//     background: "#007bff",
+//     color: "#fff",
+//     cursor: "pointer",
+//   },
+// };

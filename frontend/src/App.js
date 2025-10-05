@@ -5,6 +5,8 @@ import UserDashboard from "./pages/UserDashboard";
 import OrganiserDashboard from "./pages/OrganiserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import "./styles/styles.css";
+import "./styles/button.css";
 
 function App() {
   return (
