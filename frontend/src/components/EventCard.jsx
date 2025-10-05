@@ -4,13 +4,32 @@ import { Link } from "react-router-dom";
 const MotionLink = motion(Link);
 
 export default function EventCard({ event }) {
+  // Try to get role from localStorage user first
+  let role = null;
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    role = JSON.parse(storedUser).role;
+  }
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const role = user?.role; // "organiser" or "attendee"
+  // fallback: try decode token if localStorage user is missing
+  if (!role) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        role = payload.role;
+      } catch (err) {
+        console.error("Failed to decode token for role", err);
+      }
+    }
+  }
 
+  // Decide the route based on role
   const eventLink =
     role === "organiser"
       ? `/organiser-dashboard/events/${event._id}`
+      : role === "admin"
+      ? `/admin-dashboard/events/${event._id}`
       : `/user-dashboard/events/${event._id}`;
 
   return (
@@ -23,12 +42,17 @@ export default function EventCard({ event }) {
     >
       <h3>{event.title}</h3>
       <p>{event.category}</p>
-      <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-      <p><strong>Location:</strong> {event.location}</p>
-      <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}</p>
+      <p>
+        <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+      </p>
+      <p>
+        <strong>Location:</strong> {event.location}
+      </p>
+      <p>
+        <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
+      </p>
 
       <MotionLink
-        // to={`/user-dashboard/events/${event._id}`}
         to={eventLink}
         className="button"
         whileTap={{ scale: 0.9 }}
@@ -41,58 +65,44 @@ export default function EventCard({ event }) {
 }
 
 
+// import { motion } from "framer-motion";
+// import { Link } from "react-router-dom";
+
+// const MotionLink = motion(Link);
+
 // export default function EventCard({ event }) {
+
+//   const user = JSON.parse(localStorage.getItem("user"));
+//   const role = user?.role; // "organiser" or "attendee"
+
+//   const eventLink =
+//     role === "organiser"
+//       ? `/organiser-dashboard/events/${event._id}`
+//       : `/user-dashboard/events/${event._id}`;
+
 //   return (
-//     <div style={styles.card}>
-//       <h3 style={styles.title}>{event.title}</h3>
-//       <p style={styles.category}>{event.category}</p>
-//       <p>
-//         <strong>Date:</strong>{" "}
-//         {new Date(event.date).toLocaleDateString()}
-//       </p>
-//       <p>
-//         <strong>Time:</strong> {event.time || "TBA"}
-//       </p>
-//       <p>
-//         <strong>Location:</strong> {event.location}
-//       </p>
-//       <p>
-//         <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
-//       </p>
+//     <motion.div
+//       initial={{ opacity: 0, y: 20, scale: 0.95 }}
+//       animate={{ opacity: 1, y: 0, scale: 1 }}
+//       whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
+//       transition={{ duration: 0.4 }}
+//       className="card"
+//     >
+//       <h3>{event.title}</h3>
+//       <p>{event.category}</p>
+//       <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+//       <p><strong>Location:</strong> {event.location}</p>
+//       <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}</p>
 
-//       {/* absolute path needed */}
-//       {/* <Link to={`events/${event._id}`} style={styles.button}> */}
-//       <Link to={`/user-dashboard/events/${event._id}`} style={styles.button}>
+//       <MotionLink
+//         // to={`/user-dashboard/events/${event._id}`}
+//         to={eventLink}
+//         className="button"
+//         whileTap={{ scale: 0.9 }}
+//         whileHover={{ scale: 1.05 }}
+//       >
 //         View Event
-//       </Link>
-
-//     </div>
+//       </MotionLink>
+//     </motion.div>
 //   );
 // }
-
-// const styles = {
-//   card: {
-//     border: "1px solid #ddd",
-//     borderRadius: "8px",
-//     padding: "1rem",
-//     marginBottom: "1rem",
-//     backgroundColor: "#fff",
-//     boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-//   },
-//   title: {
-//     margin: "0 0 0.5rem 0",
-//   },
-//   category: {
-//     color: "#666",
-//     fontStyle: "italic",
-//   },
-//   button: {
-//     marginTop: "0.5rem",
-//     padding: "0.5rem 1rem",
-//     border: "none",
-//     borderRadius: "4px",
-//     background: "#007bff",
-//     color: "#fff",
-//     cursor: "pointer",
-//   },
-// };
