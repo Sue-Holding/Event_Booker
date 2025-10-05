@@ -1,4 +1,4 @@
-.card {
+/* .card {
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 1rem;
@@ -12,6 +12,25 @@
 .card:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+} */
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 380px; /* 👈 adjust as needed */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 @keyframes fadeInUp {

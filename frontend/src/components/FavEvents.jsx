@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import EventCard from "./EventCard";
+import { motion } from "framer-motion";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function FavEvent() {
   const [favorites, setFavorites] = useState([]);
+  // const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -61,45 +64,57 @@ export default function FavEvent() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Your Favourite Events</h2>
+    <motion.div
+      className="page-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2>⭐ My Favourite Events</h2>
 
       {favorites.length === 0 ? (
         <p>No favourite events yet.</p>
       ) : (
-        <ul>
-          {favorites.map(event => (
-            <li key={event._id} style={{ marginBottom: "1rem" }}>
-              <h3>{event.title}</h3>
-              <p>{event.location}</p>
-              <p>{new Date(event.date).toLocaleDateString()}</p>
-              <p>{event.price} SEK</p>
-
-              {/* remove from favourites */}
-              <button onClick={() => removeFavorite(event._id)}>
-                Remove from favourites
+        <div className="event-grid">
+          {favorites.map((event) => (
+            <motion.div
+              key={event._id}
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.3 }}
+              style={{ position: "relative" }}
+            >
+              <EventCard event={event} />
+              <button
+                onClick={() => removeFavorite(event._id)}
+                className="remove-btn"
+              >
+                ✖ Remove
               </button>
-              <Link to={`/user-dashboard/events/${event._id}`} style={styles.button}>
-                View Details
-              </Link>
-
-            </li>
+            </motion.div>
           ))}
-        </ul>
+        </div>
       )}
-
-    </div>
+    </motion.div>
   );
 }
 
-const styles = {
-  button: {
-    marginTop: "0.5rem",
-    padding: "0.5rem 1rem",
-    border: "none",
-    borderRadius: "4px",
-    background: "#007bff",
-    color: "#fff",
-    cursor: "pointer",
-  },
-};
+
+// <ul>
+        //   {favorites.map(event => (
+        //     <li key={event._id} style={{ marginBottom: "1rem" }}>
+        //       <h3>{event.title}</h3>
+        //       <p>{event.location}</p>
+        //       <p>{new Date(event.date).toLocaleDateString()}</p>
+        //       <p>{event.price} SEK</p>
+
+        //       {/* remove from favourites */}
+        //       <button onClick={() => removeFavorite(event._id)}>
+        //         Remove from favourites
+        //       </button>
+        //       <Link to={`/user-dashboard/events/${event._id}`} style={styles.button}>
+        //         View Details
+        //       </Link>
+
+        //     </li>
+        //   ))}
+        // </ul>

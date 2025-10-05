@@ -19,3 +19,23 @@
 .button:active {
   transform: scale(0.95);
 }
+
+.remove-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(255, 0, 0, 0.8);
+  color: black;
+  border: none;
+  border-radius: 20%;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: rgba(255, 50, 50, 1);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}

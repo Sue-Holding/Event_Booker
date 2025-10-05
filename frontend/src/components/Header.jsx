@@ -64,6 +64,9 @@ export default function Header() {
           {user?.role === "organiser" && (
             <>
               <motion.li whileHover={{ scale: 1.1 }}>
+                <Link to="/organiser-dashboard/search-events">Search</Link>
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.1 }}>
                 <Link to="/organiser-dashboard/my-events">My Events</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
@@ -74,6 +77,9 @@ export default function Header() {
 
           {user?.role === "admin" && (
             <>
+              <motion.li whileHover={{ scale: 1.1 }}>
+                <Link to="/admin-dashboard/search-events">Search</Link>
+              </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
                 <Link to="/admin-dashboard/event-stats">Stats</Link>
               </motion.li>

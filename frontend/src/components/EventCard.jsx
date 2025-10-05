@@ -4,6 +4,15 @@ import { Link } from "react-router-dom";
 const MotionLink = motion(Link);
 
 export default function EventCard({ event }) {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role; // "organiser" or "attendee"
+
+  const eventLink =
+    role === "organiser"
+      ? `/organiser-dashboard/events/${event._id}`
+      : `/user-dashboard/events/${event._id}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -19,7 +28,8 @@ export default function EventCard({ event }) {
       <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}</p>
 
       <MotionLink
-        to={`/user-dashboard/events/${event._id}`}
+        // to={`/user-dashboard/events/${event._id}`}
+        to={eventLink}
         className="button"
         whileTap={{ scale: 0.9 }}
         whileHover={{ scale: 1.05 }}
