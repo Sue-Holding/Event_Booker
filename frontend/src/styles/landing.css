@@ -1,110 +1,136 @@
-.landing-container {
-  display: flex;
+.landing-dark {
+  position: relative;
+  width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, #f3f4f7, #e0e7ff);
+  background: radial-gradient(circle at top, #0a0a0f 0%, #1a001f 70%, #000 100%);
+  overflow: hidden;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-carousel {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
 }
 
-.landing-hero {
-  flex: 1;
-  padding: 4rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #1e1e2f;
+.image-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: rotate(-5deg);
+  border-radius: 2rem;
+  margin: 2rem;
+  filter: brightness(0.75);
 }
 
-.landing-hero h1 {
+.overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 0, 150, 0.2), rgba(0, 0, 0, 0.9) 80%);
+}
+
+.landing-center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+}
+
+.landing-title {
   font-size: 3rem;
-  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #fff;
 }
 
-.landing-hero p {
+.landing-title span {
+  background: linear-gradient(90deg, #ff0080, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.start-button {
+  margin-top: 1.5rem;
+  padding: 1rem 2rem;
   font-size: 1.2rem;
-  margin-bottom: 2rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #ff0080, #ff8c00);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.3s;
+  box-shadow: 0 0 25px rgba(255, 0, 128, 0.5);
 }
 
-.hero-img {
-  width: 100%;
+.start-button:hover {
+  transform: scale(1.05);
+}
+
+.landing-form-modal {
+  background: rgba(20, 20, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
-.landing-form {
-  flex: 1;
-  background: #ffffff;
-  border-radius: 2rem 0 0 2rem;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.landing-form h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #333;
-}
-
-.landing-form form {
+  padding: 2rem;
+  width: 320px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
 }
 
-.landing-form input,
-.landing-form select {
+.landing-form-modal input,
+.landing-form-modal select {
   padding: 0.8rem;
+  border: none;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
-.glow-button {
-  margin-top: 1rem;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
-  color: white;
+.landing-form-modal button {
+  margin-top: 0.8rem;
+  padding: 0.8rem;
   border: none;
-  padding: 0.9rem;
   border-radius: 8px;
+  background: linear-gradient(90deg, #ff0080, #ff8c00);
+  color: white;
   cursor: pointer;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
-  transition: box-shadow 0.3s ease;
-}
-
-.glow-button:hover {
-  box-shadow: 0 0 25px rgba(99, 102, 241, 0.7);
 }
 
 .toggle-button {
-  margin-top: 1rem;
   background: transparent;
-  color: #555;
   border: none;
+  color: #ccc;
   cursor: pointer;
-  font-weight: 500;
+  font-size: 0.9rem;
   text-decoration: underline;
 }
 
 .message {
-  margin-top: 1rem;
-  color: #4f46e5;
+  color: #ff80c0;
   text-align: center;
-  font-weight: 500;
 }
 
-@media (max-width: 900px) {
-  .landing-container {
-    flex-direction: column;
-  }
-  .landing-hero {
-    padding: 2rem;
-  }
-  .landing-form {
-    border-radius: 2rem 2rem 0 0;
-  }
+.image-slide {
+  z-index: 0;
+}
+
+.overlay-gradient {
+  z-index: 1;
+}
+
+.landing-center {
+  z-index: 2;
+}
+
+.landing-dark {
+  position: relative;
+  overflow: hidden;
 }
