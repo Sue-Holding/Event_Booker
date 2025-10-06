@@ -12,10 +12,11 @@ const eventSchema = new mongoose.Schema(
         category: { type: String, default: "General" }, //kids, music etc
         status: {
             type: String,
-            enum: ["pending", "approved", "rejected", "cancelled"],
+            enum: ["pending", "approved", "rejected", "needs-update", "cancelled"],
             default: "pending",
         },
         cancelReason: { type: String },
+        adminComment: { type: String },
         imageUrl: { type: String },
     },
     { timestamps: true },
