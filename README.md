@@ -10,9 +10,13 @@ I’m building an event booking application from scratch that will cover:
 
 - Frontend – built with React, connected to the backend for browsing, booking, and managing events.
 
-This project is still a work in progress – I’ll be updating the repo as I go.
+- Admin features – approve/reject events, manage users, and view event statistics.
 
-🚀 Come back soon to see how I’ve been getting on and for the deployed version!
+- Organiser workflow – create and edit events, including handling admin feedback (“needs update”) before events are approved.
+
+This project is a work in progress – I’ll be updating the repo as I go.
+
+🚀 Check out the deployed version here: Eventure Live
 
 Thanks for dropping by! 🙌
 
@@ -58,3 +62,31 @@ Thanks for dropping by! 🙌
 <a href="./assets/Personas.png" target="_blank">View Personas</a>
 
 <a href="./assets/UserResearch.pdf" target="_blank">View User Research</a>
+
+# Features Added Recently
+
+- Admin dashboard improvements:
+
+    - Approve, reject, or request updates for pending events.
+
+    - Track events that need amendments and notify organisers.
+
+    - View event statistics for better insights.
+
+    - Full user management (create/update/delete users, including admin roles).
+
+- Organiser workflow enhancements:
+
+    - Create new events with categories, dates, times, and prices.
+
+    - Edit events after admin requests changes.
+
+    - Receive “needs update” comments and amend events accordingly.
+
+- Frontend improvements:
+
+    - Protected routes based on role (attendee, organiser, admin).
+
+    - Dynamic forms for event creation with category suggestions.
+
+    - Real-time updates to event lists after admin actions.
