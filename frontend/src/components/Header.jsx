@@ -19,6 +19,11 @@ export default function Header() {
     }
   }, []);
 
+  // const handleHomeClick = () => {
+  //   window.dispatchEvent(new Event("clearFilters"));
+  //   navigate(`/${user.role}-dashboard`);
+  // }
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
@@ -50,13 +55,19 @@ export default function Header() {
           {user?.role === "attendee" && (
             <>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/user-dashboard/search-events">Search</Link>
+                {/* <button onClick={handleHomeClick} className="nav-link-button">
+                  Home
+                </button> */}
+                <Link to="/user-dashboard/dashboard">Home</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/user-dashboard/favourites">Favourites</Link>
+                <Link to="/user-dashboard/search-events">Search Events</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/user-dashboard/booked-events">Bookings</Link>
+                <Link to="/user-dashboard/favourites">My Favourites</Link>
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.1 }}>
+                <Link to="/user-dashboard/booked-events">My Bookings</Link>
               </motion.li>
             </>
           )}
@@ -64,13 +75,16 @@ export default function Header() {
           {user?.role === "organiser" && (
             <>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/organiser-dashboard/search-events">Search</Link>
+                <Link to="/organiser-dashboard/dashboard">Home</Link>
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.1 }}>
+                <Link to="/organiser-dashboard/search-events">Search Events</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
                 <Link to="/organiser-dashboard/my-events">My Events</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/organiser-dashboard/events/new">Add Event</Link>
+                <Link to="/organiser-dashboard/events/new">Add New Event</Link>
               </motion.li>
             </>
           )}
@@ -78,13 +92,16 @@ export default function Header() {
           {user?.role === "admin" && (
             <>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/admin-dashboard/search-events">Search</Link>
+                <Link to="/admin-dashboard/dashboard">Home</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/admin-dashboard/event-stats">Stats</Link>
+                <Link to="/admin-dashboard/search-events">Search Event</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/admin-dashboard/user-settings">Users</Link>
+                <Link to="/admin-dashboard/event-stats">Event Stats</Link>
+              </motion.li>
+              <motion.li whileHover={{ scale: 1.1 }}>
+                <Link to="/admin-dashboard/user-settings">User Settings</Link>
               </motion.li>
             </>
           )}

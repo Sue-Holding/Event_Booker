@@ -100,7 +100,7 @@ export default function EventDetails() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="card"
+        className="event-card"
       >
         <h2>{event.title}</h2>
         <p><strong>Category:</strong> {event.category}</p>

@@ -101,3 +101,42 @@
   margin-bottom: 1rem;
   border-radius: 0 0 1rem 1rem;
 }
+
+.dashboard-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #0a0a0f 0%, #1a001f 70%, #000 100%);
+  color: #fff;
+}
+
+.glass-card {
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+}
+
+.floating-words {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.floating-word {
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color 0.3s ease;
+}
+
+.floating-word:hover {
+  color: #ff47c2;
+}
+

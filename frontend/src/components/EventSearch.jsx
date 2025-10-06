@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion , AnimatePresence } from "framer-motion";
 import EventCard from "./EventCard";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export default function EventSearch() {
+export default function EventSearch({ category: selectedCategory }) {
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -26,6 +26,14 @@ export default function EventSearch() {
   }, []);
 
   useEffect(() => {
+    if (selectedCategory) {
+      setCategory(selectedCategory);
+      setSearchTerm("");
+      setDate("");
+    }
+  }, [selectedCategory])
+
+  useEffect(() => {
     const term = searchTerm.toLowerCase();
 
     const filtered = events.filter((event) => {
@@ -36,7 +44,9 @@ export default function EventSearch() {
         .toLocaleDateString()
         .toLowerCase()
         .includes(term);
-      const categoryFilter = category ? event.category === category : true;
+      const categoryFilter = category 
+        ? event.category.toLowerCase() === category.toLowerCase()
+        : true;
       const dateFilter = date
         ? new Date(event.date).toISOString().split("T")[0] === date
         : true;
@@ -51,6 +61,16 @@ export default function EventSearch() {
     setFilteredEvents(filtered);
   }, [searchTerm, category, date, events]);
 
+  useEffect(() => {
+    const clearHandler = () => {
+      setSearchTerm("");
+      setCategory("");
+      setDate("");
+    };
+    window.addEventListener("clearFilters", clearHandler);
+    return () => window.removeEventListener("clearFilters", clearHandler);
+  })
+
   const categories = [...new Set(events.map((event) => event.category))];
 
   return (
@@ -58,16 +78,17 @@ export default function EventSearch() {
       className="event-search"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
       style={{ padding: "2rem" }}
     >
-      <motion.h2
+      {/* <motion.h2
         initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        Upcoming Events
-      </motion.h2>
+        {selectedCategory ? `${selectedCategory} Events` : "Upcoming Events"}
+      </motion.h2> */}
 
       <motion.input
         type="text"
@@ -103,10 +124,19 @@ export default function EventSearch() {
         />
       </div>
 
+      <AnimatePresence mode="wait">
       {filteredEvents.length === 0 ? (
-        <p>No events found</p>
+        <motion.p
+          key="no-events"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          No events found
+        </motion.p>
       ) : (
         <motion.div
+          key="event-grid"
           layout
           className="grid"
           transition={{ layout: { duration: 0.5 } }}
@@ -116,6 +146,7 @@ export default function EventSearch() {
           ))}
         </motion.div>
       )}
+      </AnimatePresence>
     </motion.div>
   );
 }

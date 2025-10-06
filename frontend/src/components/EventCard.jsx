@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import "../styles/eventcard.css";
 
 const MotionLink = motion(Link);
 
@@ -38,7 +39,7 @@ export default function EventCard({ event }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
       transition={{ duration: 0.4 }}
-      className="card"
+      className="event-card"
     >
       <h3>{event.title}</h3>
       <p>{event.category}</p>
@@ -63,46 +64,3 @@ export default function EventCard({ event }) {
     </motion.div>
   );
 }
-
-
-// import { motion } from "framer-motion";
-// import { Link } from "react-router-dom";
-
-// const MotionLink = motion(Link);
-
-// export default function EventCard({ event }) {
-
-//   const user = JSON.parse(localStorage.getItem("user"));
-//   const role = user?.role; // "organiser" or "attendee"
-
-//   const eventLink =
-//     role === "organiser"
-//       ? `/organiser-dashboard/events/${event._id}`
-//       : `/user-dashboard/events/${event._id}`;
-
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0, y: 20, scale: 0.95 }}
-//       animate={{ opacity: 1, y: 0, scale: 1 }}
-//       whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
-//       transition={{ duration: 0.4 }}
-//       className="card"
-//     >
-//       <h3>{event.title}</h3>
-//       <p>{event.category}</p>
-//       <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-//       <p><strong>Location:</strong> {event.location}</p>
-//       <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}</p>
-
-//       <MotionLink
-//         // to={`/user-dashboard/events/${event._id}`}
-//         to={eventLink}
-//         className="button"
-//         whileTap={{ scale: 0.9 }}
-//         whileHover={{ scale: 1.05 }}
-//       >
-//         View Event
-//       </MotionLink>
-//     </motion.div>
-//   );
-// }
