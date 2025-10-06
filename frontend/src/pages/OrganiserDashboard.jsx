@@ -1,13 +1,14 @@
 // for organiser dashboard
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+// import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import EventSearch from "../components/EventSearch";
-import EventDetails from "../components/EventDetails";
-import AddNewEvent from "../components/AddNewEvent";
-import MyEvents from "../components/MyEvents";
+// import EventSearch from "../components/EventSearch";
+// import EventDetails from "../components/EventDetails";
+// import AddNewEvent from "../components/AddNewEvent";
+// import MyEvents from "../components/MyEvents";
 import FloatingWords from "../components/FloatingWords";
 import "../styles/dashboard.css";
 
@@ -45,17 +46,23 @@ return (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h2>{selectedCategory ? `${selectedCategory} Events` : "Discover Events"}</h2>
+        <h2>{selectedCategory 
+          ? `${selectedCategory} Events` 
+          : "Discover Events"}
+        </h2>
+
         {/* <EventSearch category={selectedCategory} /> */}
       
-        <Routes>
+        {/* <Routes>
            <Route index element={<MyEvents />} />
            <Route path="organiser-dashboard" element={<OrganiserDashboard />} />
            <Route path="search-events" element={<EventSearch />} />
            <Route path="events/:id" element={<EventDetails />} />
            <Route path="events/new" element={<AddNewEvent />} />
            <Route path="my-events" element={<MyEvents />} />
-         </Routes>
+         </Routes> */}
+      
+      <Outlet />
       
       </motion.div>
       

@@ -19,6 +19,14 @@ export default function Header() {
     }
   }, []);
 
+  const roleToDashboard = {
+    attendee: "user-dashboard",
+    organiser: "organiser-dashboard",
+    admin: "admin-dashboard",
+  };
+
+  const dashboardRoute = roleToDashboard[user?.role];
+
   // const handleHomeClick = () => {
   //   window.dispatchEvent(new Event("clearFilters"));
   //   navigate(`/${user.role}-dashboard`);
@@ -55,19 +63,21 @@ export default function Header() {
           {user?.role === "attendee" && (
             <>
               <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <button onClick={handleHomeClick} className="nav-link-button">
-                  Home
-                </button> */}
-                <Link to="/user-dashboard/dashboard">Home</Link>
+                {/* <Link to="/user-dashboard/dashboard">Home</Link> */}
+                <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
+
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/user-dashboard/search-events">Search Events</Link>
+                <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
+                {/* <Link to="/user-dashboard/search-events">Search Events</Link> */}
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/user-dashboard/favourites">My Favourites</Link>
+                {/* <Link to="/user-dashboard/favourites">My Favourites</Link> */}
+                <Link to={`/${dashboardRoute}/favourites`}>My Favourites</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/user-dashboard/booked-events">My Bookings</Link>
+                {/* <Link to="/user-dashboard/booked-events">My Bookings</Link> */}
+                <Link to={`/${dashboardRoute}/booked-events`}>My Booked Events</Link>
               </motion.li>
             </>
           )}
@@ -75,16 +85,20 @@ export default function Header() {
           {user?.role === "organiser" && (
             <>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/organiser-dashboard/dashboard">Home</Link>
+                {/* <Link to="/organiser-dashboard/dashboard">Home</Link> */}
+                <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/organiser-dashboard/search-events">Search Events</Link>
+                {/* <Link to="/organiser-dashboard/search-events">Search Events</Link> */}
+                <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/organiser-dashboard/my-events">My Events</Link>
+                {/* <Link to="/organiser-dashboard/my-events">My Events</Link> */}
+                <Link to={`/${dashboardRoute}/my-events`}>My Events</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/organiser-dashboard/events/new">Add New Event</Link>
+                {/* <Link to="/organiser-dashboard/events/new">Add New Event</Link> */}
+                <Link to={`/${dashboardRoute}/events/new`}>Add New Event</Link>
               </motion.li>
             </>
           )}
@@ -92,16 +106,20 @@ export default function Header() {
           {user?.role === "admin" && (
             <>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/admin-dashboard/dashboard">Home</Link>
+                {/* <Link to="/admin-dashboard/dashboard">Home</Link> */}
+                <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/admin-dashboard/search-events">Search Event</Link>
+                {/* <Link to="/admin-dashboard/search-events">Search Event</Link> */}
+                <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/admin-dashboard/event-stats">Event Stats</Link>
+                {/* <Link to="/admin-dashboard/event-stats">Event Stats</Link> */}
+                <Link to={`/${dashboardRoute}/event-stats`}>Event Stats</Link>
               </motion.li>
               <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to="/admin-dashboard/user-settings">User Settings</Link>
+                {/* <Link to="/admin-dashboard/user-settings">User Settings</Link> */}
+                <Link to={`/${dashboardRoute}/user-settings`}>User Settings</Link>
               </motion.li>
             </>
           )}

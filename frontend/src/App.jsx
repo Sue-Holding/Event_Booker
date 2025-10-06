@@ -5,6 +5,14 @@ import UserDashboard from "./pages/UserDashboard";
 import OrganiserDashboard from "./pages/OrganiserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EventSearch from "./components/EventSearch";
+import EventDetails from "./components/EventDetails";
+import FavEvents from "./components/FavEvents";
+import BookedEvents from "./components/BookedEvents";
+import AddNewEvent from "./components/AddNewEvent";
+import MyEvents from "./components/MyEvents";
+import EventStats from "./components/EventStats";
+import UserSettings from "./components/UserSettings";
 import "./styles/styles.css";
 import "./styles/button.css";
 
@@ -23,7 +31,13 @@ function App() {
               <UserDashboard />
             </ProtectedRoute> 
             } 
-          />
+          >
+            <Route index element={<EventSearch />} />
+            <Route path="search-events" element={<EventSearch />} />
+            <Route path="events/:id" element={<EventDetails />} />
+            <Route path="favourites" element={<FavEvents />} />
+            <Route path="booked-events" element={<BookedEvents />} />
+        </Route>
 
         {/* Organiser Dashboard */}
         <Route 
@@ -33,7 +47,14 @@ function App() {
               <OrganiserDashboard />
             </ProtectedRoute> 
             } 
-          />
+          >
+            {/* <Route index element={<MyEvents />} /> */}
+            <Route path="organiser-dashboard" element={<OrganiserDashboard />} />
+            <Route path="search-events" element={<EventSearch />} />
+            <Route path="events/:id" element={<EventDetails />} />
+            <Route path="events/new" element={<AddNewEvent />} />
+            <Route path="my-events" element={<MyEvents />} />
+          </Route>
 
         {/* Admin Dashboard */}
         <Route 
@@ -43,7 +64,14 @@ function App() {
               <AdminDashboard />
             </ProtectedRoute> 
             } 
-          />
+          >
+            {/* <Route index element={<EventStats />} /> */}
+            <Route path="admin-dashboard" element={<AdminDashboard />} />
+            <Route path="search-events" element={<EventSearch />} />
+            <Route path="events/:id" element={<EventDetails />} />
+            <Route path="event-stats" element={<EventStats />} />
+            <Route path="user-settings" element={<UserSettings />} />
+        </Route>
       </Routes>
     
   );

@@ -1,13 +1,14 @@
 // for user / attendee
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+// import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import EventSearch from "../components/EventSearch";
-import FavEvents from "../components/FavEvents";
-import BookedEvents from "../components/BookedEvents";
-import EventDetails from "../components/EventDetails";
+// import EventSearch from "../components/EventSearch";
+// import FavEvents from "../components/FavEvents";
+// import BookedEvents from "../components/BookedEvents";
+// import EventDetails from "../components/EventDetails";
 import FloatingWords from "../components/FloatingWords";
 import "../styles/dashboard.css";
 
@@ -43,7 +44,7 @@ export default function UserDashboard() {
         onSelect={setSelectedCategory} 
       />
 
-      {/* Dashboard content */}
+      {/* User Dashboard content */}
       <motion.div
         className="dashboard-content glass-card"
         initial={{ opacity: 0, y: 20 }}
@@ -55,18 +56,7 @@ export default function UserDashboard() {
             : "Discover Events"}
         </h2>
 
-         {selectedCategory ? (
-       <EventSearch category={selectedCategory} />
-      ) : (
-
-          <Routes>
-            {/* <Route index element={<BookedEvents />} /> */}
-             <Route path="search-events" element={<EventSearch />} />
-             <Route path="events/:id" element={<EventDetails />} />
-             <Route path="favourites" element={<FavEvents />} />
-             <Route path="booked-events" element={<BookedEvents />} />
-           </Routes>
-         )}
+         <Outlet />
       
         </motion.div>
      

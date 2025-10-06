@@ -1,13 +1,14 @@
 // for admin dashboard
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+// import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import EventSearch from "../components/EventSearch";
-import EventDetails from "../components/EventDetails";
-import EventStats from "../components/EventStats";
-import UserSettings from "../components/UserSettings";
+// import EventSearch from "../components/EventSearch";
+// import EventDetails from "../components/EventDetails";
+// import EventStats from "../components/EventStats";
+// import UserSettings from "../components/UserSettings";
 import FloatingWords from "../components/FloatingWords";
 import "../styles/dashboard.css";
 
@@ -27,7 +28,11 @@ export default function AdminDashboard() {
       console.error("Invalid token");
       localStorage.removeItem("token");
     }
-  }, []);
+  
+    const handleClear = () => setSelectedCategory("");
+      window.addEventListener("clearFilters", handleClear);
+      return () => window.removeEventListener("clearFilters", handleClear);
+    }, []);
 
   return (
     <div className="dashboard-page">
@@ -39,20 +44,15 @@ export default function AdminDashboard() {
               onSelect={setSelectedCategory} 
             />
 
+    {/* Admin Dashboard content */}
       <motion.div
         className="dashboard-content glass-card"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <h2>Admin Control Center</h2>
-          <Routes>
-            <Route index element={<EventStats />} />
-            <Route path="admin-dashboard" element={<AdminDashboard />} />
-            <Route path="search-events" element={<EventSearch />} />
-            <Route path="events/:id" element={<EventDetails />} />
-            <Route path="event-stats" element={<EventStats />} />
-            <Route path="user-settings" element={<UserSettings />} />
-          </Routes>
+
+        <Outlet />
 
         </motion.div>
 
