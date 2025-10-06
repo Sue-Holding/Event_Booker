@@ -16,7 +16,7 @@ I’m building an event booking application from scratch that will cover:
 
 This project is a work in progress – I’ll be updating the repo as I go.
 
-🚀 Check out the deployed version here: Eventure Live
+🚀 Check out the deployed version here: [Eventure Live](https://eventure-events.netlify.app/)
 
 Thanks for dropping by! 🙌
 
