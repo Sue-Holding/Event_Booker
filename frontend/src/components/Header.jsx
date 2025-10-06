@@ -25,12 +25,32 @@ export default function Header() {
     admin: "admin-dashboard",
   };
 
-  const dashboardRoute = roleToDashboard[user?.role];
-
-  // const handleHomeClick = () => {
-  //   window.dispatchEvent(new Event("clearFilters"));
-  //   navigate(`/${user.role}-dashboard`);
-  // }
+  const roleLinks = {
+    attendee: [
+      { name: "Home", path: "dashboard" },
+      { name: "Search Events", path: "search-events" },
+      { name: "My Favourites", path: "favourites" },
+      { name: "My Booked Events", path: "booked-events" },
+    ],
+    organiser: [
+      { name: "Home", path: "dashboard" },
+      { name: "Search Events", path: "search-events" },
+      { name: "My Favourites", path: "favourites" },
+      { name: "My Booked Events", path: "booked-events" },
+      { name: "My Events", path: "my-events" },
+      { name: "Add New Event", path: "events/new" },
+    ],
+    admin: [
+      { name: "Home", path: "dashboard" },
+      { name: "Search Events", path: "search-events" },
+      { name: "My Favourites", path: "favourites" },
+      { name: "My Booked Events", path: "booked-events" },
+      { name: "My Events", path: "my-events" },
+      { name: "Add New Event", path: "events/new" },
+      { name: "Event Stats", path: "event-stats" },
+      { name: "User Settings", path: "user-settings" },
+    ],
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -60,69 +80,14 @@ export default function Header() {
         <h2 className="logo">Eventure</h2>
 
         <ul className="links">
-          {user?.role === "attendee" && (
-            <>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/user-dashboard/dashboard">Home</Link> */}
-                <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
-
+          {user &&
+            roleLinks[user.role]?.map((link) => (
+              <motion.li key={link.path} whileHover={{ scale: 1.1 }}>
+                <Link to={`/${roleToDashboard[user.role]}/${link.path}`}>
+                  {link.name}
+                </Link>
               </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
-                {/* <Link to="/user-dashboard/search-events">Search Events</Link> */}
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/user-dashboard/favourites">My Favourites</Link> */}
-                <Link to={`/${dashboardRoute}/favourites`}>My Favourites</Link>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/user-dashboard/booked-events">My Bookings</Link> */}
-                <Link to={`/${dashboardRoute}/booked-events`}>My Booked Events</Link>
-              </motion.li>
-            </>
-          )}
-
-          {user?.role === "organiser" && (
-            <>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/organiser-dashboard/dashboard">Home</Link> */}
-                <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/organiser-dashboard/search-events">Search Events</Link> */}
-                <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/organiser-dashboard/my-events">My Events</Link> */}
-                <Link to={`/${dashboardRoute}/my-events`}>My Events</Link>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/organiser-dashboard/events/new">Add New Event</Link> */}
-                <Link to={`/${dashboardRoute}/events/new`}>Add New Event</Link>
-              </motion.li>
-            </>
-          )}
-
-          {user?.role === "admin" && (
-            <>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/admin-dashboard/dashboard">Home</Link> */}
-                <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/admin-dashboard/search-events">Search Event</Link> */}
-                <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/admin-dashboard/event-stats">Event Stats</Link> */}
-                <Link to={`/${dashboardRoute}/event-stats`}>Event Stats</Link>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.1 }}>
-                {/* <Link to="/admin-dashboard/user-settings">User Settings</Link> */}
-                <Link to={`/${dashboardRoute}/user-settings`}>User Settings</Link>
-              </motion.li>
-            </>
-          )}
+            ))}
 
           {user ? (
             <motion.li whileHover={{ scale: 1.1 }}>
@@ -140,6 +105,7 @@ export default function Header() {
     </motion.header>
   );
 }
+
 
 
 
@@ -164,6 +130,19 @@ export default function Header() {
 //     }
 //   }, []);
 
+//   const roleToDashboard = {
+//     attendee: "user-dashboard",
+//     organiser: "organiser-dashboard",
+//     admin: "admin-dashboard",
+//   };
+
+//   const dashboardRoute = roleToDashboard[user?.role];
+
+//   // const handleHomeClick = () => {
+//   //   window.dispatchEvent(new Event("clearFilters"));
+//   //   navigate(`/${user.role}-dashboard`);
+//   // }
+
 //   const handleLogout = () => {
 //     localStorage.removeItem("token");
 //     setUser(null);
@@ -172,161 +151,112 @@ export default function Header() {
 
 //   return (
 //     <motion.header
-//       className="header"
-//       initial={{ y: -80, opacity: 0 }}
+//       initial={{ y: -100, opacity: 0 }}
 //       animate={{ y: 0, opacity: 1 }}
-//       transition={{ duration: 0.6, ease: "easeOut" }}
+//       transition={{ duration: 0.8, ease: "easeOut" }}
+//       className="header"
 //     >
-//       <nav className="nav">
-//         {user && <p>Welcome, {user.name}! Role: {user.role}</p>}
-//         <motion.h2
-//           className="logo"
-//           whileHover={{ scale: 1.1, rotate: -2 }}
-//           transition={{ type: "spring", stiffness: 200 }}
-//         >
-//           Eventure
-//         </motion.h2>
+//       <motion.nav
+//         className="nav"
+//         initial="hidden"
+//         animate="visible"
+//         variants={{
+//           hidden: { opacity: 0 },
+//           visible: {
+//             opacity: 1,
+//             transition: { delayChildren: 0.3, staggerChildren: 0.15 },
+//           },
+//         }}
+//       >
+//         <h2 className="logo">Eventure</h2>
 
 //         <ul className="links">
+
+//           {/* user header */}
 //           {user?.role === "attendee" && (
 //             <>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/user-dashboard/search-events">Search Events</Link>
+//                 <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
 //               </motion.li>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/user-dashboard/favourites">Favourites</Link>
+//                 <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
 //               </motion.li>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/user-dashboard/booked-events">Booked Events</Link>
+//                 <Link to={`/${dashboardRoute}/favourites`}>My Favourites</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/booked-events`}>My Booked Events</Link>
 //               </motion.li>
 //             </>
 //           )}
 
+//           {/* organiser header */}
 //           {user?.role === "organiser" && (
 //             <>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/organiser-dashboard/search-events">Search Events</Link>
+//                 <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
 //               </motion.li>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/organiser-dashboard/events/new">Add New Event</Link>
+//                 <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
 //               </motion.li>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/organiser-dashboard/my-events">My Events</Link>
+//                 <Link to={`/${dashboardRoute}/favourites`}>My Favourites</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/booked-events`}>My Booked Events</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/my-events`}>My Events</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/events/new`}>Add New Event</Link>
 //               </motion.li>
 //             </>
 //           )}
 
+//           {/* admin header */}
 //           {user?.role === "admin" && (
 //             <>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/admin-dashboard/search-events">Search Events</Link>
+//                 <Link to={`/${dashboardRoute}/dashboard`}>Home</Link>
 //               </motion.li>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/admin-dashboard/event-stats">Event Stats</Link>
+//                 <Link to={`/${dashboardRoute}/search-events`}>Search Events</Link>
 //               </motion.li>
 //               <motion.li whileHover={{ scale: 1.1 }}>
-//                 <Link to="/admin-dashboard/user-settings">User Settings</Link>
+//                 <Link to={`/${dashboardRoute}/favourites`}>My Favourites</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/booked-events`}>My Booked Events</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/my-events`}>My Events</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/events/new`}>Add New Event</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/event-stats`}>Event Stats</Link>
+//               </motion.li>
+//               <motion.li whileHover={{ scale: 1.1 }}>
+//                 <Link to={`/${dashboardRoute}/user-settings`}>User Settings</Link>
 //               </motion.li>
 //             </>
 //           )}
 
-//           {user && (
+//           {user ? (
 //             <motion.li whileHover={{ scale: 1.1 }}>
-//               <button onClick={handleLogout} className="logout">Logout</button>
+//               <button onClick={handleLogout} className="logout">
+//                 Logout
+//               </button>
 //             </motion.li>
-//           )}
-//           {!user && (
+//           ) : (
 //             <motion.li whileHover={{ scale: 1.1 }}>
 //               <Link to="/">Login/Register</Link>
 //             </motion.li>
 //           )}
 //         </ul>
-//       </nav>
+//       </motion.nav>
 //     </motion.header>
 //   );
 // }
-
-
-
-// import { Link, useNavigate } from "react-router-dom";
-// import { useState, useEffect } from "react";
-// import { jwtDecode } from "jwt-decode";
-
-// export default function Header() {
-//   const navigate = useNavigate();
-//   const [user, setUser] = useState(null);
-
-//   useEffect(() => {
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//       try {
-//         const decoded = jwtDecode(token);
-//         setUser(decoded); // decoded contains at least { id, role, name, iat, exp }
-//       } catch {
-//         localStorage.removeItem("token");
-//       }
-//     }
-//   }, []);
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     setUser(null);
-//     navigate("/"); // redirect to landing page
-//   };
-
-//   return (
-//     <header style={styles.header}>
-//       <nav style={styles.nav}>
-//         {user && <p>Welcome, {user.name}! Role: {user.role}</p>}
-//         <h2 style={styles.logo}>Eventure</h2>
-        
-//         <ul style={styles.links}>
-//           <ul style={styles.links}>
-//               {/* <li><Link to="/dashboard">Home</Link></li> */}
-
-//               {user?.role === "attendee" && (
-//                 <>
-//                   <li><Link to="/user-dashboard/search-events">Search Events</Link></li>
-//                   <li><Link to="/user-dashboard/favourites">Favourites</Link></li>
-//                   <li><Link to="/user-dashboard/booked-events">Booked Events</Link></li>
-//                 </>
-//               )}
-
-//               {user?.role === "organiser" && (
-//                 <>
-//                   <li><Link to="/organiser-dashboard/search-events">Search Events</Link></li>
-//                   <li><Link to="/organiser-dashboard/events/new">Add New Event</Link></li>
-//                   <li><Link to="/organiser-dashboard/my-events">My Events</Link></li>
-//                 </>
-//               )}
-
-//               {user?.role === "admin" && (
-//                 <>
-//                   <li><Link to="/admin-dashboard/search-events">Search Events</Link></li>
-//                   <li><Link to="/admin-dashboard/event-stats">Event Stats</Link></li>
-//                   <li><Link to="/admin-dashboard/user-settings">User Settings</Link></li>
-//                 </>
-//               )}
-
-//               {user && <li><button onClick={handleLogout} style={styles.logout}>Logout</button></li>}
-//               {!user && <li><Link to="/">Login/Register</Link></li>}
-//             </ul>
-//         </ul>
-//       </nav>
-//     </header>
-//   );
-// }
-
-// const styles = {
-//   header: { background: "#282c34", padding: "1rem", color: "white" },
-//   nav: { display: "flex", justifyContent: "space-between", alignItems: "center" },
-//   logo: { margin: 0 },
-//   links: { listStyle: "none", display: "flex", gap: "1rem", margin: 0, padding: 0 },
-//   logout: {
-//     background: "transparent",
-//     border: "1px solid white",
-//     color: "white",
-//     padding: "0.25rem 0.5rem",
-//     cursor: "pointer",
-//   },
-// };
