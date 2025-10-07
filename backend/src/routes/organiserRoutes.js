@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
     "/events", 
     protect, 
-    authorize("organiser"),
+    authorize("organiser", "admin"),
     async (req, res) => {
   try {
     const { title, description, date, time, location, category } = req.body;
@@ -43,7 +43,7 @@ router.post(
 router.get(
   "/events",
   protect,
-  authorize("organiser"),
+  authorize("organiser", "admin"),
   async (req, res) => {
     try {
       const events = await Event.find({ organizer: req.user.id }).sort({ date: 1 }); // optional: sort by date
@@ -60,7 +60,7 @@ router.get(
 router.put(
     "/events/:eventId", 
     protect, 
-    authorize("organiser"),
+    authorize("organiser", "admin"),
     async (req, res) => {
   try {
     const { eventId } = req.params;
@@ -92,7 +92,7 @@ router.put(
 router.delete(
     "/events/:eventId", 
     protect, 
-    authorize("organiser"),
+    authorize("organiser", "admin"),
     async (req, res) => {
   try {
     const { eventId } = req.params;

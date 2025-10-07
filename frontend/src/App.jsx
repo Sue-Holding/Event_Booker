@@ -52,6 +52,8 @@ function App() {
             <Route path="organiser-dashboard" element={<OrganiserDashboard />} />
             <Route path="search-events" element={<EventSearch />} />
             <Route path="events/:id" element={<EventDetails />} />
+            <Route path="favourites" element={<FavEvents />} />
+            <Route path="booked-events" element={<BookedEvents />} />
             <Route path="events/new" element={<AddNewEvent />} />
             <Route path="my-events" element={<MyEvents />} />
           </Route>
@@ -69,6 +71,10 @@ function App() {
             <Route path="admin-dashboard" element={<AdminDashboard />} />
             <Route path="search-events" element={<EventSearch />} />
             <Route path="events/:id" element={<EventDetails />} />
+            <Route path="favourites" element={<FavEvents />} />
+            <Route path="booked-events" element={<BookedEvents />} />
+            <Route path="events/new" element={<AddNewEvent />} />
+            <Route path="my-events" element={<MyEvents />} />
             <Route path="event-stats" element={<EventStats />} />
             <Route path="user-settings" element={<UserSettings />} />
         </Route>
