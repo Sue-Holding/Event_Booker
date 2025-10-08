@@ -113,7 +113,7 @@ export default function AddNewEvent() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <h2 className="form-title">🎉 Add a New Event</h2>
+      <h2 className="form-title">Add a New Event</h2>
       {message && <p className="form-message">{message}</p>}
 
       <form className="add-event-form" onSubmit={handleSubmit}>

@@ -196,7 +196,6 @@ export default function MyEvents() {
               </div>
             ) : (
               <div key={event._id} className="event-card-wrapper">
-                {/* ✅ Merge EventCard content and actions inside one card */}
                 <EventCard event={event} showDetailsButton={true} />
                 <div className="event-card-actions">
                   <button onClick={() => startEditing(event)} className="btn-primary">

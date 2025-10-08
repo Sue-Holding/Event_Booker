@@ -1,4 +1,164 @@
 .my-events-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.06);
+  background-image: linear-gradient(135deg, rgba(255, 0, 255, 0.05), rgba(102, 0, 255, 0.05));
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.1);
+  animation: fadeIn 0.8s ease;
+}
+
+.my-events-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #ff8fd8;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+}
+
+.my-events-container p {
+  text-align: center;
+  color: #ddd;
+  font-weight: 500;
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.8rem;
+}
+
+/* ✨ Neon glass style for each event card */
+.event-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 380px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
+  padding: 1.2rem;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.6s ease;
+}
+
+.event-card-wrapper:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.25);
+}
+
+.event-card-wrapper h3 {
+  font-size: 1.3rem;
+  color: #ff8fd8;
+  margin-bottom: 0.5rem;
+}
+
+.event-card-wrapper p,
+.event-card-wrapper input,
+.event-card-wrapper textarea,
+.event-card-wrapper select {
+  color: #e6e6e6;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 0.6rem;
+  width: 100%;
+  margin-top: 0.3rem;
+  transition: all 0.3s ease;
+}
+
+.event-card-wrapper input:focus,
+.event-card-wrapper textarea:focus,
+.event-card-wrapper select:focus {
+  border-color: #ff8fd8;
+  box-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ✴️ Action Buttons */
+.event-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.btn-primary,
+.btn-danger {
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #ff00cc, #6600ff);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #ff66cc, #9933ff);
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.btn-danger {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(90deg, #ff6f61, #ff8a80);
+  box-shadow: 0 0 10px rgba(255, 100, 100, 0.6);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    font-size: 0.9rem;
+  }
+}
+
+
+
+
+/* .my-events-container {
   padding: 2rem;
 }
 
@@ -61,4 +221,4 @@
 
 .btn-danger:hover {
   background-color: #c82333;
-}
+} */
