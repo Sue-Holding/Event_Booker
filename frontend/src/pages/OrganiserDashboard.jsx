@@ -10,6 +10,7 @@ import Footer from "../components/Footer";
 // import AddNewEvent from "../components/AddNewEvent";
 // import MyEvents from "../components/MyEvents";
 import FloatingWords from "../components/FloatingWords";
+import UpdatesRequired from "../components/UpdatesRequired";
 import "../styles/dashboard.css";
 
 const categories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
@@ -46,13 +47,15 @@ return (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h2>{selectedCategory 
+        {/* <h2>{selectedCategory 
           ? `${selectedCategory} Events` 
           : "Discover Events"}
-        </h2>
+        </h2> */}
 
         {/* <EventSearch category={selectedCategory} /> */}
       
+      <UpdatesRequired />
+
       <Outlet />
       
       </motion.div>

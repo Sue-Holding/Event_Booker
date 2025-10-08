@@ -46,7 +46,11 @@ router.get(
   authorize("organiser", "admin"),
   async (req, res) => {
     try {
-      const events = await Event.find({ organizer: req.user.id }).sort({ date: 1 }); // optional: sort by date
+      const { status } = req.query;
+      let filter = { organizer: req.user.id };
+      if (status) filter.status = status;
+
+      const events = await Event.find(filter).sort({ date: 1 }); // optional: sort by date
       res.json(events);
     } catch (err) {
       console.error(err);
@@ -58,34 +62,62 @@ router.get(
 
 // amend existing event PUT http://localhost:5050/organiser/events/:eventId
 router.put(
-    "/events/:eventId", 
-    protect, 
-    authorize("organiser", "admin"),
-    async (req, res) => {
-  try {
-    const { eventId } = req.params;
-    const updates = req.body;
+  "/events/:eventId",
+  protect,
+  authorize("organiser", "admin"),
+  async (req, res) => {
+    try {
+      const { eventId } = req.params;
+      const { organiserComment, ...updates } = req.body;
 
-    const event = await Event.findById(eventId);
-    if (!event) return res.status(404).json({ message: "Event not found" });
-    
-    if (event.organizer.toString() !== req.user.id) {
+      delete updates.adminComments; // prevent overwriting the thread manually
+
+      const event = await Event.findById(eventId);
+      if (!event)
+        return res.status(404).json({ message: "Event not found" });
+
+      if (event.organizer.toString() !== req.user.id) {
         return res
-            .status(403)
-            .json({ message: "Not authorized to update this event" });
-    }
+          .status(403)
+          .json({ message: "Not authorized to update this event" });
+      }
 
-    if (event.status === "approved") {
-        event.status = "pending"; // requires re-approval from admin
-    }
+      // push organiser reply if provided
+      if (organiserComment) {
+        event.adminComments.push({
+          userRole: "organiser",
+          text: organiserComment,
+        });
+      }
 
-    const updatedEvent = await Event.findByIdAndUpdate(eventId, updates, { new: true });
-    res.json(updatedEvent);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+      // update fields
+      Object.assign(event, updates);
+
+      // whenever organiser updates, reset status to pending
+      event.status = "pending";
+
+      await event.save();
+
+      res.json({ message: "Event updated and submitted for review", event });
+    } catch (err) {
+      console.error("Organiser PUT /events/:eventId error:", err);
+      res.status(500).json({ message: "Server error" });
+    }
   }
-});
+);
+
+    // re-pending after update
+//     if (event.status === "approved" || event.status === "needs-update") {
+//         event.status = "pending"; // requires re-approval from admin
+//     }
+
+//     const updatedEvent = await Event.findByIdAndUpdate(eventId, updates, { new: true });
+//     res.json(updatedEvent);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
 
 
 // soft delete / cancel an event DELETE http://localhost:5050/organiser/events/:eventId

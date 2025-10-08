@@ -16,7 +16,15 @@ const eventSchema = new mongoose.Schema(
             default: "pending",
         },
         cancelReason: { type: String },
-        adminComment: { type: String },
+        // adminComment: { type: String },
+        adminComments: [
+            {
+                userRole: { type: String, enum: ["admin", "organiser"], required: true },
+                text: { type: String, required: true },
+                date: { type: Date, default: Date.now },
+            },
+            ],
+
         imageUrl: { type: String },
     },
     { timestamps: true },

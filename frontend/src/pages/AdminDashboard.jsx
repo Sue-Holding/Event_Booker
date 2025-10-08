@@ -10,6 +10,8 @@ import Footer from "../components/Footer";
 // import EventStats from "../components/EventStats";
 // import UserSettings from "../components/UserSettings";
 import FloatingWords from "../components/FloatingWords";
+import PendingEvents from "../components/PendingEvents";
+import AdminPendingActions from "../components/AdminPendingActions";
 import "../styles/dashboard.css";
 
 const categories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
@@ -44,6 +46,7 @@ export default function AdminDashboard() {
               onSelect={setSelectedCategory} 
             />
 
+    
     {/* Admin Dashboard content */}
       <motion.div
         className="dashboard-content glass-card"
@@ -51,6 +54,10 @@ export default function AdminDashboard() {
         animate={{ opacity: 1, y: 0 }}
       >
         <h2>Admin Control Center</h2>
+
+         <PendingEvents />
+
+         <AdminPendingActions />
 
         <Outlet />
 

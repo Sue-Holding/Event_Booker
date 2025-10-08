@@ -175,7 +175,6 @@ router.post(
     async (req, res) => {
   try {
     const { action, comment } = req.body;
-    // const { approve } = req.body; // true or false
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
 
@@ -183,16 +182,28 @@ router.post(
     switch (action) {
         case "approve":
           event.status = "approved";
-          event.adminComment = "";
           break;
+
         case "needs-update":
           event.status = "needs-update";
-          event.adminComment = comment || "Please update the event details";
+          if (comment) {
+            event.adminComments.push({
+              userRole: "admin",
+              text: comment,
+            });
+          }
           break;
+
         case "reject":
           event.status = "rejected";
-          event.adminComment = comment || "Event rejected";
+          if (comment) {
+            event.adminComments.push({
+              userRole: "admin",
+              text: comment,
+            })
+          }
           break;
+
         default:
           return res.status(400).json({ message: "Invalid action" });
       }

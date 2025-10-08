@@ -35,8 +35,9 @@ export default function MyEvents() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
+      setEvents(Array.isArray(data) ? data : data.events || []);
       if (!res.ok) throw new Error(data.message || "Failed to fetch events");
-      setEvents(data);
+      // setEvents(data);
     } catch (err) {
       setMessage(`❌ ${err.message}`);
     } finally {

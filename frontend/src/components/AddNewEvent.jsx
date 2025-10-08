@@ -89,7 +89,7 @@ export default function AddNewEvent() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to create event");
 
-      setMessage("✅ Event created successfully!");
+      setMessage("✅ Event posted successfully to Admin for review!");
       setFormData({
         title: "",
         description: "",
