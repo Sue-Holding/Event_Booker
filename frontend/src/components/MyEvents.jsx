@@ -46,6 +46,12 @@ export default function MyEvents() {
   };
 
   const handleCancel = async (eventId) => {
+    // alert are you sure you wish to cancel
+    const confirmCancel = window.confirm(
+      "⚠️ Are you sure wish wish to canccel this event? This cannot be amended later"
+    );
+    if (!confirmCancel) return;
+
     const reason = prompt("Please enter a reason for cancellation:");
     if (!reason) return;
 
@@ -62,7 +68,11 @@ export default function MyEvents() {
       if (!res.ok) throw new Error(data.message || "Failed to cancel event");
 
       setMessage("✅ Event cancelled successfully!");
-      fetchEvents();
+
+      //auto refresh fetch to show update to new status
+      setTimeout(() => {
+        fetchEvents();
+    }, 500);
     } catch (err) {
       setMessage(`❌ ${err.message}`);
     }
@@ -116,101 +126,65 @@ export default function MyEvents() {
   if (loading) return <p>Loading events...</p>;
 
   return (
-    <div className="my-events-container">
-      <h2>My Events</h2>
-      {message && <p>{message}</p>}
-      {events.length === 0 ? (
-        <p>No events found.</p>
-      ) : (
-        <div className="event-grid">
-          {events.map((event) =>
-            editingEventId === event._id ? (
-              <div key={event._id} className="event-card-wrapper">
-                <h3>Edit Event</h3>
-                <input
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  placeholder="Title"
-                />
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  placeholder="Description"
-                />
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleInputChange}
-                  placeholder="Location"
-                />
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  placeholder="Price"
-                />
-                <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
+  <div className="my-events-container">
+    <h2>My Events</h2>
+    {message && <p>{message}</p>}
+    {events.length === 0 ? (
+      <p>No events found.</p>
+    ) : (
+      <div className="event-grid">
+        {events.map((event) =>
+          editingEventId === event._id ? (
+            // --- EDIT MODE ---
+            <div key={event._id} className="event-card-wrapper">
+              <h3>Edit Event</h3>
+              {/* ... your form inputs ... */}
+              <div className="event-card-actions">
+                <button
+                  onClick={() => handleUpdateSubmit(event._id)}
+                  className="btn-primary"
                 >
-                  <option value="">Select a category</option>
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  name="newCategory"
-                  value={formData.newCategory}
-                  onChange={handleInputChange}
-                  placeholder="Or type a new category"
-                />
-
-                <div className="event-card-actions">
-                  <button onClick={() => handleUpdateSubmit(event._id)} className="btn-primary">
-                    Save
-                  </button>
-                  <button onClick={() => setEditingEventId(null)} className="btn-danger">
-                    Cancel
-                  </button>
-                </div>
+                  Save
+                </button>
+                <button
+                  onClick={() => setEditingEventId(null)}
+                  className="btn-danger"
+                >
+                  Cancel
+                </button>
               </div>
-            ) : (
-              <div key={event._id} className="event-card-wrapper">
-                <EventCard event={event} showDetailsButton={true} />
+            </div>
+          ) : (
+            // --- VIEW MODE ---
+            <div key={event._id} className="event-card-wrapper">
+              <EventCard event={event} showDetailsButton={true} />
+
+              {/* if event status = "cancelled" or "rejected" read-only */}
+              {event.status === "cancelled" || event.status === "rejected" ? (
+                <p className="cancelled-label">
+                  This event has been cancelled or rejected.
+                </p>
+              ) : (
                 <div className="event-card-actions">
-                  <button onClick={() => startEditing(event)} className="btn-primary">
+                  <button
+                    onClick={() => startEditing(event)}
+                    className="btn-primary"
+                  >
                     Update
                   </button>
-                  <button onClick={() => handleCancel(event._id)} className="btn-danger">
+                  <button
+                    onClick={() => handleCancel(event._id)}
+                    className="btn-danger"
+                  >
                     Cancel
                   </button>
                 </div>
-              </div>
-            )
-          )}
-        </div>
-      )}
-    </div>
-  );
+              )}
+            </div>
+          )
+        )}
+      </div>
+    )}
+  </div>
+)
 }
