@@ -64,11 +64,17 @@ return (
           onUpdate={handleUpdate}
         />
       ) : (
-        <div key={event._id} className="event-card">
-          <h4>{event.title}</h4>
+        <div key={event._id} 
+        // className="event-card"
+        className="comment-thread"
+        >
+          {/* <h4>{event.title}</h4> */}
 
-          {/* 👇 Threaded chat between admin & organiser */}
+          {/* Threaded chat between admin & organiser */}
+          {/* <div className="comment-thread"> */}
+            {/* <div className="organiser-dashboard"> */}
           <CommentThread comments={event.adminComments} />
+          {/* </div> */}
 
           <button onClick={() => startEditing(event)}>Edit & Submit</button>
         </div>
@@ -76,22 +82,4 @@ return (
     )}
   </div>
 );
-
-//   return (
-//     <div>
-//       <h3>Updates Required</h3>
-//       {events.length === 0 && <p>No updates required.</p>}
-//       {events.map((event) =>
-//         editingEventId === event._id ? (
-//           <UpdateEventForm key={event._id} event={event} onUpdate={handleUpdate} />
-//         ) : (
-//           <div key={event._id} className="event-card">
-//             <h4>{event.title}</h4>
-//             <p><strong>Comment:</strong> {event.adminComment}</p>
-//             <button onClick={() => startEditing(event)}>Edit & Submit</button>
-//           </div>
-//         )
-//       )}
-//     </div>
-//   );
 };

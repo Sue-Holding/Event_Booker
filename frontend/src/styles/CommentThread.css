@@ -1,4 +1,86 @@
+/* CommentThread.css */
+
+/* Base container for all comment threads */
 .comment-thread {
+  background: rgba(20, 20, 30, 0.85); /* darker, semi-transparent for light backgrounds */
+  color: #fff; /* ensure text is readable */
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+  padding: 1rem;
+  margin-top: 1rem;
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.3s ease;
+}
+
+/* Heading inside the thread */
+.comment-thread h5 {
+  font-size: 1.1rem;
+  color: #ff8fd8;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+
+/* Each comment */
+.comment {
+  margin-bottom: 0.8rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  word-wrap: break-word;
+}
+
+/* Admin comment */
+.comment.admin {
+  background: rgba(102, 0, 255, 0.3);
+  border-left: 3px solid #a855f7;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(102, 0, 255, 0.3);
+}
+
+/* Organiser comment */
+.comment.organiser {
+  background: rgba(255, 0, 204, 0.3);
+  border-left: 3px solid #ff66cc;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255, 0, 204, 0.2);
+}
+
+/* Hover effect */
+.comment:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.25);
+}
+
+/* Optional timestamp or extra info */
+.comment small {
+  display: block;
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-top: 0.3rem;
+}
+
+/* Add separation between consecutive comments */
+.comment + .comment {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.8rem;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* .comment-thread {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
@@ -54,9 +136,14 @@
   padding-top: 0.8rem;
 }
 
+.organiser-dashboard .comment-thread {
+  background: rgba(0, 0, 0, 0.15);
+  color: #fff;
+}
+
 
 /* Match your fade-in effect from event-card */
-@keyframes fadeInUp {
+/* @keyframes fadeInUp {
   0% {
     opacity: 0;
     transform: translateY(10px) scale(0.98);
@@ -65,4 +152,4 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-}
+} */ 

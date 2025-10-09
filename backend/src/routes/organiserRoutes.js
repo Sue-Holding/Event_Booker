@@ -4,6 +4,7 @@ import User from "../models/User.js";
 import multer from "multer";
 import { protect, authorize } from "../middleware/authMiddleware.js";
 import { sendEmail } from "../utils/mailer.js";
+import path from "path";
 
 const router = express.Router();
 
@@ -11,9 +12,12 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, "uploads/"),
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, uniqueSuffix + "-" + file.originalname);
+        const ext = path.extname(file.originalname);
+        cb(null, `${uniqueSuffix}${ext}`);
     },
 });
+
+
 
 const upload = multer({ storage });
 
@@ -96,17 +100,18 @@ router.put(
           .json({ message: "Not authorized to update this event" });
       }
 
+      // replace image
+      if (req.file) {
+        event.imageUrl = `/uploads/${req.file.filename}`;
+      }
+
       // push organiser reply if provided
       if (organiserComment) {
         event.adminComments.push({
           userRole: "organiser",
           text: organiserComment,
+          createdAt: new Date(),
         });
-      }
-
-      // replacce image
-      if (req.file) {
-        event.imageUrl = `/uploads/${req.file.filename}`;
       }
 
       // update fields

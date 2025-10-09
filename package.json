@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "framer-motion": "^12.23.22",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "react-dropzone": "^14.3.8"
   }
 }
