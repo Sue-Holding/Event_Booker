@@ -76,6 +76,7 @@ router.get(
 // amend existing event PUT http://localhost:5050/organiser/events/:eventId
 router.put(
   "/events/:eventId",
+  upload.single("image"),
   protect,
   authorize("organiser", "admin"),
   async (req, res) => {
@@ -101,6 +102,11 @@ router.put(
           userRole: "organiser",
           text: organiserComment,
         });
+      }
+
+      // replacce image
+      if (req.file) {
+        event.imageUrl = `/uploads/${req.file.filename}`;
       }
 
       // update fields
