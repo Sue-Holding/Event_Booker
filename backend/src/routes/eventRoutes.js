@@ -4,14 +4,32 @@ import Event from "../models/Event.js";
 const router = express.Router();
 
 // Get all events
+// router.get("/", async (req, res) => {
+//   try {
+//     const events = await Event.find();
+//     res.json(events);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+// Get all events (with optional query filtering)
 router.get("/", async (req, res) => {
   try {
-    const events = await Event.find();
+    const { status, category } = req.query;
+
+    // Build a filter object dynamically
+    const filter = {};
+    if (status) filter.status = status;
+    if (category) filter.category = category;
+
+    const events = await Event.find(filter);
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // GET all categories
 router.get("/categories", async (req, res) => {

@@ -52,6 +52,9 @@ export default function EventCard({ event }) {
       <p>
         <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
       </p>
+      {/* <p>
+        <strong>Event status:</strong> {event.status}
+      </p> */}
 
       <MotionLink
         to={eventLink}
