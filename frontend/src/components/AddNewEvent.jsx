@@ -1,15 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
-import "../styles/addEvent.css"; // 👈 new stylesheet
+import "../styles/addEvent.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function AddNewEvent() {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    date: "",
+    time: "",
+    location: "",
+    category: "",
+    price: "",
+  });
+  const [categories, setCategories] = useState([]);
+  const [message, setMessage] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  const fileInputRef = useRef();
+
+  // check user role
   useEffect(() => {
   const token = localStorage.getItem("token");
     if (!token) {
@@ -29,19 +46,7 @@ export default function AddNewEvent() {
     }
   }, [navigate]);
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    time: "",
-    location: "",
-    category: "",
-    price: "",
-  });
-  const [categories, setCategories] = useState([]);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
+  // fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -59,6 +64,39 @@ export default function AddNewEvent() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // file input handler
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+  // drag and drop for file upload
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const files = e.dataTransfer?.files;
+    if (!files || files.length ===0) return;
+
+    const file = files[0];
+
+    // check file type
+    const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp"];
+    if (!validTypes.includes(file.type)) {
+      alert("Unsupported file type! Please upload PNG, JPEG, JPG, GID or WEBP.");
+      return;
+    }
+
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    
+  };
+
+  const handleDragOver = (e) => e.preventDefault();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -66,24 +104,30 @@ export default function AddNewEvent() {
 
     try {
       const token = localStorage.getItem("token");
-      let dateTime = formData.date;
-      if (formData.time) {
-        dateTime = new Date(`${formData.date}T${formData.time}`);
-      }
 
-      const payload = {
-        ...formData,
-        date: dateTime,
-        price: Number(formData.price),
-      };
+      let dateTime = formData.date;
+      if (formData.time) dateTime = new Date(`${formData.date}T${formData.time}`);
+
+      // user FormData for image upload
+      const dataToSend = new FormData();
+      Object.entries({ ...formData, 
+                      date: dateTime, 
+                      price: Number(formData.price) }).forEach(
+        ([key, value]) => {
+        if (value !== "") dataToSend.append(key,value);
+        }
+      );
+
+      if (selectedFile) dataToSend.append("image", selectedFile);
 
       const res = await fetch(`${API_URL}/organiser/events`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(payload),
+        body: dataToSend,
+        // body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -99,6 +143,9 @@ export default function AddNewEvent() {
         category: "",
         price: "",
       });
+      setSelectedFile(null);
+      setPreviewUrl(null);
+      fileInputRef.current.value = null;
     } catch (err) {
       setMessage(`❌ ${err.message}`);
     } finally {
@@ -173,6 +220,29 @@ export default function AddNewEvent() {
             </datalist>
           </div>
         </div>
+
+        {/* upload file & drag and drop*/}
+          <div 
+            className="form-group file-dropzone"
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            >
+            <label>Event Image</label>
+            <input 
+              type="file" 
+              accept="image/png, image/jpeg, image/jpg, image/gif, image/webp" 
+              onChange={handleFileChange} 
+              ref={fileInputRef}
+              />
+              {previewUrl && (
+                <div className="image-preview">
+                  <img src={previewUrl} alt="Preview" />
+                </div>
+              )}
+              <p className="dropzone-text">
+                Drag & drop an image here, or click to select a file.
+              </p>
+          </div>
 
         <motion.button
           type="submit"

@@ -1,14 +1,26 @@
 import express from "express";
 import Event from "../models/Event.js";
 import User from "../models/User.js";
+import multer from "multer";
 import { protect, authorize } from "../middleware/authMiddleware.js";
 import { sendEmail } from "../utils/mailer.js";
 
 const router = express.Router();
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, "uploads/"),
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+        cb(null, uniqueSuffix + "-" + file.originalname);
+    },
+});
+
+const upload = multer({ storage });
+
 // post new event - organiser only - POST http://localhost:5050/organiser/events
 router.post(
     "/events", 
+    upload.single("image"),
     protect, 
     authorize("organiser", "admin"),
     async (req, res) => {
@@ -29,6 +41,7 @@ router.post(
         location,
         category,
         organizer: req.user.id,
+        imageUrl: req.file ? `/uploads/${req.file.filename}` : undefined,
     });
 
     const savedEvent = await newEvent.save();
