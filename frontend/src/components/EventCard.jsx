@@ -4,7 +4,7 @@ import "../styles/eventcard.css";
 
 const MotionLink = motion(Link);
 
-export default function EventCard({ event }) {
+export default function EventCard({ event, bookingRef }) {
   // Try to get role from localStorage user first
   let role = null;
   const storedUser = localStorage.getItem("user");
@@ -55,6 +55,13 @@ export default function EventCard({ event }) {
       <p>
         <strong>Event status:</strong> {event.status}
       </p>
+
+      {/* only show booking ref if is exists */}
+      {bookingRef && (
+        <p>
+          <strong>Booking Ref:</strong> {bookingRef}
+        </p>
+      )}
 
       <MotionLink
         to={eventLink}
