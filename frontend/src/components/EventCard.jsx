@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import "../styles/eventcard.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
 const MotionLink = motion(Link);
 
 export default function EventCard({ event, bookingRef }) {
@@ -41,6 +42,12 @@ export default function EventCard({ event, bookingRef }) {
       transition={{ duration: 0.4 }}
       className="event-card"
     >
+
+      {event.imageUrl && (
+        <div className="event.card.image">
+          <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
+        </div>
+      )}
       <h3>{event.title}</h3>
       <p>{event.category}</p>
       <p>

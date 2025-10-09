@@ -28,6 +28,7 @@ app.use("/admin", adminRoutes);
 app.use("/event", eventRoutes);
 app.use("/users", userRoutes);
 app.use("/organiser", organiserRoutes);
+app.use("/uploads", express.static("uploads"));
 
 
 export default app;

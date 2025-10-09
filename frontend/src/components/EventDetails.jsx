@@ -102,6 +102,25 @@ export default function EventDetails() {
         transition={{ delay: 0.3 }}
         className="event-card"
       >
+
+        {/* event image */}
+        {event.imageUrl && (
+          <motion.img
+            src={`${API_URL}${event.imageUrl}`}
+            alt={event.title}
+            style={{
+              width: "100%",
+              maxHeight: "400px",
+              objectFit: "cover",
+              borderRadius: "16px",
+              marginBottom: "1rem",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity:1 }}
+            transition={{ duration: 0.6 }}
+            />
+        )}
+
         <h2>{event.title}</h2>
         <p><strong>Category:</strong> {event.category}</p>
         <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
