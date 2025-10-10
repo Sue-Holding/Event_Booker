@@ -38,8 +38,25 @@ export default function LandingPage() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
+
       if (!res.ok) throw new Error(data.message || "Something went wrong");
       setMessage(isLogin ? `Welcome back, ${data.name || "User"}!` : "🎉 Registration successful!");
+      
+      // Handle messages for pending organiser approval
+      if (!isLogin && form.role === "organiser") {
+        setMessage(
+          "Your organiser registration is pending admin approval. You will log in as attendee until approved."
+        );
+        return;
+      }
+
+      if (!isLogin) {
+        setMessage("🎉 Registration successful!");
+      } else {
+        setMessage(`Welcome back, ${data.name || "User"}!`);
+      }
+
+      // loging redirect
       if (data.token) {
         localStorage.setItem("token", data.token);
         if (data.role === "admin") window.location.href = "/admin-dashboard";

@@ -13,6 +13,7 @@ import FloatingWords from "../components/FloatingWords";
 import PendingEvents from "../components/PendingEvents";
 import AdminPendingActions from "../components/AdminPendingActions";
 import "../styles/dashboard.css";
+import PendingAccounts from "../components/PendingAccounts";
 
 const categories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
 
@@ -58,6 +59,8 @@ export default function AdminDashboard() {
          <PendingEvents />
 
          <AdminPendingActions />
+
+         <PendingAccounts />
 
         <Outlet />
 

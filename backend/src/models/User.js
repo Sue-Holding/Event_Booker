@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema(
             enum:  ["attendee", "organiser", "admin"],
             default: "attendee",
         },
+        status: {
+            type: String,
+            enum: ["pending", "approved"],
+            default: "approved"
+        },
         favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
         bookedEvents: [
             {

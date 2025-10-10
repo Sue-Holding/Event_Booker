@@ -50,6 +50,29 @@ router.post(
   }
 });
 
+
+// approve organiser registration request
+router.patch(
+  "/approve-organiser/:id",
+  protect,
+  authorize("admin"),
+  async (req, res) => {
+    try {
+      console.log("PATCH /approve-organiser id:", req.params.id);
+
+      const user = await User.findById(req.params.id);
+      if (!user) return res.status(400).json({ message: "User not found" });
+
+        user.role = "organiser";
+        user.status = "approved";
+        await user.save();
+
+        res.status(200).json({ message: `${user.name} is now an Event Organiser!` });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
 // update user setting on all role - admin only - PUT http://localhost:5050/admin/users/:id
 router.put(
     "/users/:id", 
