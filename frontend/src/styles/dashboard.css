@@ -1,4 +1,4 @@
-/* 🌈 General Dashboard Layout */
+/* General Dashboard Layout */
 .dashboard-container {
   min-height: 100vh;
   display: flex;
@@ -57,7 +57,7 @@
 }
 
 /* 💙 Admin Theme */
-.admin-theme {
+/* .admin-theme {
   background: linear-gradient(135deg, #1e3a8a, #3b82f6);
   color: white;
 }
@@ -66,10 +66,10 @@
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
-}
+} */
 
 /* 💜 Organiser Theme */
-.organiser-theme {
+/* .organiser-theme {
   background: linear-gradient(135deg, #7e22ce, #db2777);
   color: white;
 }
@@ -77,17 +77,17 @@
 .organiser-theme .dashboard-card {
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
-}
+} */
 
 /* 🧡 User Theme */
-.user-theme {
+/* .user-theme {
   background: linear-gradient(135deg, #0f766e, #f97316);
   color: white;
 }
 
 .user-theme .dashboard-card {
   background: rgba(255, 255, 255, 0.2);
-}
+} */
 
 /* 🧭 Role Header Bar */
 .role-banner {

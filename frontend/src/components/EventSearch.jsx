@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion , AnimatePresence } from "framer-motion";
 import EventCard from "./EventCard";
+import "../styles/eventsearch.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -48,7 +49,14 @@ export default function EventSearch({ category: selectedCategory }) {
         ? event.category.toLowerCase() === category.toLowerCase()
         : true;
       const dateFilter = date
-        ? new Date(event.date).toISOString().split("T")[0] === date
+        ? (() => {
+          const eventDate = new Date(event.date);
+          const day = String(eventDate.getDate()).padStart(2, "0");
+          const month = String(eventDate.getMonth() + 1).padStart(2, "0");
+          const year = eventDate.getFullYear();
+          return `${day}-${month}-${year}` === date.split("-").reverse().join("-");
+        })()
+        // ? new Date(event.date).toISOString().split("T")[0] === date
         : true;
 
       return (
@@ -82,14 +90,7 @@ export default function EventSearch({ category: selectedCategory }) {
       transition={{ duration: 0.6 }}
       style={{ padding: "2rem" }}
     >
-      {/* <motion.h2
-        initial={{ y: -10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        {selectedCategory ? `${selectedCategory} Events` : "Upcoming Events"}
-      </motion.h2> */}
-
+      
       <motion.input
         type="text"
         placeholder="Search by title, location, category, or date..."
