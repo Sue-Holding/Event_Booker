@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import EventCard from "./EventCard";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -95,44 +96,15 @@ export default function EventDetails() {
         ← Back to Search
       </motion.button>
 
-      {/* Event Info */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="event-card"
-      >
-
-        {/* event image */}
-        {event.imageUrl && (
-          <motion.img
-            src={`${API_URL}${event.imageUrl}`}
-            alt={event.title}
-            style={{
-              width: "100%",
-              maxHeight: "400px",
-              objectFit: "cover",
-              borderRadius: "16px",
-              marginBottom: "1rem",
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity:1 }}
-            transition={{ duration: 0.6 }}
-            />
-        )}
-
-        <h2>{event.title}</h2>
-        <p><strong>Category:</strong> {event.category}</p>
-        <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-        <p><strong>Time:</strong> {event.time || "TBA"}</p>
-        <p><strong>Location:</strong> {event.location}</p>
-        <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} kr`}</p>
-        <p><strong>Description:</strong> {event.description}</p>
-      </motion.div>
-
-      {/* Action buttons */}
-      <div style={{ marginTop: "1.5rem", display: "flex", gap: "1rem" }}>
-        <motion.button
+      {/* Event Info and buttons*/}
+      <EventCard event={event}>
+        <div style={{ 
+          display: "flex", 
+          gap: "1rem", 
+          marginTop: "1rem", 
+          justifyContent: "center" 
+        }}>
+      <motion.button
           onClick={toggleFavourite}
           disabled={loading}
           whileHover={{ scale: 1.05 }}
@@ -150,7 +122,8 @@ export default function EventDetails() {
         >
           🎟️ Book Event
         </motion.button>
-      </div>
+        </div>
+      </EventCard>
     </motion.div>
   );
 }
