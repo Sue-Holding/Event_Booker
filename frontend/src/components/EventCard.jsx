@@ -5,7 +5,7 @@ import "../styles/eventcard.css";
 const API_URL = process.env.REACT_APP_API_URL;
 const MotionLink = motion(Link);
 
-export default function EventCard({ event, bookingRef }) {
+export default function EventCard({ event, bookingRef, onCancel, children }) {
   // Try to get role from localStorage user first
   let role = null;
   const storedUser = localStorage.getItem("user");
@@ -78,6 +78,27 @@ export default function EventCard({ event, bookingRef }) {
       >
         View Event
       </MotionLink>
+      
+      {onCancel && (
+        <motion.button 
+          className="remove-btn inside-card"
+          onClick={onCancel}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {bookingRef ? "❌ Cancel Booking" : "✖ Remove from Favourites"}
+        </motion.button>
+      )}
+
+      <motion.div 
+        className="card-footer"
+        initial={{ opacity: 0, height: 0}}
+        animate={{ opacity: 1, height: "auto" }}
+        transition={{ duration: 0.3 }}
+        >
+        {children}
+      </motion.div>
+      
     </motion.div>
   );
 }

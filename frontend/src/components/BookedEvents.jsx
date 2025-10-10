@@ -81,16 +81,21 @@ export default function BookedEvents() {
               key={b._id}
               whileHover={{ scale: 1.03, y: -5 }}
               transition={{ duration: 0.3 }}
-              style={{ position: "relative" }}
+              // style={{ position: "relative" }}
+              className="event-wrapper"
             >
-              <EventCard event={b.event} bookingRef={b.bookingRef} />
 
-              <button
-                onClick={() => cancelBooking(b._id)}
-                className="remove-btn"
+              <EventCard
+                event={b.event}
+                bookingRef={b.bookingRef}
               >
-                ❌ Cancel Booking
-              </button>
+                <button
+                  onClick={() => cancelBooking(b._id)}
+                  className="remove-btn inside-card"
+                >
+                  ❌ Cancel Booking
+                </button>
+              </EventCard>
             </motion.div>
           ))}
         </div>

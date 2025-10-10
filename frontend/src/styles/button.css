@@ -20,7 +20,27 @@
   transform: scale(0.95);
 }
 
-.remove-btn {
+/* .remove-btn {
+  position: static;
+  background: rgba(255, 105, 180, 0.15);
+  border: 1px solid rgba(255, 105, 180, 0.6);
+  color: #ff8fd8;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.8rem;
+  align-self: center;
+}
+
+.remove-btn:hover {
+  background: rgba(255, 105, 180, 0.4);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+  transform: translateY(-2px);
+} */
+
+/* .remove-btn {
   position: absolute;
   bottom: 30px;
   right: 30px;
@@ -38,4 +58,4 @@
 .remove-btn:hover {
   background: rgba(255, 50, 50, 1);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-}
+} */

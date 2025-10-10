@@ -82,14 +82,17 @@ export default function FavEvent() {
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
               style={{ position: "relative" }}
+              className="event-wrapper"
             >
-              <EventCard event={event} />
-              <button
-                onClick={() => removeFavorite(event._id)}
-                className="remove-btn"
-              >
-                ✖ Remove
-              </button>
+
+              <EventCard event={event}>
+                <button
+                  onClick={() => removeFavorite(event._id)}
+                  className="remove-btn inside-card"
+                >
+                  ✖ Remove from Favourites
+                </button>
+              </EventCard>
             </motion.div>
           ))}
         </div>
@@ -97,24 +100,3 @@ export default function FavEvent() {
     </motion.div>
   );
 }
-
-
-// <ul>
-        //   {favorites.map(event => (
-        //     <li key={event._id} style={{ marginBottom: "1rem" }}>
-        //       <h3>{event.title}</h3>
-        //       <p>{event.location}</p>
-        //       <p>{new Date(event.date).toLocaleDateString()}</p>
-        //       <p>{event.price} SEK</p>
-
-        //       {/* remove from favourites */}
-        //       <button onClick={() => removeFavorite(event._id)}>
-        //         Remove from favourites
-        //       </button>
-        //       <Link to={`/user-dashboard/events/${event._id}`} style={styles.button}>
-        //         View Details
-        //       </Link>
-
-        //     </li>
-        //   ))}
-        // </ul>
