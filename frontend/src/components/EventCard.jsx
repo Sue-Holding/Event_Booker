@@ -44,8 +44,12 @@ export default function EventCard({ event, bookingRef, onCancel, children }) {
     >
 
       {event.imageUrl && (
-        <div className="event.card.image">
+        <div className="event-card-image">
+          {event.imageUrl ? (
           <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
+        ) : (
+          <span className="no-image">No image</span>
+        )}
         </div>
       )}
       <h3>{event.title}</h3>

@@ -97,6 +97,7 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   margin-bottom: 1rem;
   border-radius: 0 0 1rem 1rem;
@@ -111,6 +112,7 @@
 }
 
 .glass-card {
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   background: rgba(255, 255, 255, 0.08);
   border-radius: 16px;

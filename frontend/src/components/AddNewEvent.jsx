@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
+import { resizeImage } from "../utils/resizeImage";
 import "../styles/addEvent.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -64,17 +65,37 @@ export default function AddNewEvent() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // file input handler
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-    setSelectedFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
+  // file input handler with resize image
+  const handleFileChange = async (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp"];
+    if (!validTypes.includes(file.type)) {
+      alert("Unsupported file type! Please upload PNG, JPEG, JPG, GIF, or WEBP.");
+      return;
     }
-  };
+
+    try {
+      const resized = await resizeImage(file, 800, 600, 0.8);
+      setSelectedFile(resized);
+      setPreviewUrl(URL.createObjectURL(resized));
+    } catch (err) {
+      console.error("Image resize failed:", err);
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  }
+};
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //   setSelectedFile(file);
+  //   setPreviewUrl(URL.createObjectURL(file));
+  //   }
+  // };
 
   // drag and drop for file upload
-  const handleDrop = (e) => {
+  const handleDrop = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -90,9 +111,15 @@ export default function AddNewEvent() {
       return;
     }
 
-    setSelectedFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-    
+    try {
+      const resized = await resizeImage(file, 800, 600, 0.8);
+      setSelectedFile(resized);
+      setPreviewUrl(URL.createObjectURL(resized));
+    } catch (err) {
+      console.error("Image resize failed:", err);
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
   };
 
   const handleDragOver = (e) => e.preventDefault();
