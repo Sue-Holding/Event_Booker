@@ -62,6 +62,9 @@ export default function EventCard({ event, bookingRef, onCancel, children }) {
       <p>
         <strong>Event status:</strong> {event.status}
       </p>
+      <p>
+        {/* <strong>Description:</strong> {event.description} */}
+      </p>
 
       {/* only show booking ref if is exists */}
       {bookingRef && (

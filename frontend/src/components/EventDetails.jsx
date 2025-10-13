@@ -98,6 +98,9 @@ export default function EventDetails() {
 
       {/* Event Info and buttons*/}
       <EventCard event={event}>
+        <p>
+        <strong>Description:</strong> {event.description}
+      </p>
         <div style={{ 
           display: "flex", 
           gap: "1rem", 

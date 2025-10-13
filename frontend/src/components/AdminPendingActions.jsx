@@ -1,3 +1,4 @@
+// new event post from organiser flow here
 import { useState } from "react";
 import '../styles/CommentThread.css';
 
