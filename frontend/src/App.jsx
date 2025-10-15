@@ -5,6 +5,7 @@ import UserDashboard from "./pages/UserDashboard";
 import OrganiserDashboard from "./pages/OrganiserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./components/Home";
 import EventSearch from "./components/EventSearch";
 import EventDetails from "./components/EventDetails";
 import FavEvents from "./components/FavEvents";
@@ -32,7 +33,8 @@ function App() {
             </ProtectedRoute> 
             } 
           >
-            <Route index element={<EventSearch />} />
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
             <Route path="search-events" element={<EventSearch />} />
             <Route path="events/:id" element={<EventDetails />} />
             <Route path="favourites" element={<FavEvents />} />
@@ -48,8 +50,8 @@ function App() {
             </ProtectedRoute> 
             } 
           >
-            {/* <Route index element={<MyEvents />} /> */}
-            <Route path="organiser-dashboard" element={<OrganiserDashboard />} />
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
             <Route path="search-events" element={<EventSearch />} />
             <Route path="events/:id" element={<EventDetails />} />
             <Route path="favourites" element={<FavEvents />} />
@@ -67,8 +69,8 @@ function App() {
             </ProtectedRoute> 
             } 
           >
-            {/* <Route index element={<EventStats />} /> */}
-            <Route path="admin-dashboard" element={<AdminDashboard />} />
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
             <Route path="search-events" element={<EventSearch />} />
             <Route path="events/:id" element={<EventDetails />} />
             <Route path="favourites" element={<FavEvents />} />

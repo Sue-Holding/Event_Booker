@@ -27,13 +27,13 @@ export default function Header() {
 
   const roleLinks = {
     attendee: [
-      { name: "Home", path: "dashboard" },
+      { name: "Home", path: "home" },
       { name: "Search Events", path: "search-events" },
       { name: "My Favourites", path: "favourites" },
       { name: "My Booked Events", path: "booked-events" },
     ],
     organiser: [
-      { name: "Home", path: "dashboard" },
+      { name: "Home", path: "home" },
       { name: "Search Events", path: "search-events" },
       { name: "My Favourites", path: "favourites" },
       { name: "My Booked Events", path: "booked-events" },
@@ -41,7 +41,7 @@ export default function Header() {
       { name: "Add New Event", path: "events/new" },
     ],
     admin: [
-      { name: "Home", path: "dashboard" },
+      { name: "Home", path: "home" },
       { name: "Search Events", path: "search-events" },
       { name: "My Favourites", path: "favourites" },
       { name: "My Booked Events", path: "booked-events" },

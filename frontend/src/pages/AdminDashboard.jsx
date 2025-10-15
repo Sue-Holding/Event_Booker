@@ -10,10 +10,11 @@ import Footer from "../components/Footer";
 // import EventStats from "../components/EventStats";
 // import UserSettings from "../components/UserSettings";
 import FloatingWords from "../components/FloatingWords";
-import PendingEvents from "../components/PendingEvents";
-import AdminPendingActions from "../components/AdminPendingActions";
+// import PendingEvents from "../components/PendingEvents";
+// import AdminPendingActions from "../components/AdminPendingActions";
+// import PendingAccounts from "../components/PendingAccounts";
 import "../styles/dashboard.css";
-import PendingAccounts from "../components/PendingAccounts";
+
 
 const categories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
 
@@ -32,9 +33,9 @@ export default function AdminDashboard() {
       localStorage.removeItem("token");
     }
   
-    const handleClear = () => setSelectedCategory("");
-      window.addEventListener("clearFilters", handleClear);
-      return () => window.removeEventListener("clearFilters", handleClear);
+    // const handleClear = () => setSelectedCategory("");
+    //   window.addEventListener("clearFilters", handleClear);
+    //   return () => window.removeEventListener("clearFilters", handleClear);
     }, []);
 
   return (
@@ -54,13 +55,13 @@ export default function AdminDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h2>Admin Control Center</h2>
+        {/* <h2>Admin Control Center</h2> */}
 
-         <PendingEvents />
+         {/* <PendingEvents />
 
          <AdminPendingActions />
 
-         <PendingAccounts />
+         <PendingAccounts /> */}
 
         <Outlet />
 

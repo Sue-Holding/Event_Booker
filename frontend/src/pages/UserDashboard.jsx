@@ -50,11 +50,11 @@ export default function UserDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h2>
+        {/* <h2>
           {selectedCategory
             ? `${selectedCategory} Events`
             : "Discover Events"}
-        </h2>
+        </h2> */}
 
          <Outlet />
       

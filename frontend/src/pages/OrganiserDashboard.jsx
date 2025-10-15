@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 // import AddNewEvent from "../components/AddNewEvent";
 // import MyEvents from "../components/MyEvents";
 import FloatingWords from "../components/FloatingWords";
-import UpdatesRequired from "../components/UpdatesRequired";
+// import UpdatesRequired from "../components/UpdatesRequired";
 import "../styles/dashboard.css";
 
 const categories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
@@ -54,7 +54,7 @@ return (
 
         {/* <EventSearch category={selectedCategory} /> */}
       
-      <UpdatesRequired />
+      {/* <UpdatesRequired /> */}
 
       <Outlet />
       
