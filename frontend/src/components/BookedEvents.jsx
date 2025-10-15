@@ -76,28 +76,34 @@ export default function BookedEvents() {
         <p>You haven’t booked any events yet.</p>
       ) : (
         <div className="event-grid">
-          {bookings.map((b) => (
-            <motion.div
-              key={b._id}
-              whileHover={{ scale: 1.03, y: -5 }}
-              transition={{ duration: 0.3 }}
-              // style={{ position: "relative" }}
-              className="event-wrapper"
-            >
+          {bookings.map((b) => {
+            // Check if event data exists
+            if (!b.event || !b.event._id) {
+              console.error("Invalid event data:", b);
+              return null; // Skip rendering this booking
+            }
 
-              <EventCard
-                event={b.event}
-                bookingRef={b.bookingRef}
+            return (
+              <motion.div
+                key={b._id}
+                whileHover={{ scale: 1.03, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="event-wrapper"
               >
-                <button
-                  onClick={() => cancelBooking(b._id)}
-                  className="remove-btn inside-card"
+                <EventCard
+                  event={b.event}
+                  bookingRef={b.bookingRef}
                 >
-                  ❌ Cancel Booking
-                </button>
-              </EventCard>
-            </motion.div>
-          ))}
+                  <button
+                    onClick={() => cancelBooking(b._id)}
+                    className="remove-btn inside-card"
+                  >
+                    ❌ Cancel Booking
+                  </button>
+                </EventCard>
+              </motion.div>
+            );
+          })}
         </div>
       )}
     </motion.div>

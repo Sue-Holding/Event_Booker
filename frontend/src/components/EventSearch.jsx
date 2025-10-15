@@ -183,6 +183,7 @@ export default function EventSearch({ category: selectedCategory }) {
               autoplay={{ delay: 3500, disableOnInteraction: false }}
               speed={1000}
               loop
+              // pauseOnHover: true
               effect="coverflow"
               coverflowEffect={{
                 rotate: 25,

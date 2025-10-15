@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import EventCard from "./EventCard";
+// import EventCard from "./EventCard";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export default function EventDetails() {
+export default function EventDetails(bookingRef) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
@@ -97,7 +97,41 @@ export default function EventDetails() {
       </motion.button>
 
       {/* Event Info and buttons*/}
-      <EventCard event={event}>
+      {/* <EventCard event={event}> */}
+      {event.imageUrl && (
+        <div className="event-card-image">
+          {event.imageUrl ? (
+          <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
+        ) : (
+          <span className="no-image">No image</span>
+        )}
+        </div>
+      )}
+      <h3>{event.title}</h3>
+      <p>{event.category}</p>
+      <p>
+        <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+      </p>
+      <p>
+        <strong>Time:</strong> {event.time}
+      </p>
+      <p>
+        <strong>Location:</strong> {event.location}
+      </p>
+      <p>
+        <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
+      </p>
+      <p>
+        <strong>Event status:</strong> {event.status}
+      </p>
+  
+
+      {/* only show booking ref if is exists */}
+        {/* {bookingRef && (
+        <p>
+          <strong>Booking Ref:</strong> {bookingRef}
+        </p>
+      )} */}
         <p>
         <strong>Description:</strong> {event.description}
       </p>
@@ -126,7 +160,7 @@ export default function EventDetails() {
           🎟️ Book Event
         </motion.button>
         </div>
-      </EventCard>
+      {/* </EventCard> */}
     </motion.div>
   );
 }
