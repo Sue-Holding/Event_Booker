@@ -124,7 +124,7 @@ export default function UserSettings() {
 
   return (
     <div style={{ padding: "2rem" }}>
-      <h2>User Settings</h2>
+      <h2 className="title">User Settings</h2>
 
       {/* New User Form */}
       <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>

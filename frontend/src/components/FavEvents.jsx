@@ -70,7 +70,7 @@ export default function FavEvent() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h2>⭐ My Favourite Events</h2>
+      <h2 className="title">My Favourite Events</h2>
 
       {favorites.length === 0 ? (
         <p>No favourite events yet.</p>

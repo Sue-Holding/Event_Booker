@@ -70,7 +70,7 @@ export default function BookedEvents() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h2>🎟️ My Booked Events</h2>
+      <h2 className="title">My Booked Events</h2>
 
       {bookings.length === 0 ? (
         <p>You haven’t booked any events yet.</p>

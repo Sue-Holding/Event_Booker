@@ -78,7 +78,7 @@ export default function PendingAccounts() {
 
     return (
         <div>
-      <h2>Pending Organiser Requests</h2>
+      <h2 className="title">Pending Organiser Requests</h2>
       {users.length === 0 && <p>No pending requests.</p>}
       <ul>
         {users.map((user) => (

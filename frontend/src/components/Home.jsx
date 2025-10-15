@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UpcomingEvents from "./UpcomingEvents"; //attendee
+import NewlyAdded from "./NewlyAdded"; //attendee
 import UpdatesRequired from "../components/UpdatesRequired"; //organiser
 import PendingEvents from "../components/PendingEvents"; //admin
 import AdminPendingActions from "../components/AdminPendingActions"; //admin
@@ -32,6 +34,8 @@ export default function Home() {
 return (
     <div className="home-page">
 
+        {user.role === "attendee" && <UpcomingEvents />}
+        {user.role === "attendee" && <NewlyAdded />}
 
         {user.role === "organiser" && <UpdatesRequired />}
 

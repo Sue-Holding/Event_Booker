@@ -98,7 +98,7 @@ export default function EventSearch({ category: selectedCategory }) {
       transition={{ duration: 0.6 }}
       style={{ padding: "2rem" }}
     >
-      <h2>Search Events</h2>
+      <h2 className="title">Search Events</h2>
       <div className="search-bar-container">
         <motion.input
           type="text"

@@ -143,7 +143,7 @@ export default function EventStats() {
 
       {/* event list */}
       <section>
-        <h3>📅 Events ({filteredEvents.length})</h3>
+        <h2 className="title">Events ({filteredEvents.length})</h2>
         {filteredEvents.length === 0 ? (
           <p>No events found.</p>
         ) : (

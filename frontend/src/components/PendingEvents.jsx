@@ -70,13 +70,16 @@ export default function PendingEvents() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Pending Events - Action required</h2>
-
+    <div 
+    style={{
+      paddingBottom: "2rem" 
+    }}
+    >
+      <h2 className="title">Pending Events - Action required</h2>
 
       {/* event list */}
       <section>
-        <h3>📅 Events ({filteredEvents.length})</h3>
+        <h3>Events ({filteredEvents.length})</h3>
         {filteredEvents.length === 0 ? (
           <p>No events found.</p>
         ) : (

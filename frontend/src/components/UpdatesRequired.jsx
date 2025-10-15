@@ -54,7 +54,7 @@ export default function UpdatesRequired() {
 
 return (
   <div>
-    <h3>Updates Required</h3>
+    <h2 className="title">Updates Required</h2>
     {events.length === 0 && <p>No updates required.</p>}
     {events.map((event) =>
       editingEventId === event._id ? (

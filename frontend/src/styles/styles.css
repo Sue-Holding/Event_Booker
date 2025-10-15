@@ -167,6 +167,10 @@ header h2:hover {
   align-items: start;
 }
 
+.title {
+  color:#ff69b4
+}
+
 /* redundant styles now  */
 /* button {
   border: none;

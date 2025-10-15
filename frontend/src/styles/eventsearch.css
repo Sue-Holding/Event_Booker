@@ -1,9 +1,9 @@
 /* Search and Filters */
 .event-search h2 {
   margin-bottom: 1rem;
-  color: #222;
+  /* color: #222;
   text-align: center;
-  font-size: 2rem;
+  font-size: 2rem; */
 }
 
 .search-input {
