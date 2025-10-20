@@ -23,6 +23,7 @@ Thanks for dropping by! 🙌
 ## Endpoints  
 
 <a href="./assets/endpoints.png" target="_blank">View Endpoints</a>
+
 |                                 |        |                                                  |       |
 |---------------------------------|--------|--------------------------------------------------|-------|
 | Action                          | Method | URL                                              | Notes |
@@ -60,7 +61,9 @@ Thanks for dropping by! 🙌
 | Approve / reject event (admin)  |	POST   | http://localhost:5050/admin/events/:id/approve   | action in body: "approve", "needs-update", "reject" (optionally add comment). |
 
 
+# Flow Chart
 
+<a href="./assets/Event-Booker.png" target=" blank">Flow Chart for full functions</a>
 
 # Persona and UX Research
 
