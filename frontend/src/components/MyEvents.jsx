@@ -256,12 +256,15 @@ const handleUpdateSubmit = async (eventId) => {
             ) : (
               // --- VIEW MODE ---
               <div key={event._id} className="event-card-wrapper">
+                <div className="card-inner">
                 <EventCard event={event} showDetailsButton={true} />
+
                 {event.status === "cancelled" || event.status === "rejected" ? (
                   <p className="cancelled-label">
                     This event has been cancelled or rejected.
                   </p>
                 ) : (
+
                   <div className="event-card-actions">
                     <button
                       onClick={() => startEditing(event)}
@@ -277,6 +280,7 @@ const handleUpdateSubmit = async (eventId) => {
                     </button>
                   </div>
                 )}
+              </div>
               </div>
             )
           )}

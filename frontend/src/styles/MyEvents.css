@@ -132,6 +132,12 @@
   margin-top: 10px;
 }
 
+.card-inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* matches the content, not padding of wrapper */
+}
+
 /* buttons */
 .event-card-actions {
   display: flex;
@@ -230,11 +236,14 @@
 
   .btn-primary,
   .btn-danger {
-    flex: 1 1 45%;
+    /* flex: 1 1 45%; */
+    width: 100%;
     min-width: 140px;
+    font-size: 0.95rem;
   }
 
   .event-card-actions {
+    flex-direction: column;
     justify-content: center;
     gap: 0.8rem;
   }
@@ -244,8 +253,8 @@
 @media (max-width: 600px) {
   .my-events-container {
     width: 95%;
-    padding: 1rem;
-    margin: 1rem;
+    padding: 0.8rem;
+    margin: 1rem auto;
   }
 
   .event-grid {
@@ -265,8 +274,18 @@
 
   .btn-primary,
   .btn-danger {
+    flex: none;
     width: 100%;
+    min-width: auto;
     font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .event-card-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+    /* justify-content: center; */
   }
 
   .file-dropzone {
@@ -275,6 +294,7 @@
 
   .my-events-container h2 {
     font-size: 1.4rem;
+    margin-bottom: 1rem;
   }
 }
 
