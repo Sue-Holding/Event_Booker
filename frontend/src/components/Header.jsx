@@ -78,15 +78,19 @@ export default function Header() {
           },
         }}
       > */}
-        <h2 className="logo">Eventure</h2>
+        
 
         {/* Hamburger for mobile */}
+        <div className="header-left">
         <div
           className="hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
-          // style={{ display: "none" }}
         >
-          <span style={{ fontSize: "1.5rem" }}>☰</span>
+          <span style={{ fontSize: "1.5rem" }}>
+            ☰
+          </span>
+        </div>
+        <h2 className="logo">Eventure</h2>
         </div>
 
         <motion.nav

@@ -19,7 +19,7 @@ header {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
   background: rgba(30, 30, 45, 0.95);
   -webkit-backdrop-filter: blur();
   backdrop-filter: blur(10px);
@@ -29,6 +29,13 @@ header {
   top: 0;
   z-index: 1000;
   border-bottom: 2px solid #ff69b4;;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* space between hamburger and logo */
+  /* margin-left: 20px; */
 }
 
 /* header h2::after {
@@ -121,26 +128,49 @@ nav a:hover::after,
   color: #ff69b4;
 }
 
+/* tablet and mobile menu */
 @media (max-width: 768px) {
   nav ul {
-    flex-direction: column; /* stack links on small screens */
-    width: 100%;
+    display: none; /* hide links by default */
+    flex-direction: column;
+    width: calc(100% - 40px);
     gap: 0.8rem;
     margin-top: 0.5rem;
+    background: rgba(30,30,45,0.95);
+    padding: 1rem 20px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    border-top: 2px solid #ff69b4;
+    border-radius: 0 0 12px 12px;
+  }
+
+  nav ul.show {
+    display: flex;
   }
 
   nav a,
   .nav-link,
   .logout-link {
-    text-align: center;
+    text-align: left;
     width: 100%;
   }
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #ff69b4;
+    /* padding-left: 20px;  */
+  }
+
+  
 }
 
 /* hamburger menu for mobile */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   nav ul {
-    display: none; /* hide by default */
+    display: none; 
     flex-direction: column;
     width: 100%;
     gap: 0.5rem;
@@ -163,7 +193,7 @@ nav a:hover::after,
     font-size: 1.5rem;
     color: #ff69b4;
   }
-}
+} */
 
 
 /* Footer */
