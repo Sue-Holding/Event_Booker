@@ -8,8 +8,11 @@
   max-height: fit-content; */
   width: 300px;
   height: 460px;
-  overflow-y: visible;
-  overflow: hidden;
+  /* overflow-y: visible;
+  overflow: hidden; */
+  overflow: visible; /* ✅ allow expanded content to show */
+  height: auto; /* ✅ let card grow when footer/button appears */
+  min-height: 460px; /* ✅ ensures consistent base height */
   text-align: center;
   background: rgba(255, 255, 255, 0.08);
   border: 2px solid rgba(255, 105, 180, 0.15);
@@ -121,6 +124,7 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   padding: 1rem;
+  overflow: visible;
 }
 
 .event-wrapper {
@@ -129,6 +133,7 @@
   align-items: center;
   gap: 0.8rem;
   position: relative;
+  overflow: visible;
 }
 
 .card-footer {
@@ -168,7 +173,10 @@
   transform: translateY(-2px);
 }
 
-
+.event-card:hover {
+  transform: scale(1.02);
+  z-index: 2;
+}
 
 .event-wrapper .remove-btn {
   opacity: 0;
@@ -230,48 +238,3 @@
   padding: 0.4rem 0.8rem;
   font-size: 0.85rem;
 }
-
-
-/* .remove-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(255, 105, 180, 0.15);
-  border: 1px solid rgba(255, 105, 180, 0.6);
-  color: #ff8fd8;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.remove-btn:hover {
-  background: rgba(255, 105, 180, 0.5);
-  color: #fff;
-  box-shadow: 0 0 12px rgba(255, 105, 180, 0.7);
-  transform: scale(1.1);
-} */
-
-/* this is nice, remove button appears from beneath the card and hoovers */
-/* .remove-btn {
-  background: rgba(255, 105, 180, 0.15);
-  border: 1px solid rgba(255, 105, 180, 0.6);
-  color: #ff8fd8;
-  border-radius: 10px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: fit-content;
-}
-
-.remove-btn:hover {
-  background: rgba(255, 105, 180, 0.4);
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
-  transform: translateY(-2px);
-} */
