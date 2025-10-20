@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 export default function Header() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -65,7 +66,7 @@ export default function Header() {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="header"
     >
-      <motion.nav
+      {/* <motion.nav
         className="nav"
         initial="hidden"
         animate="visible"
@@ -76,14 +77,39 @@ export default function Header() {
             transition: { delayChildren: 0.3, staggerChildren: 0.15 },
           },
         }}
-      >
+      > */}
         <h2 className="logo">Eventure</h2>
 
-        <ul className="links">
+        {/* Hamburger for mobile */}
+        <div
+          className="hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+          // style={{ display: "none" }}
+        >
+          <span style={{ fontSize: "1.5rem" }}>☰</span>
+        </div>
+
+        <motion.nav
+          className="nav"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { delayChildren: 0.3, staggerChildren: 0.15 },
+            },
+          }}
+        >
+
+        <ul className={`links ${menuOpen ? "show" : ""}`}>
           {user &&
             roleLinks[user.role]?.map((link) => (
               <motion.li key={link.path} whileHover={{ scale: 1.1 }}>
-                <Link to={`/${roleToDashboard[user.role]}/${link.path}`}>
+                <Link 
+                  to={`/${roleToDashboard[user.role]}/${link.path}`}
+                  onClick={() => setMenuOpen(false)}
+                  >
                   {link.name}
                 </Link>
               </motion.li>
@@ -97,7 +123,11 @@ export default function Header() {
             </motion.li>
           ) : (
             <motion.li whileHover={{ scale: 1.1 }}>
-              <Link to="/" className="nav-link">Login/Register</Link>
+              <Link 
+                to="/" 
+                className="nav-link">
+                  Login/Register
+                </Link>
             </motion.li>
           )}
         </ul>

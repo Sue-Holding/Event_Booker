@@ -1,20 +1,27 @@
 .my-events-container {
-  max-width: 1200px;
+  width: 90%;
+  max-width: 1300px;
   margin: 2rem auto;
-  padding: 2.5rem;
+  padding: 2rem;
   border-radius: 18px;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   background: rgba(255, 255, 255, 0.06);
-  background-image: linear-gradient(135deg, rgba(255, 0, 255, 0.05), rgba(102, 0, 255, 0.05));
+  background-image: linear-gradient(
+    135deg, 
+    rgba(255, 0, 255, 0.05), 
+    rgba(102, 0, 255, 0.05)
+  );
   box-shadow: 0 0 25px rgba(255, 0, 255, 0.1);
   animation: fadeIn 0.8s ease;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .my-events-container h2 {
   text-align: center;
   margin-bottom: 2rem;
-  font-size: 1.9rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #ff8fd8;
   text-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
@@ -26,10 +33,13 @@
   font-weight: 500;
 }
 
+/* gird layout */
 .event-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 1.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ✨ Neon glass style for each event card */
@@ -37,16 +47,19 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 380px;
+  /* min-height: 380px; */
   background: rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
   padding: 1.2rem;
-  overflow-y: auto;
+  overflow: hidden;
+  /* overflow-y: auto; */
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   animation: fadeInUp 0.6s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .event-card-wrapper:hover {
@@ -58,9 +71,14 @@
   font-size: 1.3rem;
   color: #ff8fd8;
   margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.event-card-wrapper p,
+/* .event-card-wrapper p, */
+
+/* input and textarea */
 .event-card-wrapper input,
 .event-card-wrapper textarea,
 .event-card-wrapper select {
@@ -71,8 +89,14 @@
   border-radius: 10px;
   padding: 0.6rem;
   width: 100%;
-  margin-top: 0.3rem;
-  transition: all 0.3s ease;
+  margin-top: 0.4rem;
+  box-sizing: border-box;
+  resize: vertical;
+  /* transition: all 0.3s ease; */
+}
+
+.event-card-wrapper textarea {
+  min-height: 80px;
 }
 
 .event-card-wrapper input:focus,
@@ -84,9 +108,34 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* ✴️ Action Buttons */
+/* dropzone */
+.file-dropzone {
+  border: 2px dashed #888;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  margin-top: 0.8rem;
+  box-sizing: border-box;
+}
+
+.file-dropzone.drag-over {
+  border-color: #0055ff;
+  background-color: #f0f8ff;
+}
+
+.image-preview {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* buttons */
 .event-card-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 0.6rem;
   margin-top: 0.8rem;
@@ -94,9 +143,11 @@
 
 .btn-primary,
 .btn-danger {
+  flex: 1;
+  min-width: 120px;
   border: none;
   border-radius: 12px;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
@@ -122,6 +173,7 @@
   box-shadow: 0 0 10px rgba(255, 100, 100, 0.6);
 }
 
+/* status labels */
 .cancelled-label {
   color: #ff6f91;
   font-weight: 600;
@@ -133,26 +185,98 @@
   padding: 0.4rem 0.6rem;
 }
 
-.file-dropzone {
-  border: 2px dashed #888;
-  padding: 20px;
-  text-align: center;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: border-color 0.2s, background-color 0.2s;
+/* responsiveness */
+/* Tablets */
+@media (max-width: 1024px) {
+  .my-events-container {
+    width: 92%;
+    padding: 1.5rem;
+  }
+
+  .event-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .event-card-wrapper {
+    padding: 1rem;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    font-size: 0.95rem;
+  }
 }
 
-.file-dropzone.drag-over {
-  border-color: #0055ff;
-  background-color: #f0f8ff;
+/* Large Phones / Small Tablets */
+@media (max-width: 768px) {
+  .my-events-container {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .event-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .event-card-wrapper {
+    padding: 0.9rem;
+  }
+
+  .my-events-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    flex: 1 1 45%;
+    min-width: 140px;
+  }
+
+  .event-card-actions {
+    justify-content: center;
+    gap: 0.8rem;
+  }
 }
 
-.image-preview {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-top: 10px;
-}
+/* Mobile Phones */
+@media (max-width: 600px) {
+  .my-events-container {
+    width: 95%;
+    padding: 1rem;
+    margin: 1rem;
+  }
 
+  .event-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .event-card-wrapper {
+    padding: 0.8rem;
+  }
+
+  .event-card-wrapper input,
+  .event-card-wrapper textarea,
+  .event-card-wrapper select {
+    font-size: 0.9rem;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .file-dropzone {
+    font-size: 0.85rem;
+  }
+
+  .my-events-container h2 {
+    font-size: 1.4rem;
+  }
+}
 
 /* Animations */
 @keyframes fadeInUp {
