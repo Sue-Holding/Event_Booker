@@ -80,18 +80,6 @@
   max-width: 250px;
 }
 
-@media (min-width: 768px) {
-  .filters {
-    justify-content: space-between;
-  }
-
-  .search-input {
-    max-width: 600px;
-  }
-}
-
-
-
 /* carousel styling */
 .event-carousel-container {
   /* width: 100%;
@@ -160,3 +148,35 @@
   margin: 0 auto;
   padding: 1rem;
 }
+
+@media (min-width: 768px) {
+  .filters {
+    justify-content: space-between;
+  }
+
+  .search-input {
+    max-width: 600px;
+  }
+}
+
+/* Mobile / small screens */
+@media (max-width: 600px) {
+  .search-bar-container {
+    width: 95%;
+    gap: 0.75rem;
+  }
+
+  .filters {
+    flex-direction: column; /* stack filters vertically */
+    align-items: stretch;   /* make inputs full width */
+    gap: 0.5rem;
+  }
+
+  .search-input,
+  .filter-select,
+  .filter-date,
+  .view-toggle-btn {
+    max-width: 100%; /* full width */
+  }
+}
+

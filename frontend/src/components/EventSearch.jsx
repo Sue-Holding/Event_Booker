@@ -191,16 +191,17 @@ export default function EventSearch({ category: selectedCategory }) {
               coverflowEffect={{
                 rotate: 0,
                 stretch: 0,
-                depth: 100,
-                modifier: 1.2,
+                depth: window.innerWidth < 600 ? 0 : 100,
+                modifier: 1,
                 slideShadows: false,
               }}
               breakpoints={{
+                0: { slidesPerView: 1, spaceBetween: 15 },
                 480: { slidesPerView: 1, spaceBetween: 20 },
                 640: { slidesPerView: 1.2, spaceBetween: 25 },
-                768: { slidesPerView: 2, spaceBetween: 30 },
-                1024: { slidesPerView: 3, spaceBetween: 40 },
-                1440: { slidesPerView: 4, spaceBetween: 50},
+                768: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 30 },
+                1440: { slidesPerView: 4, spaceBetween: 40},
               }}
               className="event-carousel"
               onSwiper={(swiper) => {
@@ -214,31 +215,6 @@ export default function EventSearch({ category: selectedCategory }) {
                   container.removeEventListener("mouseleave", handleMouseLeave);
                 });
               }}
-              // onSwiper={(swiper) => {
-              //   const container = swiper.el;
-
-              //   // Safe hover pause handling
-              //   const handleMouseEnter = () => {
-              //     if (swiper.autoplay && swiper.autoplay.running) {
-              //       swiper.autoplay.stop();
-              //     }
-              //   };
-
-              //   const handleMouseLeave = () => {
-              //     if (swiper.autoplay && !swiper.autoplay.running) {
-              //       swiper.autoplay.start();
-              //     }
-              //   };
-
-              //   container.addEventListener("mouseenter", handleMouseEnter);
-              //   container.addEventListener("mouseleave", handleMouseLeave);
-
-              //   // Clean up listeners when Swiper is destroyed
-              //   swiper.on("destroy", () => {
-              //     container.removeEventListener("mouseenter", handleMouseEnter);
-              //     container.removeEventListener("mouseleave", handleMouseLeave);
-              //   });
-              // }}
             >
               {filteredEvents.map((event) => (
                 <SwiperSlide key={event._id}>
