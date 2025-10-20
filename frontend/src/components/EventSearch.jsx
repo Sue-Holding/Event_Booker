@@ -176,29 +176,69 @@ export default function EventSearch({ category: selectedCategory }) {
           >
             <Swiper
               modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
-              spaceBetween={40}
+              spaceBetween={30}
               slidesPerView={1}
               centeredSlides
               navigation
               pagination={{ clickable: true }}
-              autoplay={{ delay: 3500, disableOnInteraction: false }}
-              speed={1000}
+              autoplay={{ 
+                delay: 3500, 
+                disableOnInteraction: false, 
+              }}
+              speed={900}
               loop
-              // pauseOnHover: true
               effect="coverflow"
               coverflowEffect={{
-                rotate: 25,
-                stretch: 10,
-                depth: 150,
-                modifier: 2,
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 1.2,
                 slideShadows: false,
               }}
               breakpoints={{
-                640: { slidesPerView: 1 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
+                480: { slidesPerView: 1, spaceBetween: 20 },
+                640: { slidesPerView: 1.2, spaceBetween: 25 },
+                768: { slidesPerView: 2, spaceBetween: 30 },
+                1024: { slidesPerView: 3, spaceBetween: 40 },
+                1440: { slidesPerView: 4, spaceBetween: 50},
               }}
               className="event-carousel"
+              onSwiper={(swiper) => {
+                const container = swiper.el;
+                const handleMouseEnter = () => swiper.autoplay?.stop();
+                const handleMouseLeave = () => swiper.autoplay?.start();
+                container.addEventListener("mouseenter", handleMouseEnter);
+                container.addEventListener("mouseleave", handleMouseLeave);
+                swiper.on("destroy", () => {
+                  container.removeEventListener("mouseenter", handleMouseEnter);
+                  container.removeEventListener("mouseleave", handleMouseLeave);
+                });
+              }}
+              // onSwiper={(swiper) => {
+              //   const container = swiper.el;
+
+              //   // Safe hover pause handling
+              //   const handleMouseEnter = () => {
+              //     if (swiper.autoplay && swiper.autoplay.running) {
+              //       swiper.autoplay.stop();
+              //     }
+              //   };
+
+              //   const handleMouseLeave = () => {
+              //     if (swiper.autoplay && !swiper.autoplay.running) {
+              //       swiper.autoplay.start();
+              //     }
+              //   };
+
+              //   container.addEventListener("mouseenter", handleMouseEnter);
+              //   container.addEventListener("mouseleave", handleMouseLeave);
+
+              //   // Clean up listeners when Swiper is destroyed
+              //   swiper.on("destroy", () => {
+              //     container.removeEventListener("mouseenter", handleMouseEnter);
+              //     container.removeEventListener("mouseleave", handleMouseLeave);
+              //   });
+              // }}
             >
               {filteredEvents.map((event) => (
                 <SwiperSlide key={event._id}>
@@ -211,75 +251,4 @@ export default function EventSearch({ category: selectedCategory }) {
       </AnimatePresence>
     </motion.div>
   );
-
-  // orginal grid view
-  // return (
-  //   <motion.div
-  //     className="event-search"
-  //     initial={{ opacity: 0 }}
-  //     animate={{ opacity: 1 }}
-  //     exit={{ opacity: 0 }}
-  //     transition={{ duration: 0.6 }}
-  //     style={{ padding: "2rem" }}
-  //   >
-      
-  //     <motion.input
-  //       type="text"
-  //       placeholder="Search by title, location, category, or date..."
-  //       value={searchTerm}
-  //       onChange={(e) => setSearchTerm(e.target.value)}
-  //       whileFocus={{ scale: 1.03, boxShadow: "0 0 8px rgba(0,0,0,0.1)" }}
-  //       transition={{ type: "spring", stiffness: 300 }}
-  //       className="search-input"
-  //     />
-
-  //     <div className="filters">
-  //       <motion.select
-  //         value={category}
-  //         onChange={(e) => setCategory(e.target.value)}
-  //         whileHover={{ scale: 1.05 }}
-  //         className="filter-select"
-  //       >
-  //         <option value="">All Categories</option>
-  //         {categories.map((cat) => (
-  //           <option key={cat} value={cat}>
-  //             {cat}
-  //           </option>
-  //         ))}
-  //       </motion.select>
-
-  //       <motion.input
-  //         type="date"
-  //         value={date}
-  //         onChange={(e) => setDate(e.target.value)}
-  //         whileHover={{ scale: 1.05 }}
-  //         className="filter-date"
-  //       />
-  //     </div>
-
-  //     <AnimatePresence mode="wait">
-  //     {filteredEvents.length === 0 ? (
-  //       <motion.p
-  //         key="no-events"
-  //         initial={{ opacity: 0 }}
-  //         animate={{ opacity: 1 }}
-  //         exit={{ opacity: 0 }}
-  //       >
-  //         No events found
-  //       </motion.p>
-  //     ) : (
-  //       <motion.div
-  //         key="event-grid"
-  //         layout
-  //         className="grid"
-  //         transition={{ layout: { duration: 0.5 } }}
-  //       >
-  //         {filteredEvents.map((event) => (
-  //           <EventCard key={event._id} event={event} />
-  //         ))}
-  //       </motion.div>
-  //     )}
-  //     </AnimatePresence>
-  //   </motion.div>
-  // );
 }
