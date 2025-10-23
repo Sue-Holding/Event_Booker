@@ -72,6 +72,12 @@ nav ul {
   gap: 1rem;
 }
 
+nav li {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+
 nav a:hover {
   color: #ff69b4;
 } 
