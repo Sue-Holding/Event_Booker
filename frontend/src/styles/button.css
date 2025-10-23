@@ -1,4 +1,72 @@
+/* 🎨 Base Button (universal) */
 .button {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* 🟣 Primary Button (default action e.g. Approve, Submit) */
+.button--primary {
+  background: linear-gradient(90deg, #ff00cc, #6600ff);
+}
+.button--primary:hover {
+  background: linear-gradient(90deg, #ff66cc, #9933ff);
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+/* 🔵 Info / Neutral (View Event, General Links) */
+.button--info {
+  background: linear-gradient(135deg, #007bff, #00d4ff);
+}
+.button--info:hover {
+  background: linear-gradient(135deg, #0056b3, #0099cc);
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.4);
+}
+
+/* 🟠 Needs Update */
+.button--warning {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+}
+.button--warning:hover {
+  background: linear-gradient(90deg, #ff6f61, #ff8a80);
+  box-shadow: 0 0 10px rgba(255, 100, 100, 0.6);
+}
+
+/* ⚫ Reject / Cancel */
+.button--danger {
+  background: linear-gradient(90deg, #555, #333);
+}
+.button--danger:hover {
+  background: linear-gradient(90deg, #777, #555);
+  box-shadow: 0 0 10px rgba(100, 100, 100, 0.4);
+}
+
+/* 🟣 Add Event Submit */
+.button--accent {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+}
+.button--accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+  .button {
+    width: 100%;
+  }
+}
+
+
+/* .button {
   display: inline-block;
   text-decoration: none;
   margin-top: 0.5rem;
@@ -18,7 +86,10 @@
 
 .button:active {
   transform: scale(0.95);
-}
+} */
+
+
+
 
 
 /* .remove-btn {

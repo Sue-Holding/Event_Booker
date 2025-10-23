@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import UpdateEventForm from "./UpdateEventForm";
 import CommentThread from "./CommentThread";
+import '../styles/button.css';
 
 export default function UpdatesRequired() {
   const [events, setEvents] = useState([]);
@@ -76,7 +77,11 @@ return (
           <CommentThread comments={event.adminComments} />
           {/* </div> */}
 
-          <button onClick={() => startEditing(event)}>Edit & Submit</button>
+          <button 
+            className="button button--warning"
+            onClick={() => startEditing(event)}>
+              Edit & Submit
+          </button>
         </div>
       )
     )}

@@ -49,6 +49,7 @@
 .landing-title span {
   background: linear-gradient(90deg, #ff0080, #ff8c00);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -80,7 +81,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  backdrop-filter: blur(10px);
+  -webkit-background-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
 }
 

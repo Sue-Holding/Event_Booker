@@ -63,21 +63,6 @@
   line-height: 1.4;
 }
 
-.event-card .button {
-  background: linear-gradient(90deg, #ff00cc, #6600ff);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.5rem 1.2rem;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.event-card .button:hover {
-  background: linear-gradient(90deg, #ff66cc, #9933ff);
-}
-
 .event-card-image {
   width: 100%;
   height: 200px;
@@ -124,71 +109,45 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   padding: 1rem;
-  overflow: visible;
+  /* overflow: visible; */
 }
 
-.event-wrapper {
+/* .event-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
   position: relative;
   overflow: visible;
-}
+} */
 
+/* Card footer hover reveal */
 .card-footer {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: all 0.34s ease;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  margin-top: 0;
+  transform: translateY(10px);
 }
 
 .event-card:hover .card-footer {
   opacity: 1;
-  max-height: 80px;
+  max-height: 80px; /* allows room for the buttons */
+  pointer-events: auto;
   margin-top: 0.8rem;
-}
-
-
-/* Button inside event card (bottom area) */
-.remove-btn.inside-card {
-  position: relative;
-  background: rgba(255, 105, 180, 0.15);
-  border: 1px solid rgba(255, 105, 180, 0.6);
-  color: #ff8fd8;
-  border-radius: 10px;
-  padding: 0.6rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-  align-self: center;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.remove-btn.inside-card:hover {
-  background: rgba(255, 105, 180, 0.4);
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
-  transform: translateY(-2px);
+  transform: translateY(0);
 }
 
 .event-card:hover {
   transform: scale(1.02);
   z-index: 2;
 }
-
-.event-wrapper .remove-btn {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.event-wrapper:hover .remove-btn {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 
 @keyframes fadeInUp {
   0% {

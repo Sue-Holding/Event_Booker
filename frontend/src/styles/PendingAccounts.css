@@ -1,0 +1,22 @@
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+ul li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between; /* name/email left, buttons right */
+  gap: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.1);
+}
+
+ul li .button {
+  flex-shrink: 0;
+}

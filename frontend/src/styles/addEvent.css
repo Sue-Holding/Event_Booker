@@ -195,7 +195,7 @@ select:focus {
   gap: 1.2rem;
 }
 
-.submit-btn {
+/* .submit-btn {
   background: linear-gradient(135deg, #8b5cf6, #6366f1);
   color: white;
   border: none;
@@ -211,7 +211,7 @@ select:focus {
 .submit-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
-}
+} */
 
 
 /* Darker placeholder text */

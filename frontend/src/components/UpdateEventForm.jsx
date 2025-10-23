@@ -1,5 +1,6 @@
 // form sent to organiser after pending event comes back with comments for updates
 import { useState } from "react";
+import '../styles/button.css';
 
 export default function UpdateEventForm({ event, onUpdate }) {
   const [formData, setFormData] = useState({
@@ -135,7 +136,7 @@ export default function UpdateEventForm({ event, onUpdate }) {
         <div className="flex justify-end gap-3 mt-4">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
+            className="button button--primary"
           >
             Save & Submit
           </button>

@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 // import EventCard from "./EventCard";
+import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -90,7 +91,7 @@ export default function EventDetails(bookingRef) {
         onClick={() => navigate(-1)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="button secondary"
+        className="button button--primary"
         style={{ marginBottom: "1.5rem" }}
       >
         ← Back to Search
@@ -146,7 +147,7 @@ export default function EventDetails(bookingRef) {
           disabled={loading}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
-          className="button"
+          className="button button--primary"
         >
           {isFavourite ? "★ Remove Favourite" : "☆ Add Favourite"}
         </motion.button>
@@ -155,7 +156,7 @@ export default function EventDetails(bookingRef) {
           onClick={bookEvent}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
-          className="button primary"
+          className="button button--primary"
         >
           🎟️ Book Event
         </motion.button>

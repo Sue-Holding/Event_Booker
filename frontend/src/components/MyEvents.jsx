@@ -1,8 +1,10 @@
+import React from "react";
 import { useEffect, useState, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import EventCard from "./EventCard";
 import "../styles/MyEvents.css";
 import "../styles/styles.css";
+import "../styles/button.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -147,18 +149,19 @@ const handleUpdateSubmit = async (eventId) => {
   if (loading) return <p>Loading events...</p>;
 
   return (
-    <div className="my-events-container">
-      <h2>My Events</h2>
-      {message && <p>{message}</p>}
+  <div className="my-events-container">
+    <h2>My Events</h2>
+    {message && <p>{message}</p>}
 
-      {events.length === 0 ? (
-        <p>No events found.</p>
-      ) : (
-        <div className="event-grid">
-          {events.map((event) =>
-            editingEventId === event._id ? (
+    {events.length === 0 ? (
+      <p>No events found.</p>
+    ) : (
+      <div className="event-grid">
+        {events.map((event) => (
+          <React.Fragment key={event._id}>
+            {editingEventId === event._id ? (
               // --- EDIT MODE ---
-              <div key={event._id} className="event-card-wrapper edit-mode">
+              <div className="event-card-wrapper edit-mode">
                 <h3>Edit Event</h3>
 
                 <input
@@ -241,13 +244,13 @@ const handleUpdateSubmit = async (eventId) => {
                 <div className="event-card-actions">
                   <button
                     onClick={() => handleUpdateSubmit(event._id)}
-                    className="btn-primary"
+                    className="button button--primary"
                   >
                     Save
                   </button>
                   <button
                     onClick={() => setEditingEventId(null)}
-                    className="btn-danger"
+                    className="button button--warning"
                   >
                     Cancel
                   </button>
@@ -255,37 +258,33 @@ const handleUpdateSubmit = async (eventId) => {
               </div>
             ) : (
               // --- VIEW MODE ---
-              <div key={event._id} className="event-card-wrapper">
-                <div className="card-inner">
-                <EventCard event={event} showDetailsButton={true} />
-
+              <EventCard event={event} showDetailsButton={true}>
                 {event.status === "cancelled" || event.status === "rejected" ? (
                   <p className="cancelled-label">
                     This event has been cancelled or rejected.
                   </p>
                 ) : (
-
-                  <div className="event-card-actions">
+                  <div className="card-footer">
                     <button
                       onClick={() => startEditing(event)}
-                      className="btn-primary"
+                      className="button button--primary"
                     >
                       Update
                     </button>
                     <button
                       onClick={() => handleCancel(event._id)}
-                      className="btn-danger"
+                      className="button button--warning"
                     >
                       Cancel
                     </button>
                   </div>
                 )}
-              </div>
-              </div>
-            )
-          )}
-        </div>
-      )}
-    </div>
-  );
+              </EventCard>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    )}
+  </div>
+);
 }

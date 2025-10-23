@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
 import { resizeImage } from "../utils/resizeImage";
 import "../styles/addEvent.css";
+import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -86,13 +87,6 @@ export default function AddNewEvent() {
     }
   }
 };
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //   setSelectedFile(file);
-  //   setPreviewUrl(URL.createObjectURL(file));
-  //   }
-  // };
 
   // drag and drop for file upload
   const handleDrop = async (e) => {
@@ -273,7 +267,7 @@ export default function AddNewEvent() {
 
         <motion.button
           type="submit"
-          className="submit-btn"
+          className="button button--primary"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           disabled={loading}

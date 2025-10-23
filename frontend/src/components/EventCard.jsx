@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 // import { useState } from "react";
 import "../styles/eventcard.css";
+import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 // const MotionLink = motion(Link);
@@ -96,14 +97,14 @@ export default function EventCard({ event, bookingRef, onCancel, children }) {
       </MotionLink> */}
 
       <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-  <Link to={eventLink} className="button">
+  <Link to={eventLink} className="button button--primary">
     View Event
   </Link>
 </motion.div>
       
       {onCancel && (
         <motion.button 
-          className="remove-btn inside-card"
+          className="button button--warning remove-btn inside-card"
           onClick={onCancel}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -124,60 +125,3 @@ export default function EventCard({ event, bookingRef, onCancel, children }) {
     </motion.div>
   );
 }
-
-
-
-// import { motion } from "framer-motion";
-// import { useState } from "react";
-// import "../styles/eventcard.css";
-
-// const API_URL = process.env.REACT_APP_API_URL;
-
-// export default function EventCard({ event, onCancel, children }) {
-//   const [isHovered, setIsHovered] = useState(false);
-
-//   const handleMouseEnter = () => setIsHovered(true);
-//   const handleMouseLeave = () => setIsHovered(false);
-
-//   return (
-//     <motion.div
-//       className="event-card"
-//       onMouseEnter={handleMouseEnter}
-//       onMouseLeave={handleMouseLeave}
-//       initial={{ opacity: 0, y: 20, scale: 0.95 }}
-//       animate={{ opacity: 1, y: 0, scale: 1 }}
-//       whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
-//       transition={{ duration: 0.4 }}
-//     >
-//       <div className="event-card-image">
-//         <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
-//       </div>
-//       <h3>{event.title}</h3>
-//       <p>{event.category}</p>
-//       <p>
-//         <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
-//       </p>
-//       <p>
-//         <strong>Location:</strong> {event.location}
-//       </p>
-//       <p>
-//         <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
-//       </p>
-//       <p>
-//         <strong>Event status:</strong> {event.status}
-//       </p>
-
-//       {isHovered && (
-//         <div className="event-card-details">
-//           <p>
-//             <strong>Description:</strong> {event.description}
-//           </p>
-//           <div className="event-card-actions">
-//             <button onClick={onCancel}>Cancel Booking</button>
-//             <button>☆ Add to Favourites</button>
-//           </div>
-//         </div>
-//       )}
-//     </motion.div>
-//   );
-// }

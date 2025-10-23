@@ -2,20 +2,20 @@
   width: 90%;
   max-width: 1300px;
   margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 18px;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.06);
-  background-image: linear-gradient(
+  padding: 1rem 0;
+  /* border-radius: 18px; */
+  /* -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px); */
+  /* background: rgba(255, 255, 255, 0.06); */
+  /* background-image: linear-gradient(
     135deg, 
     rgba(255, 0, 255, 0.05), 
     rgba(102, 0, 255, 0.05)
-  );
-  box-shadow: 0 0 25px rgba(255, 0, 255, 0.1);
-  animation: fadeIn 0.8s ease;
+  ); */
+  box-shadow: none;
+  /* animation: fadeIn 0.8s ease;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow-x: hidden; */
 }
 
 .my-events-container h2 {
@@ -132,12 +132,6 @@
   margin-top: 10px;
 }
 
-.card-inner {
-  display: flex;
-  flex-direction: column;
-  width: 100%; /* matches the content, not padding of wrapper */
-}
-
 /* buttons */
 .event-card-actions {
   display: flex;
@@ -147,37 +141,6 @@
   margin-top: 0.8rem;
 }
 
-.btn-primary,
-.btn-danger {
-  flex: 1;
-  min-width: 120px;
-  border: none;
-  border-radius: 12px;
-  padding: 0.6rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-primary {
-  background: linear-gradient(90deg, #ff00cc, #6600ff);
-}
-
-.btn-primary:hover {
-  background: linear-gradient(90deg, #ff66cc, #9933ff);
-  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-}
-
-.btn-danger {
-  background: linear-gradient(90deg, #ff4b2b, #ff416c);
-}
-
-.btn-danger:hover {
-  background: linear-gradient(90deg, #ff6f61, #ff8a80);
-  box-shadow: 0 0 10px rgba(255, 100, 100, 0.6);
-}
 
 /* status labels */
 .cancelled-label {
@@ -207,11 +170,6 @@
   .event-card-wrapper {
     padding: 1rem;
   }
-
-  .btn-primary,
-  .btn-danger {
-    font-size: 0.95rem;
-  }
 }
 
 /* Large Phones / Small Tablets */
@@ -232,14 +190,6 @@
 
   .my-events-container h2 {
     font-size: 1.6rem;
-  }
-
-  .btn-primary,
-  .btn-danger {
-    /* flex: 1 1 45%; */
-    width: 100%;
-    min-width: 140px;
-    font-size: 0.95rem;
   }
 
   .event-card-actions {
@@ -270,15 +220,6 @@
   .event-card-wrapper textarea,
   .event-card-wrapper select {
     font-size: 0.9rem;
-  }
-
-  .btn-primary,
-  .btn-danger {
-    flex: none;
-    width: 100%;
-    min-width: auto;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
   }
 
   .event-card-actions {
@@ -325,10 +266,5 @@
 @media (max-width: 700px) {
   .event-grid {
     grid-template-columns: 1fr;
-  }
-
-  .btn-primary,
-  .btn-danger {
-    font-size: 0.9rem;
   }
 }

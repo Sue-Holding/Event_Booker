@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import EventCard from "./EventCard";
 import { motion } from "framer-motion";
+import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -88,7 +89,8 @@ export default function FavEvent() {
               <EventCard event={event}>
                 <button
                   onClick={() => removeFavorite(event._id)}
-                  className="remove-btn inside-card"
+                  // className="remove-btn inside-card"
+                  className="button button--warning"
                 >
                   ✖ Remove from Favourites
                 </button>

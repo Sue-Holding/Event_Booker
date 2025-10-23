@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import '../styles/CommentThread.css';
+import '../styles/PendingEvents.css';
+import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -71,9 +73,7 @@ export default function PendingEvents() {
 
   return (
     <div 
-    style={{
-      paddingBottom: "2rem" 
-    }}
+    // style={{ padding: "2rem" }}
     >
       <h2 className="title">Pending Events - Action required</h2>
 
@@ -84,16 +84,7 @@ export default function PendingEvents() {
           <p>No events found.</p>
         ) : (
           filteredEvents.map((event) => (
-            <div
-              key={event._id}
-              style={{
-                // border: "1px solid #ccc",
-                // borderRadius: "8px",
-                // padding: "1rem",
-                // marginBottom: "1rem",
-                // backgroundColor: "#fff",
-              }}
-            >
+            <div key={event._id} className="pending-event-card">
               <h4>{event.title}</h4>
               <p>
                 <strong>Status:</strong> {event.status}
@@ -132,30 +123,39 @@ export default function PendingEvents() {
                 )}
                 
                      
-
-              <Link to={`/admin-dashboard/events/${event._id}`} 
-                style={{ 
-                  textDecoration: "none",
-                  color: "white",
-                  background: "#007bff",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "6px",
-                  marginRight: "0.5rem" 
-                  }}>
+              {/* Action Buttons */}
+              {/* <div className="pending-event-actions"> */}
+              <Link 
+                to={`/admin-dashboard/events/${event._id}`} 
+                className="button button--primary">
                 View Event
               </Link>
 
               {event.status === "pending" && (
-                <div style={{ marginTop: "1rem" }}>
+                <div className="pending-event-actions">
+                  <div className="top-actions">
+                {/* <div style={{ marginTop: "1rem" }}> */}
 
                   {/* approve button */}
                   <button
+                  className="button button--primary"
                     onClick={() => handleAction(event._id, "approve")}
-                    style={{ marginRight: "0.5rem" }}
                   >
                     ✅ Approve
                   </button>
 
+                  {/* reject button */}
+                  <button
+                    className="button button--danger"
+                    onClick={() =>
+                      handleAction(event._id, "reject", "Not suitable")
+                    }
+                  >
+                    ❌ Reject
+                  </button>
+                  </div>
+
+                  <div className="bottom-actions">
                   {/* needs update button */}
                   <input
                     type="text"
@@ -164,9 +164,9 @@ export default function PendingEvents() {
                     onChange={(e) =>
                       setEventComments((prev) => ({ ...prev, [event._id]: e.target.value }))
                     }
-                    style={{ marginRight: "0.5rem", padding: "0.25rem" }}
                   />
                   <button
+                    className="button button--warning"
                     onClick={() =>
                       handleAction(
                         event._id,
@@ -174,20 +174,10 @@ export default function PendingEvents() {
                         eventComments[event._id] || "Please fix details"
                       )
                     }
-                    style={{ marginRight: "0.5rem" }}
                   >
                     ✏️ Needs Update
                   </button>
-
-                  {/* reject button */}
-                  <button
-                    onClick={() =>
-                      handleAction(event._id, "reject", "Not suitable")
-                    }
-                  >
-                    ❌ Reject
-                  </button>
-
+                  </div>
                 </div>
               )}
             </div>

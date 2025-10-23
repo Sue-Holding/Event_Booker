@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import EventCard from "./EventCard";
+import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -96,7 +97,7 @@ export default function BookedEvents() {
                 >
                   <button
                     onClick={() => cancelBooking(b._id)}
-                    className="remove-btn inside-card"
+                    className="button button--warning"
                   >
                     ❌ Cancel Booking
                   </button>

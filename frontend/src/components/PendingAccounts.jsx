@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import '../styles/button.css';
+import '../styles/PendingAccounts.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -85,11 +87,14 @@ export default function PendingAccounts() {
           <li key={user._id} style={{ marginBottom: "1rem" }}>
             <strong>{user.name}</strong> ({user.email})
             <button
-              style={{ marginLeft: "1rem" }}
+              className="button button--primary"
               onClick={() => approveUser(user._id)}
             >
-              Approve
+             ✅ Approve
             </button>
+            <button
+              className="button button--danger"
+              >❌ Reject</button>
           </li>
         ))}
       </ul>

@@ -1,0 +1,150 @@
+/* PendingEvents Card */
+.pending-event-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: fadeInUp 0.6s ease;
+}
+
+.pending-event-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 0 35px rgba(255, 0, 255, 0.25);
+}
+
+/* Event header */
+.pending-event-card h4 {
+  font-size: 1.4rem;
+  color: #ff8fd8;
+  margin-bottom: 0.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Info text */
+.pending-event-card p {
+  color: #ddd;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons container */
+.pending-event-actions {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  /* align-items: center; */
+}
+
+.top-actions,
+.bottom-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.bottom-actions input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 12px;
+  flex: 2;
+  min-width: 150px;
+}
+
+/* Buttons */
+.pending-event-actions button,
+.pending-event-actions input[type="text"],
+.pending-event-actions a.view-event-btn {
+  flex: unset;
+  min-width: 120px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Specific buttons */
+/* .pending-event-actions .btn-approve {
+  background: linear-gradient(90deg, #ff00cc, #6600ff);
+}
+.pending-event-actions .btn-approve:hover {
+  background: linear-gradient(90deg, #ff66cc, #9933ff);
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.pending-event-actions .btn-needs-update {
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+}
+.pending-event-actions .btn-needs-update:hover {
+  background: linear-gradient(90deg, #ff6f61, #ff8a80);
+  box-shadow: 0 0 10px rgba(255, 100, 100, 0.6);
+}
+
+.pending-event-actions .btn-reject {
+  background: linear-gradient(90deg, #555, #333);
+}
+.pending-event-actions .btn-reject:hover {
+  background: linear-gradient(90deg, #777, #555);
+  box-shadow: 0 0 10px rgba(100, 100, 100, 0.4);
+} */
+
+/* View Event Link */
+/* .pending-event-actions a.view-event-btn  */
+/* a.view-event-btn 
+{
+  background: #007bff;
+  text-decoration: none;
+  display: inline-block;
+} */
+
+/* Input field */
+.pending-event-actions input[type="text"] {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 0.5rem;
+  min-width: 150px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .pending-event-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pending-event-actions button,
+  .pending-event-actions input[type="text"],
+  .pending-event-actions a.view-event-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-actions,
+  .bottom-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .top-actions button,
+  .bottom-actions button,
+  .bottom-actions input {
+    width: 100%;
+  }
+}
