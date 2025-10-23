@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState, useMemo } from "react";
-import { useDropzone } from "react-dropzone";
 import EventCard from "./EventCard";
+import ImageDropZone from "./ImageDropZone";
 import "../styles/MyEvents.css";
 import "../styles/styles.css";
 import "../styles/button.css";
@@ -94,21 +94,6 @@ export default function MyEvents() {
   const handleInputChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
-  // --- Dropzone Setup ---
-const { getRootProps, getInputProps, isDragActive } = useDropzone({
-  accept: { "image/*": [] },
-  onDrop: (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      setFormData((prev) => ({
-        ...prev,
-        image: file, // Multer expects the file field to be named "image"
-        imagePreview: URL.createObjectURL(file),
-      }));
-    }
-  },
-});
 
 // --- Update Event ---
 const handleUpdateSubmit = async (eventId) => {
@@ -225,22 +210,17 @@ const handleUpdateSubmit = async (eventId) => {
                 />
 
                 {/* Dropzone */}
-                <div
-                  {...getRootProps()}
-                  className={`file-dropzone ${isDragActive ? "drag-over" : ""}`}
-                >
-                  <input {...getInputProps()} />
-                  {formData.imagePreview ? (
-                    <img
-                      src={formData.imagePreview}
-                      alt="Preview"
-                      className="image-preview"
-                    />
-                  ) : (
-                    <p>Drag & drop an image here, or click to select a file</p>
-                  )}
-                </div>
-
+                <ImageDropZone
+                  defaultPreview={formData.imagePreview} // use formData.imagePreview, not previewUrl
+                  onFileSelect={(file) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      image: file,
+                      imagePreview: URL.createObjectURL(file),
+                    }));
+                  }}
+                />
+                
                 <div className="event-card-actions">
                   <button
                     onClick={() => handleUpdateSubmit(event._id)}

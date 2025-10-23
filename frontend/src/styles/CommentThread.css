@@ -13,6 +13,16 @@
   animation: fadeInUp 0.3s ease;
 }
 
+.comment-thread-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff8fd8;
+  text-align: left;
+  margin-bottom: 1rem;
+  /* text-shadow: 0 0 8px rgba(255, 105, 180, 0.5); */
+  letter-spacing: 0.5px;
+}
+
 /* Heading inside the thread */
 .comment-thread h5 {
   font-size: 1.1rem;

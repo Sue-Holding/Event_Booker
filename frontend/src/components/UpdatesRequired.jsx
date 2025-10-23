@@ -65,18 +65,11 @@ return (
           onUpdate={handleUpdate}
         />
       ) : (
-        <div key={event._id} 
-        // className="event-card"
-        className="comment-thread"
-        >
-          {/* <h4>{event.title}</h4> */}
+        <div key={event._id} className="comment-thread">
+          <h3 className="comment-thread-title">{event.title}</h3>
 
-          {/* Threaded chat between admin & organiser */}
-          {/* <div className="comment-thread"> */}
-            {/* <div className="organiser-dashboard"> */}
           <CommentThread comments={event.adminComments} />
-          {/* </div> */}
-
+         
           <button 
             className="button button--warning"
             onClick={() => startEditing(event)}>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
 import { resizeImage } from "../utils/resizeImage";
+import ImageDropZone from "./ImageDropZone";
 import "../styles/addEvent.css";
 import '../styles/button.css';
 
@@ -243,28 +244,17 @@ export default function AddNewEvent() {
         </div>
 
         {/* upload file & drag and drop*/}
-          <div 
-            className="form-group file-dropzone"
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            >
-            <label>Event Image</label>
-            <input 
-              type="file" 
-              accept="image/png, image/jpeg, image/jpg, image/gif, image/webp" 
-              onChange={handleFileChange} 
-              ref={fileInputRef}
-              />
-              {previewUrl && (
-                <div className="image-preview">
-                  <img src={previewUrl} alt="Preview" />
-                </div>
-              )}
-              <p className="dropzone-text">
-                Drag & drop an image here, or click to select a file.
-              </p>
-          </div>
-
+        <div className="form-group">
+        <label>Event Image</label>
+        <ImageDropZone
+          defaultPreview={previewUrl}
+          onFileSelect={(file) => {
+            setSelectedFile(file);
+            setPreviewUrl(URL.createObjectURL(file));
+          }}
+        />
+        </div>
+          
         <motion.button
           type="submit"
           className="button button--primary"
