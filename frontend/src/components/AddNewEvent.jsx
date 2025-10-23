@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
+import EventForm from "./EventForm";
 import { resizeImage } from "../utils/resizeImage";
-import ImageDropZone from "./ImageDropZone";
+// import ImageDropZone from "./ImageDropZone";
 import "../styles/addEvent.css";
 import '../styles/button.css';
 
@@ -12,30 +13,27 @@ const API_URL = process.env.REACT_APP_API_URL;
 export default function AddNewEvent() {
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    time: "",
-    location: "",
-    category: "",
-    price: "",
-  });
+  // const [formData, setFormData] = useState({
+  //   title: "",
+  //   description: "",
+  //   date: "",
+  //   time: "",
+  //   location: "",
+  //   category: "",
+  //   price: "",
+  // });
   const [categories, setCategories] = useState([]);
   const [message, setMessage] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
+  // const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fileInputRef = useRef();
+  // const fileInputRef = useRef();
 
   // check user role
   useEffect(() => {
   const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/"); // not logged in
-      return;
-    }
+    if (!token) return navigate("/");
 
     try {
       const decoded = jwtDecode(token);
@@ -63,66 +61,69 @@ export default function AddNewEvent() {
     fetchCategories();
   }, []);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  // file input handler with resize image
-  const handleFileChange = async (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp"];
-    if (!validTypes.includes(file.type)) {
-      alert("Unsupported file type! Please upload PNG, JPEG, JPG, GIF, or WEBP.");
-      return;
-    }
-
-    try {
-      const resized = await resizeImage(file, 800, 600, 0.8);
-      setSelectedFile(resized);
-      setPreviewUrl(URL.createObjectURL(resized));
-    } catch (err) {
-      console.error("Image resize failed:", err);
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  }
-};
-
-  // drag and drop for file upload
-  const handleDrop = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const files = e.dataTransfer?.files;
-    if (!files || files.length ===0) return;
-
-    const file = files[0];
-
-    // check file type
-    const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp"];
-    if (!validTypes.includes(file.type)) {
-      alert("Unsupported file type! Please upload PNG, JPEG, JPG, GID or WEBP.");
-      return;
-    }
-
-    try {
-      const resized = await resizeImage(file, 800, 600, 0.8);
-      setSelectedFile(resized);
-      setPreviewUrl(URL.createObjectURL(resized));
-    } catch (err) {
-      console.error("Image resize failed:", err);
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  };
-
-  const handleDragOver = (e) => e.preventDefault();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleAddSubmit = async (formData) => {
     setLoading(true);
     setMessage("");
+  // const handleChange = (e) => {
+  //   setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
+
+  // file input handler with resize image
+//   const handleFileChange = async (e) => {
+//   const file = e.target.files[0];
+//   if (file) {
+//     const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp"];
+//     if (!validTypes.includes(file.type)) {
+//       alert("Unsupported file type! Please upload PNG, JPEG, JPG, GIF, or WEBP.");
+//       return;
+//     }
+
+//     try {
+//       const resized = await resizeImage(file, 800, 600, 0.8);
+//       setSelectedFile(resized);
+//       setPreviewUrl(URL.createObjectURL(resized));
+//     } catch (err) {
+//       console.error("Image resize failed:", err);
+//       setSelectedFile(file);
+//       setPreviewUrl(URL.createObjectURL(file));
+//     }
+//   }
+// };
+
+//   // drag and drop for file upload
+//   const handleDrop = async (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+
+//     const files = e.dataTransfer?.files;
+//     if (!files || files.length ===0) return;
+
+//     const file = files[0];
+
+//     // check file type
+//     const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp"];
+//     if (!validTypes.includes(file.type)) {
+//       alert("Unsupported file type! Please upload PNG, JPEG, JPG, GID or WEBP.");
+//       return;
+//     }
+
+//     try {
+//       const resized = await resizeImage(file, 800, 600, 0.8);
+//       setSelectedFile(resized);
+//       setPreviewUrl(URL.createObjectURL(resized));
+//     } catch (err) {
+//       console.error("Image resize failed:", err);
+//       setSelectedFile(file);
+//       setPreviewUrl(URL.createObjectURL(file));
+//     }
+//   };
+
+//   const handleDragOver = (e) => e.preventDefault();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setMessage("");
 
     try {
       const token = localStorage.getItem("token");
@@ -140,34 +141,33 @@ export default function AddNewEvent() {
         }
       );
 
-      if (selectedFile) dataToSend.append("image", selectedFile);
+      if (formData.image) dataToSend.append("image", formData.image);
+      // if (selectedFile) dataToSend.append("image", selectedFile);
 
       const res = await fetch(`${API_URL}/organiser/events`, {
         method: "POST",
         headers: {
-          // "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: dataToSend,
-        // body: JSON.stringify(payload),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to create event");
 
       setMessage("✅ Event posted successfully to Admin for review!");
-      setFormData({
-        title: "",
-        description: "",
-        date: "",
-        time: "",
-        location: "",
-        category: "",
-        price: "",
-      });
-      setSelectedFile(null);
-      setPreviewUrl(null);
-      fileInputRef.current.value = null;
+      // setFormData({
+      //   title: "",
+      //   description: "",
+      //   date: "",
+      //   time: "",
+      //   location: "",
+      //   category: "",
+      //   price: "",
+      // });
+      // setSelectedFile(null);
+      // setPreviewUrl(null);
+      // fileInputRef.current.value = null;
     } catch (err) {
       setMessage(`❌ ${err.message}`);
     } finally {
@@ -185,7 +185,15 @@ export default function AddNewEvent() {
       <h2 className="form-title">Add a New Event</h2>
       {message && <p className="form-message">{message}</p>}
 
-      <form className="add-event-form" onSubmit={handleSubmit}>
+      <EventForm
+        initialData={{}}
+        categories={categories}
+        onSubmit={handleAddSubmit}
+        loading={loading}
+        submitLabel="✨ Create Event"
+      />
+
+      {/* <form className="add-event-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Title*</label>
           <input type="text" name="title" value={formData.title} onChange={handleChange} required />
@@ -244,7 +252,7 @@ export default function AddNewEvent() {
         </div>
 
         {/* upload file & drag and drop*/}
-        <div className="form-group">
+        {/* <div className="form-group">
         <label>Event Image</label>
         <ImageDropZone
           defaultPreview={previewUrl}
@@ -264,7 +272,7 @@ export default function AddNewEvent() {
         >
           {loading ? "Creating..." : "✨ Create Event"}
         </motion.button>
-      </form>
+      </form> */} 
     </motion.div>
   );
 }

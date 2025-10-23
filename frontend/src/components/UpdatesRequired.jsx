@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import UpdateEventForm from "./UpdateEventForm";
+import EventForm from "./EventForm"; // use the new form
 import CommentThread from "./CommentThread";
 import '../styles/button.css';
 
@@ -16,7 +16,6 @@ export default function UpdatesRequired() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-    //   setEvents(data?.events || []);
       setEvents(Array.isArray(data) ? data : data.events || []);
     } catch (err) {
       console.error(err);
@@ -24,60 +23,67 @@ export default function UpdatesRequired() {
     }
   }, [API_URL, token]);
 
-  // fetch on mount
   useEffect(() => {
     fetchEvents();
-  }, [fetchEvents]);;
+  }, [fetchEvents]);
 
   const startEditing = (event) => setEditingEventId(event._id);
 
   const handleUpdate = async (eventId, updatedData) => {
     try {
-    await fetch(`${API_URL}/organiser/events/${eventId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ ...updatedData, status: "pending" }),
-    });
+      const dataToSend = new FormData();
+      Object.entries({ ...updatedData, status: "pending" }).forEach(
+        ([key, value]) => {
+          if (value !== undefined && value !== null) dataToSend.append(key, value);
+        }
+      );
 
-    // refresh list & remove updated events from list
-    // setEvents(events.filter(e => e._id !== eventId));
-    setEditingEventId(null);
+      await fetch(`${API_URL}/organiser/events/${eventId}`, {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        body: dataToSend,
+      });
 
-    fetchEvents();
-  } catch (err) {
-    console.error(err);
-    alert("Failed to update event");
-  }
-};
+      setEditingEventId(null);
+      fetchEvents();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update event");
+    }
+  };
 
-return (
-  <div>
-    <h2 className="title">Updates Required</h2>
-    {events.length === 0 && <p>No updates required.</p>}
-    {events.map((event) =>
-      editingEventId === event._id ? (
-        <UpdateEventForm
-          key={event._id}
-          event={event}
-          onUpdate={handleUpdate}
-        />
-      ) : (
-        <div key={event._id} className="comment-thread">
-          <h3 className="comment-thread-title">{event.title}</h3>
+  return (
+    <div>
+      <h2 className="title">Updates Required</h2>
+      {events.length === 0 && <p>No updates required.</p>}
+      {events.map((event) =>
+        editingEventId === event._id ? (
+          <EventForm
+            key={event._id}
+            initialData={{
+              ...event,
+              date: event.date?.slice(0, 10),
+              organiserComment: "", // optional note for admin
+            }}
+            categories={[]} // optionally fetch categories if needed
+            onSubmit={(updatedData) => handleUpdate(event._id, updatedData)}
+            submitLabel="Save & Submit"
+          />
+        ) : (
+          <div key={event._id} className="comment-thread">
+            <h3 className="comment-thread-title">{event.title}</h3>
 
-          <CommentThread comments={event.adminComments} />
-         
-          <button 
-            className="button button--warning"
-            onClick={() => startEditing(event)}>
+            <CommentThread comments={event.adminComments} />
+
+            <button
+              className="button button--warning"
+              onClick={() => startEditing(event)}
+            >
               Edit & Submit
-          </button>
-        </div>
-      )
-    )}
-  </div>
-);
-};
+            </button>
+          </div>
+        )
+      )}
+    </div>
+  );
+}

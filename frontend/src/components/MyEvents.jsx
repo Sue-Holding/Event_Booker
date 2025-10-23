@@ -1,7 +1,6 @@
-import React from "react";
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
-import ImageDropZone from "./ImageDropZone";
+import EventForm from "./EventForm";
 import "../styles/MyEvents.css";
 import "../styles/styles.css";
 import "../styles/button.css";
@@ -11,7 +10,6 @@ const API_URL = process.env.REACT_APP_API_URL;
 export default function MyEvents() {
   const [events, setEvents] = useState([]);
   const [editingEventId, setEditingEventId] = useState(null);
-  const [formData, setFormData] = useState({});
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
@@ -75,159 +73,58 @@ export default function MyEvents() {
     }
   };
 
-  const startEditing = (event) => {
-    setEditingEventId(event._id);
-    setFormData({
-      title: event.title,
-      description: event.description,
-      date: event.date?.slice(0, 10),
-      time: event.time,
-      location: event.location,
-      price: event.price,
-      category: event.category,
-      organiserComment: "",
-      image: null,
-      imagePreview: event.imageUrl ? `${API_URL}${event.imageUrl}` : null,
-    });
-  };
+  const handleUpdateSubmit = async (eventId, updatedData) => {
+    try {
+      const dataToSend = new FormData();
 
-  const handleInputChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-// --- Update Event ---
-const handleUpdateSubmit = async (eventId) => {
-  try {
-    const dataToSend = new FormData();
-
-    // Append only non-file fields
-    for (const [key, value] of Object.entries(formData)) {
-      if (key !== "image" && value !== undefined && value !== null) {
-        dataToSend.append(key, value);
+      for (const [key, value] of Object.entries(updatedData)) {
+        if (value !== undefined && value !== null) {
+          dataToSend.append(key, value);
+        }
       }
+
+      const res = await fetch(`${API_URL}/organiser/events/${eventId}`, {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        body: dataToSend,
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to update event");
+
+      setMessage("✅ Event updated and sent for admin review!");
+      setEditingEventId(null);
+      fetchEvents();
+    } catch (err) {
+      setMessage(`❌ ${err.message}`);
     }
-
-    // Append the image last, under the key "image"
-    if (formData.image) {
-      dataToSend.append("image", formData.image);
-    }
-
-    const res = await fetch(`${API_URL}/organiser/events/${eventId}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: dataToSend,
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Failed to update event");
-
-    setMessage("✅ Event updated and sent for admin review!");
-    setEditingEventId(null);
-    fetchEvents();
-  } catch (err) {
-    setMessage(`❌ ${err.message}`);
-  }
-};
+  };
 
   if (loading) return <p>Loading events...</p>;
 
   return (
-  <div className="my-events-container">
-    <h2>My Events</h2>
-    {message && <p>{message}</p>}
+    <div className="my-events-container">
+      <h2>My Events</h2>
+      {message && <p>{message}</p>}
 
-    {events.length === 0 ? (
-      <p>No events found.</p>
-    ) : (
-      <div className="event-grid">
-        {events.map((event) => (
-          <React.Fragment key={event._id}>
-            {editingEventId === event._id ? (
-              // --- EDIT MODE ---
-              <div className="event-card-wrapper edit-mode">
-                <h3>Edit Event</h3>
-
-                <input
-                  type="text"
-                  name="title"
-                  value={formData.title || ""}
-                  onChange={handleInputChange}
-                  placeholder="Title"
-                />
-                <textarea
-                  name="description"
-                  value={formData.description || ""}
-                  onChange={handleInputChange}
-                  placeholder="Description"
-                />
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date || ""}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="time"
-                  name="time"
-                  value={formData.time || ""}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location || ""}
-                  onChange={handleInputChange}
-                  placeholder="Location"
-                />
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price || ""}
-                  onChange={handleInputChange}
-                  placeholder="Price"
-                />
-
-                <input
-                  list="category-options"
-                  name="category"
-                  value={formData.category || ""}
-                  onChange={handleInputChange}
-                  placeholder="Category"
-                />
-                <datalist id="category-options">
-                  {categories.map((cat) => (
-                    <option key={cat} value={cat} />
-                  ))}
-                </datalist>
-
-                <textarea
-                  name="organiserComment"
-                  value={formData.organiserComment || ""}
-                  onChange={handleInputChange}
-                  placeholder="Comment for admin (e.g. 'Time changed')"
-                />
-
-                {/* Dropzone */}
-                <ImageDropZone
-                  defaultPreview={formData.imagePreview} // use formData.imagePreview, not previewUrl
-                  onFileSelect={(file) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      image: file,
-                      imagePreview: URL.createObjectURL(file),
-                    }));
-                  }}
-                />
-                
-                <div className="event-card-actions">
-                  <button
-                    onClick={() => handleUpdateSubmit(event._id)}
-                    className="button button--primary"
-                  >
-                    Save
-                  </button>
+      {events.length === 0 ? (
+        <p>No events found.</p>
+      ) : (
+        <div className="event-grid">
+          {events.map((event) => (
+            <React.Fragment key={event._id}>
+              {editingEventId === event._id ? (
+                <div className="event-card-wrapper edit-mode">
+                  <EventForm
+                    initialData={{
+                      ...event,
+                      date: event.date?.slice(0, 10),
+                      organiserComment: "",
+                    }}
+                    categories={categories}
+                    onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
+                    submitLabel="Save & Submit"
+                  />
                   <button
                     onClick={() => setEditingEventId(null)}
                     className="button button--warning"
@@ -235,36 +132,34 @@ const handleUpdateSubmit = async (eventId) => {
                     Cancel
                   </button>
                 </div>
-              </div>
-            ) : (
-              // --- VIEW MODE ---
-              <EventCard event={event} showDetailsButton={true}>
-                {event.status === "cancelled" || event.status === "rejected" ? (
-                  <p className="cancelled-label">
-                    This event has been cancelled or rejected.
-                  </p>
-                ) : (
-                  <div className="card-footer">
-                    <button
-                      onClick={() => startEditing(event)}
-                      className="button button--primary"
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => handleCancel(event._id)}
-                      className="button button--warning"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                )}
-              </EventCard>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
-    )}
-  </div>
-);
+              ) : (
+                <EventCard event={event} showDetailsButton={true}>
+                  {event.status === "cancelled" || event.status === "rejected" ? (
+                    <p className="cancelled-label">
+                      This event has been cancelled or rejected.
+                    </p>
+                  ) : (
+                    <div className="card-footer">
+                      <button
+                        onClick={() => setEditingEventId(event._id)}
+                        className="button button--primary"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => handleCancel(event._id)}
+                        className="button button--warning"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  )}
+                </EventCard>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
