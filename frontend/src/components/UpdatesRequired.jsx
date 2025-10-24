@@ -1,13 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
-import EventForm from "./EventForm"; // use the new form
+import EventForm from "./EventForm";
 import CommentThread from "./CommentThread";
-import '../styles/button.css';
+import "../styles/button.css";
+import "../styles/PendingEvents.css"; // reuse same styles for consistency
 
 export default function UpdatesRequired() {
   const [events, setEvents] = useState([]);
   const [editingEventId, setEditingEventId] = useState(null);
   const token = localStorage.getItem("token");
-
   const API_URL = process.env.REACT_APP_API_URL;
 
   const fetchEvents = useCallback(async () => {
@@ -27,16 +27,12 @@ export default function UpdatesRequired() {
     fetchEvents();
   }, [fetchEvents]);
 
-  const startEditing = (event) => setEditingEventId(event._id);
-
   const handleUpdate = async (eventId, updatedData) => {
     try {
       const dataToSend = new FormData();
-      Object.entries({ ...updatedData, status: "pending" }).forEach(
-        ([key, value]) => {
-          if (value !== undefined && value !== null) dataToSend.append(key, value);
-        }
-      );
+      Object.entries({ ...updatedData, status: "pending" }).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) dataToSend.append(key, value);
+      });
 
       await fetch(`${API_URL}/organiser/events/${eventId}`, {
         method: "PUT",
@@ -53,35 +49,45 @@ export default function UpdatesRequired() {
   };
 
   return (
-    <div>
+    <div className="event-page">
       <h2 className="title">Updates Required</h2>
-      {events.length === 0 && <p>No updates required.</p>}
-      {events.map((event) =>
-        editingEventId === event._id ? (
-          <EventForm
-            key={event._id}
-            initialData={{
-              ...event,
-              date: event.date?.slice(0, 10),
-              organiserComment: "", // optional note for admin
-            }}
-            categories={[]} // optionally fetch categories if needed
-            onSubmit={(updatedData) => handleUpdate(event._id, updatedData)}
-            submitLabel="Save & Submit"
-          />
-        ) : (
-          <div key={event._id} className="comment-thread">
-            <h3 className="comment-thread-title">{event.title}</h3>
+      <h3>Events ({events.length})</h3>
 
-            <CommentThread comments={event.adminComments} />
+      {events.length === 0 ? (
+        <p>No events needing updates.</p>
+      ) : (
+        events.map((event) =>
+          editingEventId === event._id ? (
+            <EventForm
+              key={event._id}
+              initialData={{
+                ...event,
+                date: event.date?.slice(0, 10),
+                organiserComment: "",
+              }}
+              categories={[]}
+              onSubmit={(updatedData) => handleUpdate(event._id, updatedData)}
+              submitLabel="Save & Submit"
+            />
+          ) : (
+            <div key={event._id} className="event-card">
+              <h3>{event.title}</h3>
+              <p><strong>Status:</strong> {event.status}</p>
+              <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+              <p><strong>Location:</strong> {event.location}</p>
+              <p><strong>Price:</strong> {event.price} SEK</p>
+              <p><strong>Description:</strong> {event.description}</p>
 
-            <button
-              className="button button--warning"
-              onClick={() => startEditing(event)}
-            >
-              Edit & Submit
-            </button>
-          </div>
+              <CommentThread comments={event.adminComments} />
+
+              <button
+                className="button button--warning"
+                onClick={() => setEditingEventId(event._id)}
+              >
+                ✏️ Edit & Resubmit
+              </button>
+            </div>
+          )
         )
       )}
     </div>

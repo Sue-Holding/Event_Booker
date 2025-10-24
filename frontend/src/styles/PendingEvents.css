@@ -1,47 +1,29 @@
 /* PendingEvents Card */
-.pending-event-card {
-  background: rgba(255, 255, 255, 0.06);
+.event-page {
+  padding: 2rem;
+}
+
+.event-card {
+  width: auto;
+  background: rgba(20, 20, 30, 0.85);
+  color: #fff;
   border-radius: 16px;
-  padding: 1.5rem;
-  margin-top: 1.5rem;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.15);
+  padding: 1.2rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 25px rgba(255, 0, 255, 0.1);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  animation: fadeInUp 0.6s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  margin-top: 1.5rem;
+}
+.event-card h3, p {
+  text-align: left;
 }
 
-.pending-event-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 0 35px rgba(255, 0, 255, 0.25);
-}
-
-/* Event header */
-.pending-event-card h4 {
-  font-size: 1.4rem;
-  color: #ff8fd8;
-  margin-bottom: 0.5rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-/* Info text */
-.pending-event-card p {
-  color: #ddd;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-/* Buttons container */
-.pending-event-actions {
-  display: flex;
-  /* flex-wrap: wrap; */
-  flex-direction: column;
-  gap: 0.75rem;
+.event-actions {
   margin-top: 1rem;
-  /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .top-actions,
@@ -49,6 +31,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  align-items: center;
 }
 
 .bottom-actions input {
@@ -77,40 +60,6 @@
   text-align: center;
   box-sizing: border-box;
 }
-
-/* Specific buttons */
-/* .pending-event-actions .btn-approve {
-  background: linear-gradient(90deg, #ff00cc, #6600ff);
-}
-.pending-event-actions .btn-approve:hover {
-  background: linear-gradient(90deg, #ff66cc, #9933ff);
-  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-}
-
-.pending-event-actions .btn-needs-update {
-  background: linear-gradient(90deg, #ff4b2b, #ff416c);
-}
-.pending-event-actions .btn-needs-update:hover {
-  background: linear-gradient(90deg, #ff6f61, #ff8a80);
-  box-shadow: 0 0 10px rgba(255, 100, 100, 0.6);
-}
-
-.pending-event-actions .btn-reject {
-  background: linear-gradient(90deg, #555, #333);
-}
-.pending-event-actions .btn-reject:hover {
-  background: linear-gradient(90deg, #777, #555);
-  box-shadow: 0 0 10px rgba(100, 100, 100, 0.4);
-} */
-
-/* View Event Link */
-/* .pending-event-actions a.view-event-btn  */
-/* a.view-event-btn 
-{
-  background: #007bff;
-  text-decoration: none;
-  display: inline-block;
-} */
 
 /* Input field */
 .pending-event-actions input[type="text"] {

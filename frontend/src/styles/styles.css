@@ -38,21 +38,6 @@ header {
   /* margin-left: 20px; */
 }
 
-/* header h2::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 3px;
-  left: 0;
-  bottom: -5px;
-  background: #ff69b4;
-  transition: width 0.3s ease;
-}
-
-header h2:hover::after {
-  width: 100%;
-} */
-
 header h2 {
   font-size: clamp(1.5rem, 2.5vm, 2rem);
   font-weight: 800;
@@ -169,37 +154,7 @@ nav a:hover::after,
     color: #ff69b4;
     /* padding-left: 20px;  */
   }
-
-  
 }
-
-/* hamburger menu for mobile */
-/* @media (max-width: 600px) {
-  nav ul {
-    display: none; 
-    flex-direction: column;
-    width: 100%;
-    gap: 0.5rem;
-    background: rgba(30,30,45,0.95);
-    padding: 1rem 0;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    border-top: 2px solid #ff69b4;
-  }
-
-  nav ul.show {
-    display: flex;
-  }
-
-  .hamburger {
-    display: block;
-    padding-left: 20px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: #ff69b4;
-  }
-} */
 
 
 /* Footer */
