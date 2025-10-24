@@ -185,24 +185,30 @@ export default function EventSearch({ category: selectedCategory }) {
                 delay: 3500, 
                 disableOnInteraction: false, 
               }}
+
               speed={900}
               loop
               effect="coverflow"
               coverflowEffect={{
                 rotate: 0,
                 stretch: 0,
-                depth: window.innerWidth < 600 ? 0 : 100,
+                depth: 200,
+                // depth: window.innerWidth < 600 ? 0 : 100,
                 modifier: 1,
                 slideShadows: false,
               }}
+
               breakpoints={{
                 0: { slidesPerView: 1, spaceBetween: 15 },
-                480: { slidesPerView: 1, spaceBetween: 20 },
-                640: { slidesPerView: 1.2, spaceBetween: 25 },
-                768: { slidesPerView: 2, spaceBetween: 20 },
-                1024: { slidesPerView: 3, spaceBetween: 30 },
-                1440: { slidesPerView: 4, spaceBetween: 40},
+                480: { slidesPerView: 'auto', spaceBetween: 20 },
+                640: { slidesPerView: 'auto', spaceBetween: 25 },
+                768: { slidesPerView: 'auto', spaceBetween: 25 },
+                1024: { slidesPerView: 'auto', spaceBetween: 30 },
+                1280: { slidesPerView: 'auto', spaceBetween: 35 },
+                1600: { slidesPerView: 'auto', spaceBetween: 40 },
+                1920: { slidesPerView: 'auto', spaceBetween: 45 },
               }}
+              
               className="event-carousel"
               onSwiper={(swiper) => {
                 const container = swiper.el;

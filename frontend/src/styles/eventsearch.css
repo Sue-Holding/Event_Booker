@@ -82,46 +82,107 @@
 
 /* carousel styling */
 .event-carousel-container {
-  /* width: 100%;
-  padding: 2rem 0; */
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
   perspective: 1000px;
+  padding: 1rem 0 3rem;
+  position: relative;
 }
 
 .swiper {
   width: 100%;
   overflow: visible;
   padding-bottom: 3rem;
+  position: relative;
 }
 
-.swiper-slide {
-  transform: scale(0.95);
-  transition: transform 0.4s ease;
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  transform-origin: center center; */
-  /* transition: transform 0.6s ease, box-shadow 0.4s ease; */
-
+ .swiper-slide {
+  /* width: auto; */
+  width: 260px;
+  transform: scale(0.85);
+  opacity: 0;
+  transition: 
+    transform 0.6s ease, 
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  filter: blur(6px);
+  pointer-events: none;
 }
 
+/* center card */
 .swiper-slide-active {
   transform: scale(1.05);
+  opacity: 1;
+  filter: blur(0);
+  z-index: 5;
+  pointer-events: auto;
+}
+
+/* next left & right cards */
+.swiper-slide-prev,
+.swiper-slide-next {
+  transform: scale(0.97);
+  opacity: 0.85;
+  filter: blur(2px);
+  z-index: 4;
+  pointer-events: auto;
+}
+
+
+/* 2nd cards from center */
+.swiper-slide-prev + .swiper-slide-prev,
+.swiper-slide-next + .swiper-slide-next {
+  transform: scale(0.92);
+  opacity: 0.6;
+  filter: blur(4px);
+  z-index: 3;
+}
+
+/* 3rd cards for center - still just visable */
+.swiper-slide-prev + .swiper-slide-prev + .swiper-slide-prev,
+.swiper-slide-next + .swiper-slide-next + .swiper-slide-next {
+  transform: scale(0.88);
+  opacity: 0.4;
+  filter: blur(4px);
   z-index: 2;
-  /* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); */
+}
+
+/* 4th cards - completely hidden */
+.swiper-slide-prev + .swiper-slide-prev + .swiper-slide-prev + .swiper-slide-prev,
+.swiper-slide-next + .swiper-slide-next + .swiper-slide-next + .swiper-slide-next {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.85);
+  filter: blur(6px);
+}
+
+/* Gradual fade mask at the edges (for seamless edge blending) */
+.event-carousel-container::before,
+.event-carousel-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 20%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
 }
 
 .event-carousel-container .event-card {
+  width: 100%;
+  max-width: 250px;
+  min-width: 260px;
+  border-radius: 16px;
   overflow: hidden;
-  border-radius: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transform-origin: center;
 }
 
 .event-carousel-container .event-card:hover {
-  transform: scale(1.015);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(255, 0, 255, 0.25);
 }
+
 
 .view-toggle-btn {
   background: linear-gradient(90deg, #ff00cc, #6600ff);
@@ -180,3 +241,46 @@
   }
 }
 
+
+
+/* .event-carousel-container { */
+  /* width: 100%;
+  padding: 2rem 0; */
+  /* perspective: 1000px;
+}
+
+.swiper {
+  width: 100%;
+  overflow: visible;
+  padding-bottom: 3rem;
+}
+
+.swiper-slide {
+  transform: scale(0.95);
+  transition: transform 0.4s ease; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transform-origin: center center; */
+  /* transition: transform 0.6s ease, box-shadow 0.4s ease; */
+
+/* }
+
+.swiper-slide-active {
+  transform: scale(1.05);
+  z-index: 2; */
+  /* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); */
+/* }
+
+.event-carousel-container .event-card {
+  overflow: hidden;
+  border-radius: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-origin: center;
+}
+
+.event-carousel-container .event-card:hover {
+  transform: scale(1.015);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+} */
