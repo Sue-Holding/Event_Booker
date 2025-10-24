@@ -87,20 +87,12 @@ export default function EventCard({ event, bookingRef, onCancel, children }) {
         </p>
       )}
 
-      {/* <MotionLink
-        to={eventLink}
-        className="button"
-        whileTap={{ scale: 0.9 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        View Event
-      </MotionLink> */}
-
+      
       <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-  <Link to={eventLink} className="button button--primary">
-    View Event
-  </Link>
-</motion.div>
+        <Link to={eventLink} className="button button--primary">
+          View Event
+        </Link>
+      </motion.div>
       
       {onCancel && (
         <motion.button 

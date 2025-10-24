@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UpcomingEvents from "./UpcomingEvents"; //attendee
 import NewlyAdded from "./NewlyAdded"; //attendee
 import UpdatesRequired from "../components/UpdatesRequired"; //organiser - events to be amended for admin approval
+import MyEventsStats from "./MyEventsStats";
 import PendingEvents from "../components/PendingEvents"; //admin - new events
 import AdminPendingActions from "../components/AdminPendingActions"; //admin - updated events
 import PendingAccounts from "../components/PendingAccounts"; //admin - requests for organiser role
@@ -38,10 +39,12 @@ return (
         {user.role === "attendee" && <NewlyAdded />}
 
         {user.role === "organiser" && <UpdatesRequired />}
+        {user.role === "organiser" && <MyEventsStats />}
 
         {user.role === "admin" && <PendingEvents />}
         {user.role === "admin" && <AdminPendingActions />}
         {user.role === "admin" && <PendingAccounts />}
+        {user.role === "admin" && <MyEventsStats />}
 
     </div>
 

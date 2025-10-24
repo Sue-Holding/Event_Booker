@@ -1,0 +1,39 @@
+.my-events-stats {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stats-card {
+  background: rgba(20, 20, 30, 0.85);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 105, 180, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-3px);
+  animation: glowPulse 1.6s infinite alternate;
+  box-shadow:  
+    0 0 25px rgba(255, 105, 180, 0.5),
+    0 0 50px rgba(255, 0, 255, 0.3);
+}
+
+.stats-card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.stats-card p {
+  margin: 0.25rem 0;
+}
