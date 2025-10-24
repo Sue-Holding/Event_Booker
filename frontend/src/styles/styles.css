@@ -13,6 +13,33 @@ body {
   min-height: 100vh;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* ensures full screen height */
+}
+
+.dashboard-content {
+  flex: 1; /* makes main content grow to push footer down */
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* Header & Navigation */
 header {
   display: flex;

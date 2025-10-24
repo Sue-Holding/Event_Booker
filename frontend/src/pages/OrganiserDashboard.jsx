@@ -1,16 +1,10 @@
 // for organiser dashboard
 import { useEffect, useState } from "react";
-// import { Routes, Route } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import EventSearch from "../components/EventSearch";
-// import EventDetails from "../components/EventDetails";
-// import AddNewEvent from "../components/AddNewEvent";
-// import MyEvents from "../components/MyEvents";
 import FloatingWords from "../components/FloatingWords";
-// import UpdatesRequired from "../components/UpdatesRequired";
 import "../styles/dashboard.css";
 
 const categories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
@@ -47,14 +41,6 @@ return (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        {/* <h2>{selectedCategory 
-          ? `${selectedCategory} Events` 
-          : "Discover Events"}
-        </h2> */}
-
-        {/* <EventSearch category={selectedCategory} /> */}
-      
-      {/* <UpdatesRequired /> */}
 
       <Outlet />
       

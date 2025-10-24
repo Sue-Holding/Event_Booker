@@ -1,14 +1,9 @@
 // for user / attendee
 import { useEffect, useState } from "react";
-// import { Routes, Route } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import EventSearch from "../components/EventSearch";
-// import FavEvents from "../components/FavEvents";
-// import BookedEvents from "../components/BookedEvents";
-// import EventDetails from "../components/EventDetails";
 import FloatingWords from "../components/FloatingWords";
 import "../styles/dashboard.css";
 
@@ -50,11 +45,6 @@ export default function UserDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        {/* <h2>
-          {selectedCategory
-            ? `${selectedCategory} Events`
-            : "Discover Events"}
-        </h2> */}
 
          <Outlet />
       
