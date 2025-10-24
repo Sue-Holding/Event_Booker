@@ -2,19 +2,15 @@
   max-width: 700px;
   margin: 4rem auto;
   padding: 2.5rem 3rem;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  border-color: rgba(255, 105, 180, 0.9);
+  /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); */
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
   animation: fadeIn 0.8s ease forwards;
   color: #f3f3f3;
-  background-image: linear-gradient(
-    135deg,
-    rgba(168, 85, 247, 0.3),
-    rgba(59, 130, 246, 0.3)
-  );
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .form-title {
@@ -22,8 +18,9 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  background: linear-gradient(90deg, #a855f7, #60a5fa);
+  background: #ff69b4;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

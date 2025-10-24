@@ -22,6 +22,13 @@
   box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
 }
 
+/* small button */
+.button.small-primary {
+  background: linear-gradient(90deg, #ff00cc, #6600ff);
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+}
+
 /* 🔵 Info / Neutral (View Event, General Links) */
 .button--info {
   background: linear-gradient(135deg, #007bff, #00d4ff);
@@ -64,3 +71,9 @@
     width: 100%;
   }
 }
+
+/* Button */
+/* .button.small {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+} */

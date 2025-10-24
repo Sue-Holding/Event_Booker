@@ -8,11 +8,15 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 
 import EventCard from "./EventCard";
+import SmallEventCard from "./SmallEventCard";
+import useViewport from "../hooks/useViewport"; 
 import "../styles/eventsearch.css";
+import "../styles/styles.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function EventSearch({ category: selectedCategory }) {
+  const { isMobile, isTablet } = useViewport();
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -53,9 +57,11 @@ export default function EventSearch({ category: selectedCategory }) {
         .toLocaleDateString()
         .toLowerCase()
         .includes(term);
+
       const categoryFilter = category 
         ? event.category.toLowerCase() === category.toLowerCase()
         : true;
+
       const dateFilter = date
         ? (() => {
           const eventDate = new Date(event.date);
@@ -64,7 +70,6 @@ export default function EventSearch({ category: selectedCategory }) {
           const year = eventDate.getFullYear();
           return `${day}-${month}-${year}` === date.split("-").reverse().join("-");
         })()
-        // ? new Date(event.date).toISOString().split("T")[0] === date
         : true;
 
       return (
@@ -96,7 +101,6 @@ export default function EventSearch({ category: selectedCategory }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      style={{ padding: "2rem" }}
     >
       <h2 className="title">Search Events</h2>
       <div className="search-bar-container">
@@ -159,12 +163,19 @@ export default function EventSearch({ category: selectedCategory }) {
           <motion.div
             key="event-grid"
             layout
-            className="grid"
+            className={isMobile || isTablet ? "small-grid" : "grid"}
             transition={{ layout: { duration: 0.5 } }}
           >
-            {filteredEvents.map((event) => (
+            {filteredEvents.map((event) =>
+              isMobile || isTablet ? (
+                <SmallEventCard key={event._id} event={event} />
+              ) : (
+                <EventCard key={event._id} event={event} />
+              )
+            )}
+            {/* {filteredEvents.map((event) => (
               <EventCard key={event._id} event={event} />
-            ))}
+            ))} */}
           </motion.div>
         ) : (
           <motion.div
@@ -222,6 +233,18 @@ export default function EventSearch({ category: selectedCategory }) {
                 });
               }}
             >
+
+              {/* {filteredEvents.map((event) =>
+                isMobile ? (
+                  <SwiperSlide key={event._id}>
+                    <SmallEventCard event={event} />
+                  </SwiperSlide>
+                ) : (
+                  <SwiperSlide key={event._id}>
+                    <EventCard event={event} />
+                  </SwiperSlide>
+                )
+              )} */}
               {filteredEvents.map((event) => (
                 <SwiperSlide key={event._id}>
                   <EventCard event={event} />

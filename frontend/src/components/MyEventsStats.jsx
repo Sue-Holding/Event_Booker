@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/MyEventsStats.css";
+import "../styles/smallEventCard.css"; // use the small card CSS
 import "../styles/button.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -11,8 +11,7 @@ export default function MyEventsStats() {
   const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
 
-  // You could also pass role as a prop if needed
-  const role = JSON.parse(atob(token.split(".")[1])).role;
+  const role = token ? JSON.parse(atob(token.split(".")[1])).role : null;
 
   useEffect(() => {
     fetchEvents();
@@ -43,7 +42,7 @@ export default function MyEventsStats() {
       <h2 className="title">My Events Overview</h2>
       {message && <p>{message}</p>}
 
-      <div className="stats-grid">
+      <div className="small-grid">
         {events.map((event) => {
           const eventLink =
             role === "organiser"
@@ -53,13 +52,20 @@ export default function MyEventsStats() {
               : `/user-dashboard/events/${event._id}`;
 
           return (
-            <div key={event._id} className="stats-card">
-              <h3>{event.title}</h3>
-              <p>Bookings: {event.bookings?.length ?? 0}</p>
-              <p>Status: {event.status}</p>
-              <Link to={eventLink} className="button button--primary">
-                View Event
-              </Link>
+            <div key={event._id} className="event-card small">
+              {event.imageUrl && (
+                <div className="event-card-image small">
+                  <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
+                </div>
+              )}
+              <div className="small-card-content">
+                <h4>{event.title}</h4>
+                <p>Bookings: {event.bookings?.length ?? 0}</p>
+                <p>Status: {event.status}</p>
+                <Link to={eventLink} className="button button--primary">
+                  View Event
+                </Link>
+              </div>
             </div>
           );
         })}

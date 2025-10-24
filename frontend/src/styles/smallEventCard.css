@@ -1,0 +1,110 @@
+/* Base small card */
+.event-card.small {
+  width: 200px;
+  min-height: 240px;
+  max-height: fit-content;
+  padding: 0.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: visible;
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 105, 180, 0.15);
+}
+
+.event-card.small:hover {
+  transform: scale(1.03);
+  box-shadow:
+    0 0 20px rgba(255, 105, 180, 0.4),
+    0 0 40px rgba(255, 0, 255, 0.25);
+  border-color: rgba(255, 105, 180, 0.8);
+}
+
+/* Image */
+.event-card-image.small {
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-card-image.small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.event-card-image.small img:hover {
+  transform: scale(1.05);
+}
+
+/* Content */
+.small-card-content h4 {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+  color: #ff8fd8;
+}
+
+.small-card-content p {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-bottom: 0.4rem;
+}
+
+/* Button */
+.button.small {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+/* Mobile & tablet responsiveness */
+@media (max-width: 1024px) {
+  .event-card.small {
+    width: 180px;
+    min-height: 220px;
+  }
+  .event-card-image.small {
+    height: 100px;
+  }
+  .small-card-content h4 {
+    font-size: 0.95rem;
+  }
+  .small-card-content p {
+    font-size: 0.8rem;
+  }
+  .button.small {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-card.small {
+    width: 160px;
+    min-height: 200px;
+  }
+  .event-card-image.small {
+    height: 90px;
+  }
+  .small-card-content h4 {
+    font-size: 0.85rem;
+  }
+  .small-card-content p {
+    font-size: 0.75rem;
+  }
+  .button.small {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+}

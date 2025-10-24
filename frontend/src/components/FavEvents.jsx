@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import EventCard from "./EventCard";
 import { motion } from "framer-motion";
+import EventCard from "./EventCard";
+import SmallEventCard from "./SmallEventCard";
+import useViewport from "../hooks/useViewport";
 import '../styles/button.css';
+import '../styles/styles.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function FavEvent() {
+  const { isMobile, isTablet } = useViewport();
   const [favorites, setFavorites] = useState([]);
-  // const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function FavEvent() {
       {favorites.length === 0 ? (
         <p>No favourite events yet.</p>
       ) : (
-        <div className="event-grid">
+        <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
           {favorites.map((event) => (
             <motion.div
               key={event._id}
@@ -85,16 +87,25 @@ export default function FavEvent() {
               style={{ position: "relative" }}
               className="event-wrapper"
             >
-
+              {isMobile || isTablet ? (
+                <SmallEventCard event={event}>
+                  <button
+                    onClick={() => removeFavorite(event._id)}
+                    className="button button--warning"
+                  >
+                    ✖ Remove
+                  </button>
+                </SmallEventCard>
+              ) : (
               <EventCard event={event}>
                 <button
                   onClick={() => removeFavorite(event._id)}
-                  // className="remove-btn inside-card"
                   className="button button--warning"
                 >
                   ✖ Remove from Favourites
                 </button>
               </EventCard>
+              )}
             </motion.div>
           ))}
         </div>

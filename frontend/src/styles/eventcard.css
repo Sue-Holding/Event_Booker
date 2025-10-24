@@ -112,15 +112,6 @@
   /* overflow: visible; */
 }
 
-/* .event-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  position: relative;
-  overflow: visible;
-} */
-
 /* Card footer hover reveal */
 .card-footer {
   opacity: 0;
@@ -161,7 +152,7 @@
 }
 
 /* Small version of event card */
-.event-card.small {
+/* .event-card.small {
   width: 220px;
   height: 220px;
   padding: 1rem;
@@ -196,4 +187,4 @@
 .button.small {
   padding: 0.4rem 0.8rem;
   font-size: 0.85rem;
-}
+} */

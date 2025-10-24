@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import "../styles/eventcard.css";
+import "../styles/smallEventCard.css";
+import "../styles/button.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -50,7 +51,9 @@ export default function SmallEventCard({ event }) {
         <p>{new Date(event.date).toLocaleDateString()}</p>
 
         <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-          <Link to={eventLink} className="button small">
+          <Link to={eventLink} 
+          // className="button small"
+          className="button button--primary">
             View Event
           </Link>
         </motion.div>

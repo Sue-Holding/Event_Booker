@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
+import SmallEventCard from "./SmallEventCard";
 import EventForm from "./EventForm";
+import useViewport from "../hooks/useViewport";
 import "../styles/MyEvents.css";
 import "../styles/styles.css";
 import "../styles/button.css";
@@ -8,6 +10,7 @@ import "../styles/button.css";
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function MyEvents() {
+  const { isMobile, isTablet } = useViewport();
   const [events, setEvents] = useState([]);
   const [editingEventId, setEditingEventId] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -103,63 +106,86 @@ export default function MyEvents() {
   if (loading) return <p>Loading events...</p>;
 
   return (
-    <div className="my-events-container">
-      <h2>My Events</h2>
-      {message && <p>{message}</p>}
+  <div className="">
+    <h2 className="title">My Events</h2>
+    {message && <p>{message}</p>}
 
-      {events.length === 0 ? (
-        <p>No events found.</p>
-      ) : (
-        <div className="event-grid">
-          {events.map((event) => (
-            <React.Fragment key={event._id}>
-              {editingEventId === event._id ? (
-                <div className="event-card-wrapper edit-mode">
-                  <EventForm
-                    initialData={{
-                      ...event,
-                      date: event.date?.slice(0, 10),
-                      organiserComment: "",
-                    }}
-                    categories={categories}
-                    onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
-                    submitLabel="Save & Submit"
-                  />
-                  <button
-                    onClick={() => setEditingEventId(null)}
-                    className="button button--warning"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <EventCard event={event} showDetailsButton={true}>
-                  {event.status === "cancelled" || event.status === "rejected" ? (
-                    <p className="cancelled-label">
-                      This event has been cancelled or rejected.
-                    </p>
-                  ) : (
-                    <div className="card-footer">
-                      <button
-                        onClick={() => setEditingEventId(event._id)}
-                        className="button button--primary"
-                      >
-                        Update
-                      </button>
-                      <button
-                        onClick={() => handleCancel(event._id)}
-                        className="button button--warning"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  )}
-                </EventCard>
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+    {events.length === 0 ? (
+      <p>No events found.</p>
+    ) : (
+      <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
+        {events.map((event) => (
+          <React.Fragment key={event._id}>
+            {editingEventId === event._id ? (
+              <div className="event-card-wrapper edit-mode">
+                <EventForm
+                  initialData={{
+                    ...event,
+                    date: event.date?.slice(0, 10),
+                    organiserComment: "",
+                  }}
+                  categories={categories}
+                  onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
+                  submitLabel="Save & Submit"
+                />
+                <button
+                  onClick={() => setEditingEventId(null)}
+                  className="button button--warning"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : isMobile || isTablet ? (
+              <SmallEventCard event={event} showDetailsButton={true}>
+                {event.status === "cancelled" || event.status === "rejected" ? (
+                  <p className="cancelled-label">
+                    This event has been cancelled or rejected.
+                  </p>
+                ) : (
+                  <div className="card-footer">
+                    <button
+                      onClick={() => setEditingEventId(event._id)}
+                      className="button button--primary"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleCancel(event._id)}
+                      className="button button--warning"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </SmallEventCard>
+            ) : (
+              <EventCard event={event} showDetailsButton={true}>
+                {event.status === "cancelled" || event.status === "rejected" ? (
+                  <p className="cancelled-label">
+                    This event has been cancelled or rejected.
+                  </p>
+                ) : (
+                  <div className="card-footer">
+                    <button
+                      onClick={() => setEditingEventId(event._id)}
+                      className="button button--primary"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleCancel(event._id)}
+                      className="button button--warning"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </EventCard>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    )}
+  </div>
+);
 }

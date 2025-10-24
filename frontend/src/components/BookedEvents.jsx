@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import EventCard from "./EventCard";
+import SmallEventCard from "./SmallEventCard";
+import useViewport from "../hooks/useViewport";
 import '../styles/button.css';
+import '../styles/styles.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function BookedEvents() {
+  const { isMobile, isTablet } = useViewport();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -76,7 +80,7 @@ export default function BookedEvents() {
       {bookings.length === 0 ? (
         <p>You haven’t booked any events yet.</p>
       ) : (
-        <div className="event-grid">
+        <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
           {bookings.map((b) => {
             // Check if event data exists
             if (!b.event || !b.event._id) {
@@ -91,6 +95,16 @@ export default function BookedEvents() {
                 transition={{ duration: 0.3 }}
                 className="event-wrapper"
               >
+                {isMobile || isTablet ? (
+                  <SmallEventCard event={b.event} bookingRef={b.bookingRef}>
+                    <button
+                      onClick={() => cancelBooking(b._id)}
+                      className="button button--warning"
+                    >
+                      ❌ Cancel
+                    </button>
+                  </SmallEventCard>
+                ) : (
                 <EventCard
                   event={b.event}
                   bookingRef={b.bookingRef}
@@ -102,6 +116,7 @@ export default function BookedEvents() {
                     ❌ Cancel Booking
                   </button>
                 </EventCard>
+                )}
               </motion.div>
             );
           })}

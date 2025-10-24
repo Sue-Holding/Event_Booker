@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import EventCard from "./EventCard";
+import SmallEventCard from "./SmallEventCard";
+import useViewport from "../hooks/useViewport";
+import "../styles/EventStats.css";
+import "../styles/button.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function EventStats() {
+  const { isMobile, isTablet } = useViewport();
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [stats, setStats] = useState({});
@@ -12,7 +19,6 @@ export default function EventStats() {
   const [searchOrganizer, setSearchOrganizer] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [eventComments, setEventComments] = useState({});
-
 
   const token = localStorage.getItem("token");
 
@@ -83,15 +89,17 @@ export default function EventStats() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  return (
-    <div style={{ padding: "2rem" }}>
-      {/* <h2>Admin Event Dashboard</h2> */}
-
-      <section style={{ marginBottom: "1.5rem" }}>
-
-        {/* stats part */}
+ return (
+    <motion.div
+      className="event-stats-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      {/* Stats Section */}
+      <section>
         <h3>📊 Stats</h3>
-        <ul>
+        <ul className="stats-list">
           <li>Total Events: {stats.totalEvents}</li>
           <li>Free Events: {stats.freeEvents}</li>
           <li>Approved: {stats.approved}</li>
@@ -101,36 +109,18 @@ export default function EventStats() {
         </ul>
       </section>
 
-      {/* filter events */}
-      <section
-        style={{
-          display: "flex",
-          gap: "1rem",
-          alignItems: "center",
-          marginBottom: "1.5rem",
-        }}
-      >
+      {/* Filters */}
+      <section className="filters">
         <input
           type="text"
           placeholder="Search by organizer..."
           value={searchOrganizer}
           onChange={(e) => setSearchOrganizer(e.target.value)}
-          style={{
-            padding: "0.5rem",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            flex: 1,
-          }}
         />
 
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          style={{
-            padding: "0.5rem",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-          }}
         >
           <option value="">All statuses</option>
           <option value="approved">Approved</option>
@@ -141,109 +131,128 @@ export default function EventStats() {
         </select>
       </section>
 
-      {/* event list */}
+      {/* Event List */}
       <section>
         <h2 className="title">Events ({filteredEvents.length})</h2>
+
         {filteredEvents.length === 0 ? (
           <p>No events found.</p>
         ) : (
-          filteredEvents.map((event) => (
-            <div
-              key={event._id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "1rem",
-                marginBottom: "1rem",
-              }}
-            >
-              <h4>{event.title}</h4>
-              <p>
-                <strong>Status:</strong> {event.status}
-              </p>
-              <p>
-                <strong>Organizer:</strong> {event.organizer?.name} (
-                {event.organizer?.email})
-              </p>
-              <p>
-                <strong>Price:</strong> {event.price} SEK
-              </p>
-              <p>
-                <strong>Location:</strong> {event.location}
-              </p>
-              <p>
-                <strong>Time:</strong> {event.time}
-              </p>
-              <p>
-                <strong>Description:</strong> {event.description}
-              </p>
-              {event.adminComment && (
-                <p>
-                  <strong>Notes for update:</strong> {event.adminComment}
-                </p>
-              )}
+          <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
+            {filteredEvents.map((event) => (
+              <motion.div
+                key={event._id}
+                whileHover={{ scale: 1.02, y: -3 }}
+                transition={{ duration: 0.3 }}
+                className="event-wrapper"
+              >
+                {isMobile || isTablet ? (
+                  <SmallEventCard event={event}>
+                    <Link
+                      to={`/admin-dashboard/events/${event._id}`}
+                      className="button button--primary"
+                    >
+                      View Event
+                    </Link>
 
-              <Link to={`/admin-dashboard/events/${event._id}`} 
-                style={{ 
-                  textDecoration: "none",
-                  color: "white",
-                  background: "#007bff",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "6px",
-                  marginRight: "0.5rem" 
-                  }}>
-                View Event
-              </Link>
+                    {event.status === "pending" && (
+                      <>
+                        <button
+                          onClick={() => handleAction(event._id, "approve")}
+                          className="button button--primary"
+                        >
+                          ✅ Approve
+                        </button>
 
-              {event.status === "pending" && (
-                <div style={{ marginTop: "1rem" }}>
+                        <input
+                          type="text"
+                          placeholder="Short comment..."
+                          value={eventComments[event._id] || ""}
+                          onChange={(e) =>
+                            setEventComments((prev) => ({
+                              ...prev,
+                              [event._id]: e.target.value,
+                            }))
+                          }
+                        />
+                        <button
+                          className="button button--warning"
+                          onClick={() =>
+                            handleAction(
+                              event._id,
+                              "needs-update",
+                              eventComments[event._id] ||
+                                "Please fix details"
+                            )
+                          }
+                        >
+                          ✏️ Needs Update
+                        </button>
 
-                  {/* approve button */}
-                  <button
-                    onClick={() => handleAction(event._id, "approve")}
-                    style={{ marginRight: "0.5rem" }}
-                  >
-                    ✅ Approve
-                  </button>
+                        <button
+                          className="button button--danger"
+                          onClick={() =>
+                            handleAction(event._id, "reject", "Not suitable")
+                          }
+                        >
+                          ❌ Reject
+                        </button>
+                      </>
+                    )}
+                  </SmallEventCard>
+                ) : (
+                  <EventCard event={event}>
+                    {event.status === "pending" && (
+                      <>
+                        <button
+                          onClick={() => handleAction(event._id, "approve")}
+                          className="button button--primary"
+                        >
+                          ✅ Approve
+                        </button>
 
-                  {/* needs update button */}
-                  <input
-                    type="text"
-                    placeholder="Short comment..."
-                    value={eventComments[event._id] || ""}
-                    onChange={(e) =>
-                      setEventComments((prev) => ({ ...prev, [event._id]: e.target.value }))
-                    }
-                    style={{ marginRight: "0.5rem", padding: "0.25rem" }}
-                  />
-                  <button
-                    onClick={() =>
-                      handleAction(
-                        event._id,
-                        "needs-update",
-                        eventComments[event._id] || "Please fix details"
-                      )
-                    }
-                    style={{ marginRight: "0.5rem" }}
-                  >
-                    ✏️ Needs Update
-                  </button>
+                        <input
+                          type="text"
+                          placeholder="Short comment..."
+                          value={eventComments[event._id] || ""}
+                          onChange={(e) =>
+                            setEventComments((prev) => ({
+                              ...prev,
+                              [event._id]: e.target.value,
+                            }))
+                          }
+                        />
+                        <button
+                          className="button button--warning"
+                          onClick={() =>
+                            handleAction(
+                              event._id,
+                              "needs-update",
+                              eventComments[event._id] ||
+                                "Please fix details"
+                            )
+                          }
+                        >
+                          ✏️ Needs Update
+                        </button>
 
-                  {/* reject button */}
-                  <button
-                    onClick={() =>
-                      handleAction(event._id, "reject", "Not suitable")
-                    }
-                  >
-                    ❌ Reject
-                  </button>
-
-                </div>
-              )}
-            </div>
-          ))
+                        <button
+                          className="button button--danger"
+                          onClick={() =>
+                            handleAction(event._id, "reject", "Not suitable")
+                          }
+                        >
+                          ❌ Reject
+                        </button>
+                      </>
+                    )}
+                  </EventCard>
+                )}
+              </motion.div>
+            ))}
+          </div>
         )}
       </section>
-    </div>
+    </motion.div>
   );
 }

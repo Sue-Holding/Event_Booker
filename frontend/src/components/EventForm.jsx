@@ -103,6 +103,7 @@ export default function EventForm({
 
       <motion.button
         type="submit"
+        style={{ marginBottom: "1.5rem" }}
         className="button button--primary"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}

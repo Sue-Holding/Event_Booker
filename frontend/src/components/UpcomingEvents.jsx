@@ -45,26 +45,11 @@ export default function UpcomingEvents() {
     >
       <h2 className="title">Upcoming Events</h2>
 
-      <div className="event-grid">
+      <div className="small-grid">
             {events.map((event) => (
               <SmallEventCard key={event._id} event={event} />
             ))}
           </div>
-
-      {/* <div className="event-grid">
-        {events.map((event) => (
-          <motion.div
-            key={event._id}
-            whileHover={{ scale: 1.02 }}
-            className="event-card"
-          >
-            <h4>{event.title}</h4>
-            <p>{new Date(event.date).toLocaleDateString()}</p>
-            <p>{event.location}</p>
-          </motion.div>
-        ))}
-      </div> */}
-
     </motion.div>
   );
 }

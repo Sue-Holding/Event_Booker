@@ -49,7 +49,7 @@ export default function NewlyAdded() {
     transition={{ duration: 0.5 }}
   >
     <h2 className="title">Newly Added (Last 2 Days)</h2>
-    <div className="event-grid">
+    <div className="small-grid">
       {events.map((event) => (
         <SmallEventCard key={event._id} event={event} />
       ))}
