@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import '../styles/button.css';
+import '../styles/UserSettings.css';
 
-const API_URL = "http://localhost:5050"; // Replace with your backend URL
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function UserSettings() {
   const [users, setUsers] = useState([]);
@@ -123,122 +125,95 @@ export default function UserSettings() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="user-settings-container">
       <h2 className="title">User Settings</h2>
 
-      {/* New User Form */}
-      <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>
+      <form onSubmit={handleSubmit} className="user-form">
         <h3>Create New User</h3>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          style={{ marginRight: "0.5rem" }}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          style={{ marginRight: "0.5rem" }}
-        />
-        <select name="role" value={formData.role} onChange={handleChange} style={{ marginRight: "0.5rem" }}>
-          <option value="user">User</option>
-          <option value="organiser">Organiser</option>
-          <option value="admin">Admin</option>
-        </select>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          style={{ marginRight: "0.5rem" }}
-        />
-        <button type="submit">Create</button>
+        <div className="user-form-row">
+          <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
+          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+          <select name="role" value={formData.role} onChange={handleChange}>
+            <option value="user">User</option>
+            <option value="organiser">Organiser</option>
+            <option value="admin">Admin</option>
+          </select>
+          <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+          <button type="submit" className="button button--primary">Create</button>
+        </div>
       </form>
 
       {loading && <p>Loading users...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-
       {!loading && users.length === 0 && <p>No users found</p>}
 
       {users.length > 0 && (
-        <table border="1" cellPadding="8" style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>
-                  {editingUserId === user._id ? (
-                    <input
-                      value={editingData.name}
-                      onChange={(e) => setEditingData((prev) => ({ ...prev, name: e.target.value }))}
-                    />
-                  ) : (
-                    user.name
-                  )}
-                </td>
-                <td>
-                  {editingUserId === user._id ? (
-                    <input
-                      value={editingData.email}
-                      onChange={(e) => setEditingData((prev) => ({ ...prev, email: e.target.value }))}
-                    />
-                  ) : (
-                    user.email
-                  )}
-                </td>
-                <td>
-                  {editingUserId === user._id ? (
-                    <select
-                      value={editingData.role}
-                      onChange={(e) => setEditingData((prev) => ({ ...prev, role: e.target.value }))}
-                    >
-                      <option value="user">User</option>
-                      <option value="organiser">Organiser</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  ) : (
-                    user.role
-                  )}
-                </td>
-                <td>
-                  {editingUserId === user._id ? (
-                    <>
-                      <button onClick={() => updateUser(user._id)} style={{ marginRight: "0.5rem" }}>
-                        Save
-                      </button>
-                      <button onClick={cancelEditing}>Cancel</button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => startEditing(user)} style={{ marginRight: "0.5rem" }}>
-                        Edit
-                      </button>
-                      <button onClick={() => deleteUser(user._id)} style={{ color: "red" }}>
-                        Delete
-                      </button>
-                      </>
-                  )}
-                </td>
+        <div className="user-table-wrapper">
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td data-label="Name">
+                    {editingUserId === user._id ? (
+                      <input
+                        value={editingData.name}
+                        onChange={(e) => setEditingData((p) => ({ ...p, name: e.target.value }))}
+                      />
+                    ) : (
+                      user.name
+                    )}
+                  </td>
+                  <td data-label="Email">
+                    {editingUserId === user._id ? (
+                      <input
+                        value={editingData.email}
+                        onChange={(e) => setEditingData((p) => ({ ...p, email: e.target.value }))}
+                      />
+                    ) : (
+                      user.email
+                    )}
+                  </td>
+                  <td data-label="Role">
+                    {editingUserId === user._id ? (
+                      <select
+                        value={editingData.role}
+                        onChange={(e) => setEditingData((p) => ({ ...p, role: e.target.value }))}
+                      >
+                        <option value="user">User</option>
+                        <option value="organiser">Organiser</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    ) : (
+                      user.role
+                    )}
+                  </td>
+                  <td data-label="Actions" className="user-actions">
+                    {editingUserId === user._id ? (
+                      <>
+                        <button onClick={() => updateUser(user._id)} className="button button--primary">Save</button>
+                        <button onClick={cancelEditing} className="button button--warning">Cancel</button>
+                      </>
+                    ) : (
+                      <>
+                        <button onClick={() => startEditing(user)} className="button button--warning">Edit</button>
+                        <button onClick={() => deleteUser(user._id)} className="button button--danger">Delete</button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
       )}
     </div>
   );
