@@ -94,6 +94,15 @@ export default function EventSearch({ category: selectedCategory }) {
 
   const categories = [...new Set(events.map((event) => event.category))];
 
+  const enable3DEffect = !isMobile && !isTablet;
+
+  // Disable carousel on mobile and tablet
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      setViewMode("grid");
+    }
+  }, [isMobile, isTablet]);
+
   // new carousel and grid view - toogle
   return (
     <motion.div
@@ -103,6 +112,7 @@ export default function EventSearch({ category: selectedCategory }) {
       transition={{ duration: 0.6 }}
     >
       <h2 className="title">Search Events</h2>
+
       <div className="search-bar-container">
         <motion.input
           type="text"
@@ -138,14 +148,16 @@ export default function EventSearch({ category: selectedCategory }) {
           />
 
           {/* View mode toggle */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setViewMode(viewMode === "grid" ? "carousel" : "grid")}
-            className="view-toggle-btn"
-          >
-            {viewMode === "grid" ? "🌀 Carousel View" : "🔳 Grid View"}
-          </motion.button>
+          {!isMobile && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setViewMode(viewMode === "grid" ? "carousel" : "grid")}
+              className="view-toggle-btn"
+            >
+              {viewMode === "grid" ? "🌀 Carousel View" : "🔳 Grid View"}
+            </motion.button>
+          )}
         </div>
       </div>
 
@@ -173,11 +185,9 @@ export default function EventSearch({ category: selectedCategory }) {
                 <EventCard key={event._id} event={event} />
               )
             )}
-            {/* {filteredEvents.map((event) => (
-              <EventCard key={event._id} event={event} />
-            ))} */}
           </motion.div>
         ) : (
+        <div className="event-carousel-wrapper">
           <motion.div
             key="event-carousel"
             className="event-carousel-container"
@@ -186,40 +196,40 @@ export default function EventSearch({ category: selectedCategory }) {
             transition={{ duration: 0.6 }}
           >
             <Swiper
-              modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
+              modules={[Navigation, Pagination, Autoplay, ...(enable3DEffect ? [EffectCoverflow] : [])]}
+              // slidesPerView={enable3DEffect ? 'auto' : 1.2}
+              slidesPerView='auto'
+              centeredSlides={enable3DEffect}
               spaceBetween={30}
-              slidesPerView={1}
-              centeredSlides
               navigation
               pagination={{ clickable: true }}
-              autoplay={{ 
-                delay: 3500, 
-                disableOnInteraction: false, 
-              }}
-
-              speed={900}
+              autoplay={{ delay: 3500, disableOnInteraction: false }}
               loop
-              effect="coverflow"
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 200,
-                // depth: window.innerWidth < 600 ? 0 : 100,
-                modifier: 1,
-                slideShadows: false,
-              }}
+              effect={enable3DEffect ? "coverflow" : "slide"}
+              coverflowEffect={
+                enable3DEffect
+                  ? {
+                      rotate: 0,
+                      stretch: 50,
+                      depth: 200,
+                      // stretch: 0,
+                      // depth: 200,
+                      modifier: 1,
+                      slideShadows: false,
+                    }
+                  : undefined
+              }
 
               breakpoints={{
-                0: { slidesPerView: 1, spaceBetween: 15 },
-                480: { slidesPerView: 'auto', spaceBetween: 20 },
-                640: { slidesPerView: 'auto', spaceBetween: 25 },
+                0: { slidesPerView: 1.2, spaceBetween: 15, effect: 'slide' },
+                480: { slidesPerView: 1.5, spaceBetween: 20, effect: 'slide' },
                 768: { slidesPerView: 'auto', spaceBetween: 25 },
                 1024: { slidesPerView: 'auto', spaceBetween: 30 },
                 1280: { slidesPerView: 'auto', spaceBetween: 35 },
                 1600: { slidesPerView: 'auto', spaceBetween: 40 },
-                1920: { slidesPerView: 'auto', spaceBetween: 45 },
               }}
               
+            
               className="event-carousel"
               onSwiper={(swiper) => {
                 const container = swiper.el;
@@ -233,18 +243,6 @@ export default function EventSearch({ category: selectedCategory }) {
                 });
               }}
             >
-
-              {/* {filteredEvents.map((event) =>
-                isMobile ? (
-                  <SwiperSlide key={event._id}>
-                    <SmallEventCard event={event} />
-                  </SwiperSlide>
-                ) : (
-                  <SwiperSlide key={event._id}>
-                    <EventCard event={event} />
-                  </SwiperSlide>
-                )
-              )} */}
               {filteredEvents.map((event) => (
                 <SwiperSlide key={event._id}>
                   <EventCard event={event} />
@@ -252,6 +250,7 @@ export default function EventSearch({ category: selectedCategory }) {
               ))}
             </Swiper>
           </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </motion.div>
