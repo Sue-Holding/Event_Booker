@@ -95,6 +95,28 @@
   color: #fff;
 }
 
+.landing-form-modal select {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1); /* base background */
+  color: #fff; /* selected text */
+  appearance: none; /* remove default arrow styling for consistency */
+  transition: all 0.3s ease;
+}
+
+/* Options inside the select */
+.landing-form-modal select option {
+  background-color: rgba(20, 20, 30, 0.95); /* background for dropdown options */
+  color: #fff; /* text color */
+}
+
+/* Hovered option */
+.landing-form-modal select option:hover {
+  background-color: rgba(255, 0, 128, 0.2); /* highlight on hover */
+  color: #fff;
+}
+
 .landing-form-modal button {
   margin-top: 0.8rem;
   padding: 0.8rem;

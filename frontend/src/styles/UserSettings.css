@@ -32,6 +32,28 @@
   min-width: 150px;
 }
 
+.user-form select {
+  background: rgba(255, 255, 255, 0.15); /* base background */
+  color: #fff; /* selected text color */
+  border: none;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 150px;
+  transition: all 0.3s ease;
+  appearance: none;
+}
+
+.user-form select option {
+  background-color: rgba(20, 20, 30, 0.9); /* dropdown options bg */
+  color: #fff; /* text in dropdown */
+}
+
+.user-form select option:hover {
+  background-color: rgba(255, 0, 255, 0.2); /* hover highlight */
+  color: #fff;
+}
+
 .user-form input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }

@@ -47,6 +47,39 @@
   min-width: 150px;
 }
 
+.filters select {
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #333; /* dark grey background */
+  color: #fff; /* white text for selected option */
+  flex: 1;
+  min-width: 150px;
+  appearance: none; /* removes default browser arrow styling */
+  transition: all 0.3s ease;
+}
+
+/* Hover and focus on select itself */
+.filters select:hover,
+.filters select:focus {
+  background-color: #444; /* slightly lighter dark grey */
+  border-color: #888; /* subtle border highlight */
+  outline: none;
+}
+
+/* Options inside dropdown */
+.filters select option {
+  background-color: #333; /* match select background */
+  color: #fff; /* text color */
+  padding: 0.3rem 0.5rem;
+}
+
+/* Hovered option inside dropdown */
+.filters select option:hover {
+  background-color: #555; /* lighter grey for hover */
+  color: #fff; /* text remains readable */
+}
+
 .event-card {
   border: 1.5px solid rgba(255, 105, 180, 0.15);
   border-radius: 8px;

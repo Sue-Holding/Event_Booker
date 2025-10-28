@@ -16,6 +16,7 @@
 }
 
 .search-input {
+  color: #fff;
   width: 100%;
   padding: 0.8rem;
   font-size: 1rem;
@@ -36,22 +37,18 @@
 .filter-select {
   padding: 0.6rem 1rem;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: none;
   font-size: 1rem;
-  /* background-color: #f0f0f5; slightly off-white */
+  appearance: none;
+  background: rgba(255, 255, 255, 0.15);
   transition: all 0.3s ease;
-  /* color: #333; */
+  color: #fff;
   appearance: none;
 }
 
-.filter-select:hover,
-.filter-select:focus {
-  background: linear-gradient(90deg, #e1e1ff, #d6e0ff);
-  /* background-color: #e1e1ff; light highlight */
-  border-color: #007bff;
-  color: #222;
-  outline: none;
-  transform: scale(1.03);
+.filter-select option {
+  background-color: rgba(20, 20, 30, 0.9); /* dropdown options bg */
+  color: #fff;
 }
 
 .filter-date {
@@ -59,17 +56,20 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  /* background-color: #f0f0f5; */
   transition: all 0.3s ease;
-  /* color: #333; */
 }
 
 .filter-date:hover,
 .filter-date:focus {
-  background-color: #e1e1ff;
-  border-color: #007bff;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: 1px solid #ccc;
   outline: none;
-  color: #222;
+  color: #fff;
+}
+
+.search-input:hover {
+  border-color: rgba(255, 0, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.15);
 }
 
 .search-input,
