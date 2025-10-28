@@ -197,11 +197,13 @@ export default function EventSearch({ category: selectedCategory }) {
           >
             <Swiper
               modules={[Navigation, Pagination, Autoplay, ...(enable3DEffect ? [EffectCoverflow] : [])]}
-              // slidesPerView={enable3DEffect ? 'auto' : 1.2}
               slidesPerView='auto'
               centeredSlides={enable3DEffect}
               spaceBetween={30}
-              navigation
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
               pagination={{ clickable: true }}
               autoplay={{ delay: 3500, disableOnInteraction: false }}
               loop
@@ -229,7 +231,6 @@ export default function EventSearch({ category: selectedCategory }) {
                 1600: { slidesPerView: 'auto', spaceBetween: 40 },
               }}
               
-            
               className="event-carousel"
               onSwiper={(swiper) => {
                 const container = swiper.el;
@@ -249,6 +250,8 @@ export default function EventSearch({ category: selectedCategory }) {
                 </SwiperSlide>
               ))}
             </Swiper>
+            <div className="swiper-button-prev"></div>
+            <div className="swiper-button-next"></div>
           </motion.div>
           </div>
         )}
