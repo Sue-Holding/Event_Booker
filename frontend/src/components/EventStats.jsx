@@ -90,6 +90,7 @@ export default function EventStats() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
  return (
+  <motion.div>
     <motion.div
       className="event-stats-container"
       initial={{ opacity: 0 }}
@@ -130,8 +131,11 @@ export default function EventStats() {
           <option value="cancelled">Cancelled</option>
         </select>
       </section>
+    </motion.div>
 
+  
       {/* Event List */}
+    <motion.div>
       <section>
         <h2 className="title">Events ({filteredEvents.length})</h2>
 
@@ -254,5 +258,6 @@ export default function EventStats() {
         )}
       </section>
     </motion.div>
+  </motion.div>
   );
 }
