@@ -1,5 +1,46 @@
 /* General Dashboard Layout */
-.dashboard-container {
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0a0a0f 0%, #1a001f 70%, #000 100%);
+  color: #fff;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-content.full-width {
+  max-width: 100%; /* allow content to fill screen width */
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-container {
+  width: 100%;
+  max-width: none; /* override parent max-width */
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Animated fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* .dashboard-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,22 +69,12 @@
 .dashboard-container:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
+} */
 
-/* ✨ Animated fade-in */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-/* 🌟 Shared card styling */
-.dashboard-card {
+
+/* Shared card styling */
+/* .dashboard-card {
   background: white;
   border-radius: 1rem;
   padding: 1.5rem;
@@ -56,52 +87,7 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
-/* 💙 Admin Theme */
-/* .admin-theme {
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-  color: white;
-}
 
-.admin-theme .dashboard-card {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-} */
-
-/* 💜 Organiser Theme */
-/* .organiser-theme {
-  background: linear-gradient(135deg, #7e22ce, #db2777);
-  color: white;
-}
-
-.organiser-theme .dashboard-card {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-} */
-
-/* 🧡 User Theme */
-/* .user-theme {
-  background: linear-gradient(135deg, #0f766e, #f97316);
-  color: white;
-}
-
-.user-theme .dashboard-card {
-  background: rgba(255, 255, 255, 0.2);
-} */
-
-/* 🧭 Role Header Bar */
-.role-banner {
-  text-align: center;
-  padding: 1rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.1);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  margin-bottom: 1rem;
-  border-radius: 0 0 1rem 1rem;
-}
 
 .dashboard-page {
   min-height: 100vh;
@@ -118,7 +104,7 @@
   border-radius: 16px;
   padding: 2rem;
   margin: 2rem auto;
-  max-width: 900px;
+  max-width: 100%;
   box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
 }
 
@@ -140,5 +126,5 @@
 
 .floating-word:hover {
   color: #ff47c2;
-}
+}  */
 

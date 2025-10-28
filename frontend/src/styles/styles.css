@@ -22,6 +22,15 @@ main {
   flex: 1;
 }
 
+.page-container {
+  width: 100%;
+  max-width: 1200px; /* or none if you want full width */
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+
 .dashboard-page {
   display: flex;
   flex-direction: column;
@@ -234,7 +243,7 @@ header h2:hover {
   gap: 1.5rem;
   margin-top: 1.5rem;
   width: 100%;
-  justify-items: center;
+  /* justify-items: center; */
   align-items: start;
 }
 
@@ -248,7 +257,7 @@ header h2:hover {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
-  justify-items: center;
+  /* justify-items: center; */
   align-items: start;
 }
 

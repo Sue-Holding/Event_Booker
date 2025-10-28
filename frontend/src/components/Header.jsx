@@ -20,12 +20,6 @@ export default function Header() {
     }
   }, []);
 
-  const roleToDashboard = {
-    attendee: "user-dashboard",
-    organiser: "organiser-dashboard",
-    admin: "admin-dashboard",
-  };
-
   const roleLinks = {
     attendee: [
       { name: "Home", path: "home" },
@@ -66,7 +60,17 @@ export default function Header() {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="header"
     >
-      {/* <motion.nav
+      <div className="header-left">
+        <div
+          className="hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span style={{ fontSize: "1.5rem" }}>☰</span>
+        </div>
+        <h2 className="logo">Eventure</h2>
+      </div>
+
+      <motion.nav
         className="nav"
         initial="hidden"
         animate="visible"
@@ -77,43 +81,15 @@ export default function Header() {
             transition: { delayChildren: 0.3, staggerChildren: 0.15 },
           },
         }}
-      > */}
-        
-
-        {/* Hamburger for mobile */}
-        <div className="header-left">
-        <div
-          className="hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span style={{ fontSize: "1.5rem" }}>
-            ☰
-          </span>
-        </div>
-        <h2 className="logo">Eventure</h2>
-        </div>
-
-        <motion.nav
-          className="nav"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { delayChildren: 0.3, staggerChildren: 0.15 },
-            },
-          }}
-        >
-
+      >
         <ul className={`links ${menuOpen ? "show" : ""}`}>
           {user &&
             roleLinks[user.role]?.map((link) => (
               <motion.li key={link.path} whileHover={{ scale: 1.1 }}>
-                <Link 
-                  to={`/${roleToDashboard[user.role]}/${link.path}`}
+                <Link
+                  to={`/dashboard/${link.path}`}
                   onClick={() => setMenuOpen(false)}
-                  >
+                >
                   {link.name}
                 </Link>
               </motion.li>
@@ -127,11 +103,9 @@ export default function Header() {
             </motion.li>
           ) : (
             <motion.li whileHover={{ scale: 1.1 }}>
-              <Link 
-                to="/" 
-                className="nav-link">
-                  Login/Register
-                </Link>
+              <Link to="/" className="nav-link">
+                Login/Register
+              </Link>
             </motion.li>
           )}
         </ul>

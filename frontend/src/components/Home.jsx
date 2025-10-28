@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import UpcomingEvents from "./UpcomingEvents"; //attendee
 import NewlyAdded from "./NewlyAdded"; //attendee
 import UpdatesRequired from "../components/UpdatesRequired"; //organiser - events to be amended for admin approval
@@ -10,13 +10,15 @@ import PendingAccounts from "../components/PendingAccounts"; //admin - requests 
 
 export default function Home() {
     const [user, setUser] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    // const [selectedCategory, setSelectedCategory] = useState(null);
     const navigate = useNavigate();
+    const { selectedCategory } = useOutletContext() || {};
   
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
-        navigate("/login");
+        // navigate("/login");
+        navigate("/");
         return;
         }
 
@@ -26,7 +28,7 @@ export default function Home() {
         } catch (err) {
         console.error("Invalid token");
         localStorage.removeItem("token");
-        navigate("/login");
+        navigate("/");
         }
     }, [navigate]);
 
@@ -34,8 +36,29 @@ export default function Home() {
 
 return (
     <div className="home-page">
+        {user.role === "attendee" && (
+            <>
+            <UpcomingEvents />
+            <NewlyAdded />
+            </>
+        )}
 
-        {user.role === "attendee" && <UpcomingEvents />}
+        {user.role === "organiser" && (
+            <>
+            <UpdatesRequired />
+            <MyEventsStats />
+            </>
+        )}
+
+        {user.role === "admin" && (
+            <>
+            <PendingEvents />
+            <AdminPendingActions />
+            <PendingAccounts />
+            <MyEventsStats />
+            </>
+        )}
+        {/* {user.role === "attendee" && <UpcomingEvents />}
         {user.role === "attendee" && <NewlyAdded />}
 
         {user.role === "organiser" && <UpdatesRequired />}
@@ -44,9 +67,8 @@ return (
         {user.role === "admin" && <PendingEvents />}
         {user.role === "admin" && <AdminPendingActions />}
         {user.role === "admin" && <PendingAccounts />}
-        {user.role === "admin" && <MyEventsStats />}
+        {user.role === "admin" && <MyEventsStats />} */}
 
     </div>
-
-)
+    );
 }

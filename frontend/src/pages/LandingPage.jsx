@@ -59,9 +59,9 @@ export default function LandingPage() {
       // loging redirect
       if (data.token) {
         localStorage.setItem("token", data.token);
-        if (data.role === "admin") window.location.href = "/admin-dashboard";
-        else if (data.role === "organiser") window.location.href = "/organiser-dashboard";
-        else window.location.href = "/user-dashboard";
+        if (data.role === "admin") window.location.href = "/dashboard";
+        else if (data.role === "organiser") window.location.href = "/dashboard";
+        else window.location.href = "/dashboard";
       }
     } catch (err) {
       setMessage(err.message);
