@@ -68,7 +68,7 @@ export default function FavEvent() {
 
   return (
     <motion.div
-      className="page-container"
+      className="page-container full-width"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

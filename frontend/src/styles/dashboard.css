@@ -14,18 +14,29 @@
   flex-direction: column;
 }
 
-.dashboard-content.full-width {
-  max-width: 100%; /* allow content to fill screen width */
+.dashboard-content.full-width,
+.page-container.full-width {
+  width: 100%;
+  max-width: none;
   margin: 0 auto;
-  padding: 2rem;
+  padding-top: 2rem;
 }
 
-.page-container {
-  width: 100%;
-  max-width: none; /* override parent max-width */
-  margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
+/* Desktop and large laptop view: limit content width to ~80% */
+@media (min-width: 1024px) {
+  .dashboard-content.full-width,
+  .page-container.full-width {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* Optional: extra-large screens, even narrower */
+@media (min-width: 1440px) {
+  .dashboard-content.full-width,
+  .page-container.full-width {
+    max-width: 70%;
+  }
 }
 
 /* Animated fade-in */
@@ -39,92 +50,4 @@
     transform: translateY(0);
   }
 }
-
-/* .dashboard-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(135deg, #f8fafc, #eef2ff);
-  font-family: "Inter", sans-serif;
-  color: #1e1e2f;
-}
-
-.dashboard-content {
-  flex: 1;
-  padding: 2rem;
-  animation: fadeIn 0.5s ease;
-}
-
-.dashboard-container {
-  padding: 2rem;
-  border-radius: 12px;
-  background: #f9f9f9;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
-  margin: 2rem auto;
-  min-height: 80vh;
-  transition: all 0.3s ease;
-}
-
-.dashboard-container:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-} */
-
-
-
-/* Shared card styling */
-/* .dashboard-card {
-  background: white;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.dashboard-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-}
-
-
-
-.dashboard-page {
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-  background: radial-gradient(circle at top, #0a0a0f 0%, #1a001f 70%, #000 100%);
-  color: #fff;
-}
-
-.glass-card {
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 100%;
-  box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
-}
-
-.floating-words {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.floating-word {
-  position: absolute;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  pointer-events: auto;
-  transition: color 0.3s ease;
-}
-
-.floating-word:hover {
-  color: #ff47c2;
-}  */
 

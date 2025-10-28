@@ -26,10 +26,14 @@ main {
   width: 100%;
   max-width: 1200px; /* or none if you want full width */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   box-sizing: border-box;
 }
 
+.page-container.full-width {
+  max-width: none;
+  padding: 0;
+}
 
 .dashboard-page {
   display: flex;

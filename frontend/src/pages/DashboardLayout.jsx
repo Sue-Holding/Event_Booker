@@ -32,7 +32,6 @@ export default function DashboardLayout() {
 
       <main className="dashboard-content full-width">
         <Outlet context={{ user, selectedCategory }} />
-        {/* <Outlet user={user} selectedCategory={selectedCategory} /> */}
       </main>
 
       <Footer />
