@@ -1,6 +1,6 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 // import EventCard from "./EventCard";
 import '../styles/button.css';
 
@@ -28,13 +28,13 @@ export default function EventDetails(bookingRef) {
   }, [id]);
 
   const toggleFavourite = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return alert("You must be logged in");
+    const token = localStorage.getItem('token');
+    if (!token) return alert('You must be logged in');
 
     setLoading(true);
     try {
       const url = `${API_URL}/users/favorites/${id}`;
-      const method = isFavourite ? "DELETE" : "POST";
+      const method = isFavourite ? 'DELETE' : 'POST';
 
       const res = await fetch(url, {
         method,
@@ -49,26 +49,26 @@ export default function EventDetails(bookingRef) {
       }
     } catch (err) {
       console.error(err);
-      alert("Error updating favourites");
+      alert('Error updating favourites');
     }
     setLoading(false);
   };
 
   const bookEvent = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return alert("Please log in first!");
+    const token = localStorage.getItem('token');
+    if (!token) return alert('Please log in first!');
 
     try {
-      const confirmed = window.confirm("Proceed with dummy payment?");
+      const confirmed = window.confirm('Proceed with dummy payment?');
       if (!confirmed) return;
 
       const res = await fetch(`${API_URL}/users/bookings/${id}`, {
-        method: "POST",
+        method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Booking failed");
+      if (!res.ok) throw new Error(data.message || 'Booking failed');
 
       alert(`✅ Booked! Reference: ${data.bookingRef}`);
     } catch (err) {
@@ -81,7 +81,7 @@ export default function EventDetails(bookingRef) {
 
   return (
     <motion.div
-      style={{ padding: "2rem", maxWidth: "700px", margin: "auto" }}
+      style={{ padding: '2rem', maxWidth: '700px', margin: 'auto' }}
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -92,20 +92,20 @@ export default function EventDetails(bookingRef) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="button button--primary"
-        style={{ marginBottom: "1.5rem" }}
+        style={{ marginBottom: '1.5rem' }}
       >
         ← Back to Search
       </motion.button>
 
-      {/* Event Info and buttons*/}
+      {/* Event Info and buttons */}
       {/* <EventCard event={event}> */}
       {event.imageUrl && (
         <div className="event-card-image">
           {event.imageUrl ? (
-          <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
-        ) : (
-          <span className="no-image">No image</span>
-        )}
+            <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
+          ) : (
+            <span className="no-image">No image</span>
+          )}
         </div>
       )}
       <h3>{event.title}</h3>
@@ -120,36 +120,37 @@ export default function EventDetails(bookingRef) {
         <strong>Location:</strong> {event.location}
       </p>
       <p>
-        <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
+        <strong>Price:</strong> {event.price === 0 ? 'Free' : `${event.price} SEK`}
       </p>
       <p>
         <strong>Event status:</strong> {event.status}
       </p>
-  
 
       {/* only show booking ref if is exists */}
-        {/* {bookingRef && (
+      {/* {bookingRef && (
         <p>
           <strong>Booking Ref:</strong> {bookingRef}
         </p>
       )} */}
-        <p>
+      <p>
         <strong>Description:</strong> {event.description}
       </p>
-        <div style={{ 
-          display: "flex", 
-          gap: "1rem", 
-          marginTop: "1rem", 
-          justifyContent: "center" 
-        }}>
-      <motion.button
+      <div
+        style={{
+          display: 'flex',
+          gap: '1rem',
+          marginTop: '1rem',
+          justifyContent: 'center',
+        }}
+      >
+        <motion.button
           onClick={toggleFavourite}
           disabled={loading}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           className="button button--primary"
         >
-          {isFavourite ? "★ Remove Favourite" : "☆ Add Favourite"}
+          {isFavourite ? '★ Remove Favourite' : '☆ Add Favourite'}
         </motion.button>
 
         <motion.button
@@ -160,7 +161,7 @@ export default function EventDetails(bookingRef) {
         >
           🎟️ Book Event
         </motion.button>
-        </div>
+      </div>
       {/* </EventCard> */}
     </motion.div>
   );

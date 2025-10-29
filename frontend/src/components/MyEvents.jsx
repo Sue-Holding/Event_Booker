@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import EventCard from "./EventCard";
-import SmallEventCard from "./SmallEventCard";
-import EventForm from "./EventForm";
-import useViewport from "../hooks/useViewport";
-import "../styles/MyEvents.css";
-import "../styles/styles.css";
-import "../styles/button.css";
-import "../styles/grid.css";
+import React, { useEffect, useState } from 'react';
+import EventCard from './EventCard';
+import SmallEventCard from './SmallEventCard';
+import EventForm from './EventForm';
+import useViewport from '../hooks/useViewport';
+import '../styles/MyEvents.css';
+import '../styles/styles.css';
+import '../styles/button.css';
+import '../styles/grid.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -16,8 +16,8 @@ export default function MyEvents() {
   const [editingEventId, setEditingEventId] = useState(null);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
-  const token = localStorage.getItem("token");
+  const [message, setMessage] = useState('');
+  const token = localStorage.getItem('token');
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function MyEvents() {
       const data = await res.json();
       setCategories(data.categories || []);
     } catch (err) {
-      console.error("Failed to fetch categories", err);
+      console.error('Failed to fetch categories', err);
     }
   };
 
@@ -42,7 +42,7 @@ export default function MyEvents() {
       });
       const data = await res.json();
       setEvents(Array.isArray(data) ? data : data.events || []);
-      if (!res.ok) throw new Error(data.message || "Failed to fetch events");
+      if (!res.ok) throw new Error(data.message || 'Failed to fetch events');
     } catch (err) {
       setMessage(`❌ ${err.message}`);
     } finally {
@@ -56,26 +56,26 @@ export default function MyEvents() {
 
   const handleCancel = async (eventId) => {
     const confirmCancel = window.confirm(
-      "⚠️ Are you sure you wish to cancel this event? This cannot be undone."
+      '⚠️ Are you sure you wish to cancel this event? This cannot be undone.',
     );
     if (!confirmCancel) return;
 
-    const reason = prompt("Please enter a reason for cancellation:");
+    const reason = prompt('Please enter a reason for cancellation:');
     if (!reason) return;
 
     try {
       const res = await fetch(`${API_URL}/organiser/events/${eventId}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ cancelReason: reason }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to cancel event");
+      if (!res.ok) throw new Error(data.message || 'Failed to cancel event');
 
-      setMessage("✅ Event cancelled successfully!");
+      setMessage('✅ Event cancelled successfully!');
       setTimeout(fetchEvents, 500);
     } catch (err) {
       setMessage(`❌ ${err.message}`);
@@ -93,15 +93,15 @@ export default function MyEvents() {
       }
 
       const res = await fetch(`${API_URL}/organiser/events/${eventId}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: { Authorization: `Bearer ${token}` },
         body: dataToSend,
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update event");
+      if (!res.ok) throw new Error(data.message || 'Failed to update event');
 
-      setMessage("✅ Event updated and sent for admin review!");
+      setMessage('✅ Event updated and sent for admin review!');
       setEditingEventId(null);
       fetchEvents();
     } catch (err) {
@@ -111,20 +111,20 @@ export default function MyEvents() {
 
   if (loading) return <p>Loading events...</p>;
 
-
   return (
-  <div className="">
-    <h2 className="title">My Events</h2>
-    {message && <p>{message}</p>}
+    <div className="">
+      <h2 className="title">My Events</h2>
+      {message && <p>{message}</p>}
 
-    {events.length === 0 ? (
-      <p>No events found.</p>
-    ) : (
-
-        <div className={`
-          ${isMobile || isTablet ? "small-grid" : "event-grid"}
-          ${editingEventId ? "editing" : ""}
-        `}>
+      {events.length === 0 ? (
+        <p>No events found.</p>
+      ) : (
+        <div
+          className={`
+          ${isMobile || isTablet ? 'small-grid' : 'event-grid'}
+          ${editingEventId ? 'editing' : ''}
+        `}
+        >
           {events.map((event) => {
             const isEditing = editingEventId === event._id;
 
@@ -143,7 +143,7 @@ export default function MyEvents() {
                         initialData={{
                           ...event,
                           date: event.date?.slice(0, 10),
-                          organiserComment: "",
+                          organiserComment: '',
                         }}
                         categories={categories}
                         onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
@@ -158,7 +158,7 @@ export default function MyEvents() {
                     </>
                   ) : (
                     <>
-                      {event.status === "cancelled" || event.status === "rejected" ? (
+                      {event.status === 'cancelled' || event.status === 'rejected' ? (
                         <p className="cancelled-label">
                           This event has been cancelled or rejected.
                         </p>
@@ -182,67 +182,64 @@ export default function MyEvents() {
                   )}
                 </SmallEventCard>
               );
-            } else {
-              return (
-                <EventCard 
-                  key={event._id} 
-                  event={event} 
-                  showDetailsButton={true} 
-                  isExpanded={expandedId === event._id || isEditing}
-                  fullExpand={isEditing}>
-                  {isEditing ? (
-                    <>
-                      <EventForm
-                        initialData={{
-                          ...event,
-                          date: event.date?.slice(0, 10),
-                          organiserComment: "",
-                        }}
-                        categories={categories}
-                        onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
-                        submitLabel="Save & Submit"
-                      />
-                      <button
-                        onClick={() => setEditingEventId(null)}
-                        className="button button--warning"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      {event.status === "cancelled" || event.status === "rejected" ? (
-                        <p className="cancelled-label">
-                          This event has been cancelled or rejected.
-                        </p>
-                      ) : (
-                        <div className="card-footer">
-                          <button
-                            onClick={() => setEditingEventId(event._id)}
-                            className="button button--primary"
-                          >
-                            Update
-                          </button>
-                          <button
-                            onClick={() => handleCancel(event._id)}
-                            className="button button--warning"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </EventCard>
-              );
             }
+            return (
+              <EventCard
+                key={event._id}
+                event={event}
+                showDetailsButton
+                isExpanded={expandedId === event._id || isEditing}
+                fullExpand={isEditing}
+              >
+                {isEditing ? (
+                  <>
+                    <EventForm
+                      initialData={{
+                        ...event,
+                        date: event.date?.slice(0, 10),
+                        organiserComment: '',
+                      }}
+                      categories={categories}
+                      onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
+                      submitLabel="Save & Submit"
+                    />
+                    <button
+                      onClick={() => setEditingEventId(null)}
+                      className="button button--warning"
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {event.status === 'cancelled' || event.status === 'rejected' ? (
+                      <p className="cancelled-label">This event has been cancelled or rejected.</p>
+                    ) : (
+                      <div className="card-footer">
+                        <button
+                          onClick={() => setEditingEventId(event._id)}
+                          className="button button--primary"
+                        >
+                          Update
+                        </button>
+                        <button
+                          onClick={() => handleCancel(event._id)}
+                          className="button button--warning"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </EventCard>
+            );
           })}
         </div>
-  )}
-  </div>
-);
+      )}
+    </div>
+  );
 }
-
 
 //   return (
 //     <div>
@@ -380,87 +377,84 @@ export default function MyEvents() {
 //   );
 // }
 
-
-
-
-      // <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
-      //   {events.map((event) => (
-      //     <React.Fragment key={event._id}>
-      //       {editingEventId === event._id ? (
-      //         <div className="event-card-wrapper edit-mode">
-      //           <EventForm
-      //             initialData={{
-      //               ...event,
-      //               date: event.date?.slice(0, 10),
-      //               organiserComment: "",
-      //             }}
-      //             categories={categories}
-      //             onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
-      //             submitLabel="Save & Submit"
-      //           />
-      //           <button
-      //             onClick={() => setEditingEventId(null)}
-      //             className="button button--warning"
-      //           >
-      //             Cancel
-      //           </button>
-      //         </div>
-      //       ) : isMobile || isTablet ? (
-      //         <SmallEventCard 
-      //           event={event} 
-      //           showDetailsButton={true}
-      //           isExpanded={expandedId === event._id}
-      //           onToggle={() => handleCardToggle(event._id)}
-      //           fullExpand={editingEventId === event._id}
-      //           >
-      //           {event.status === "cancelled" || event.status === "rejected" ? (
-      //             <p className="cancelled-label">
-      //               This event has been cancelled or rejected.
-      //             </p>
-      //           ) : (
-      //             <div className="card-footer">
-      //               <button
-      //                 onClick={() => setEditingEventId(event._id)}
-      //                 className="button button--primary"
-      //               >
-      //                 Update
-      //               </button>
-      //               <button
-      //                 onClick={() => handleCancel(event._id)}
-      //                 className="button button--warning"
-      //               >
-      //                 Cancel
-      //               </button>
-      //             </div>
-      //           )}
-      //         </SmallEventCard>
-      //       ) : (
-      //         <EventCard event={event} showDetailsButton={true}>
-      //           {event.status === "cancelled" || event.status === "rejected" ? (
-      //             <p className="cancelled-label">
-      //               This event has been cancelled or rejected.
-      //             </p>
-      //           ) : (
-      //             <div className="card-footer">
-      //               <button
-      //                 onClick={() => setEditingEventId(event._id)}
-      //                 className="button button--primary"
-      //               >
-      //                 Update
-      //               </button>
-      //               <button
-      //                 onClick={() => handleCancel(event._id)}
-      //                 className="button button--warning"
-      //               >
-      //                 Cancel
-      //               </button>
-      //             </div>
-      //           )}
-      //         </EventCard>
-      //       )}
-      //     </React.Fragment>
-      //   ))}
-      // </div>
+// <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
+//   {events.map((event) => (
+//     <React.Fragment key={event._id}>
+//       {editingEventId === event._id ? (
+//         <div className="event-card-wrapper edit-mode">
+//           <EventForm
+//             initialData={{
+//               ...event,
+//               date: event.date?.slice(0, 10),
+//               organiserComment: "",
+//             }}
+//             categories={categories}
+//             onSubmit={(updatedData) => handleUpdateSubmit(event._id, updatedData)}
+//             submitLabel="Save & Submit"
+//           />
+//           <button
+//             onClick={() => setEditingEventId(null)}
+//             className="button button--warning"
+//           >
+//             Cancel
+//           </button>
+//         </div>
+//       ) : isMobile || isTablet ? (
+//         <SmallEventCard
+//           event={event}
+//           showDetailsButton={true}
+//           isExpanded={expandedId === event._id}
+//           onToggle={() => handleCardToggle(event._id)}
+//           fullExpand={editingEventId === event._id}
+//           >
+//           {event.status === "cancelled" || event.status === "rejected" ? (
+//             <p className="cancelled-label">
+//               This event has been cancelled or rejected.
+//             </p>
+//           ) : (
+//             <div className="card-footer">
+//               <button
+//                 onClick={() => setEditingEventId(event._id)}
+//                 className="button button--primary"
+//               >
+//                 Update
+//               </button>
+//               <button
+//                 onClick={() => handleCancel(event._id)}
+//                 className="button button--warning"
+//               >
+//                 Cancel
+//               </button>
+//             </div>
+//           )}
+//         </SmallEventCard>
+//       ) : (
+//         <EventCard event={event} showDetailsButton={true}>
+//           {event.status === "cancelled" || event.status === "rejected" ? (
+//             <p className="cancelled-label">
+//               This event has been cancelled or rejected.
+//             </p>
+//           ) : (
+//             <div className="card-footer">
+//               <button
+//                 onClick={() => setEditingEventId(event._id)}
+//                 className="button button--primary"
+//               >
+//                 Update
+//               </button>
+//               <button
+//                 onClick={() => handleCancel(event._id)}
+//                 className="button button--warning"
+//               >
+//                 Cancel
+//               </button>
+//             </div>
+//           )}
+//         </EventCard>
+//       )}
+//     </React.Fragment>
+//   ))}
+// </div>
 
 //     )}
 //   </div>

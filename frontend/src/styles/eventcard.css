@@ -18,9 +18,9 @@
   box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
   padding: 1.2rem;
 
-  transition: 
+  transition:
     all 0.3s ease,
-    transform 0.2s ease, 
+    transform 0.2s ease,
     box-shadow 0.2s ease,
     border-color 0.25s ease;
 
@@ -30,9 +30,9 @@
 
 /* When editing, let the event card stretch fully in the grid */
 .event-card.full-expand {
-  grid-column: 1 / -1;       /* span the entire grid width */
+  grid-column: 1 / -1; /* span the entire grid width */
   width: 100%;
-  max-width: 900px;          /* optional - control max expansion */
+  max-width: 900px; /* optional - control max expansion */
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -66,12 +66,14 @@
 
 @keyframes glowPulse {
   from {
-    box-shadow: 0 0 20px rgba(255, 105, 180, 0.4),
-                0 0 40px rgba(255, 0, 255, 0.3);
+    box-shadow:
+      0 0 20px rgba(255, 105, 180, 0.4),
+      0 0 40px rgba(255, 0, 255, 0.3);
   }
   to {
-    box-shadow: 0 0 35px rgba(255, 105, 180, 0.8),
-                0 0 70px rgba(255, 0, 255, 0.5);
+    box-shadow:
+      0 0 35px rgba(255, 105, 180, 0.8),
+      0 0 70px rgba(255, 0, 255, 0.5);
   }
 }
 
@@ -129,20 +131,19 @@
 }
 
 .event-card-wrapper {
-  width: 100%;       /* span the available space */
+  width: 100%; /* span the available space */
   grid-column: auto; /* normal flow unless edit-mode */
-  margin: 0;         /* remove any margin */
-  padding: 0;        /* remove padding */
-  display: block;    /* or flex if needed */
+  margin: 0; /* remove any margin */
+  padding: 0; /* remove padding */
+  display: block; /* or flex if needed */
 }
 
 .event-card-wrapper.edit-mode {
   grid-column: 1 / -1; /* span all columns in edit mode */
-  max-width: 100%;     /* prevent wrapping limits */
-  margin: 0 auto;      /* center in grid */
-  padding: 0;          /* remove padding */
+  max-width: 100%; /* prevent wrapping limits */
+  margin: 0 auto; /* center in grid */
+  padding: 0; /* remove padding */
 }
-
 
 /* Card footer hover reveal */
 .card-footer {

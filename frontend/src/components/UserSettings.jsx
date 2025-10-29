@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import '../styles/button.css';
 import '../styles/UserSettings.css';
 
@@ -7,16 +7,16 @@ const API_URL = process.env.REACT_APP_API_URL;
 export default function UserSettings() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    role: "user",
-    password: "",
+    name: '',
+    email: '',
+    role: 'user',
+    password: '',
   });
   const [editingUserId, setEditingUserId] = useState(null);
-  const [editingData, setEditingData] = useState({ name: "", email: "", role: "" });
-  const token = localStorage.getItem("token");
+  const [editingData, setEditingData] = useState({ name: '', email: '', role: '' });
+  const token = localStorage.getItem('token');
 
   // Fetch all users
   const fetchUsers = async () => {
@@ -29,11 +29,11 @@ export default function UserSettings() {
       });
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.message || "Failed to fetch users");
+        throw new Error(data.message || 'Failed to fetch users');
       }
       const data = await res.json();
       setUsers(data);
-      setError("");
+      setError('');
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -56,19 +56,19 @@ export default function UserSettings() {
     e.preventDefault();
     try {
       const res = await fetch(`${API_URL}/admin/users`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to create user");
+      if (!res.ok) throw new Error(data.message || 'Failed to create user');
 
       setUsers([...users, data.user]);
-      setFormData({ name: "", email: "", role: "user", password: "" });
+      setFormData({ name: '', email: '', role: 'user', password: '' });
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -82,24 +82,24 @@ export default function UserSettings() {
 
   const cancelEditing = () => {
     setEditingUserId(null);
-    setEditingData({ name: "", email: "", role: "" });
+    setEditingData({ name: '', email: '', role: '' });
   };
 
   const updateUser = async (id) => {
     try {
       const res = await fetch(`${API_URL}/admin/users/${id}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(editingData),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update user");
+      if (!res.ok) throw new Error(data.message || 'Failed to update user');
 
       setUsers(users.map((user) => (user._id === id ? data.user : user)));
-      
+
       cancelEditing();
     } catch (err) {
       console.error(err);
@@ -108,15 +108,15 @@ export default function UserSettings() {
   };
 
   const deleteUser = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
       const res = await fetch(`${API_URL}/admin/users/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!res.ok) throw new Error("Failed to delete user");
+      if (!res.ok) throw new Error('Failed to delete user');
       setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
       console.error(err);
@@ -131,20 +131,43 @@ export default function UserSettings() {
       <form onSubmit={handleSubmit} className="user-form">
         <h3>Create New User</h3>
         <div className="user-form-row">
-          <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
-          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
           <select name="role" value={formData.role} onChange={handleChange}>
             <option value="user">User</option>
             <option value="organiser">Organiser</option>
             <option value="admin">Admin</option>
           </select>
-          <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-          <button type="submit" className="button button--primary">Create</button>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit" className="button button--primary">
+            Create
+          </button>
         </div>
       </form>
 
       {loading && <p>Loading users...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       {!loading && users.length === 0 && <p>No users found</p>}
 
       {users.length > 0 && (
@@ -198,20 +221,36 @@ export default function UserSettings() {
                   <td data-label="Actions" className="user-actions">
                     {editingUserId === user._id ? (
                       <>
-                        <button onClick={() => updateUser(user._id)} className="button button--primary">Save</button>
-                        <button onClick={cancelEditing} className="button button--warning">Cancel</button>
+                        <button
+                          onClick={() => updateUser(user._id)}
+                          className="button button--primary"
+                        >
+                          Save
+                        </button>
+                        <button onClick={cancelEditing} className="button button--warning">
+                          Cancel
+                        </button>
                       </>
                     ) : (
                       <>
-                        <button onClick={() => startEditing(user)} className="button button--warning">Edit</button>
-                        <button onClick={() => deleteUser(user._id)} className="button button--danger">Delete</button>
+                        <button
+                          onClick={() => startEditing(user)}
+                          className="button button--warning"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => deleteUser(user._id)}
+                          className="button button--danger"
+                        >
+                          Delete
+                        </button>
                       </>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
       )}

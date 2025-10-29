@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import SmallEventCard from "./SmallEventCard";
-import "../styles/grid.css";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import SmallEventCard from './SmallEventCard';
+import '../styles/grid.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -22,13 +22,11 @@ export default function NewlyAdded() {
         // Filter events created within the last 2 days and approved
         const recent = data.filter((event) => {
           const createdAt = new Date(event.createdAt);
-          return createdAt >= twoDaysAgo && event.status === "approved";
+          return createdAt >= twoDaysAgo && event.status === 'approved';
         });
 
         // Sort by createdAt descending (newest first)
-        const sorted = recent.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
+        const sorted = recent.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         setEvents(sorted);
       } catch (err) {
@@ -44,19 +42,17 @@ export default function NewlyAdded() {
   if (events.length === 0) return <p>No new events added in the last 2 days.</p>;
 
   return (
-  <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-  >
-    <h2 className="title">Newly Added (Last 2 Days)</h2>
-    <div className="small-grid">
-      {events.map((event) => (
-        <SmallEventCard key={event._id} event={event} />
-      ))}
-    </div>
-  </motion.div>
-);
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2 className="title">Newly Added (Last 2 Days)</h2>
+      <div className="small-grid">
+        {events.map((event) => (
+          <SmallEventCard key={event._id} event={event} />
+        ))}
+      </div>
+    </motion.div>
+  );
 }
-
-

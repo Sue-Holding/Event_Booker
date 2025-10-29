@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import SmallEventCard from "./SmallEventCard";
-import "../styles/grid.css";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import SmallEventCard from './SmallEventCard';
+import '../styles/grid.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -47,10 +47,10 @@ export default function UpcomingEvents() {
       <h2 className="title">Upcoming Events</h2>
 
       <div className="small-grid">
-            {events.map((event) => (
-              <SmallEventCard key={event._id} event={event} />
-            ))}
-          </div>
+        {events.map((event) => (
+          <SmallEventCard key={event._id} event={event} />
+        ))}
+      </div>
     </motion.div>
   );
 }

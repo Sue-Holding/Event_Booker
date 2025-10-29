@@ -3,7 +3,7 @@ import '../styles/CommentThread.css';
 export default function CommentThread({ comments = [] }) {
   if (!comments.length) return <p>No comments yet.</p>;
 
-  console.log("COMMENTS:", comments);
+  console.log('COMMENTS:', comments);
   return (
     <div className="comment-thread">
       <h5>Comments</h5>
@@ -20,12 +20,8 @@ export default function CommentThread({ comments = [] }) {
           return (
             <li key={i} className={`comment ${comment.userRole}`}>
               <div className="comment-header">
-                <strong>
-                  {comment.userRole === "admin" ? "Admin" : "Organiser"}
-                </strong>
-                {formattedDate && (
-                  <span className="comment-date"> — {formattedDate}</span>
-                )}
+                <strong>{comment.userRole === 'admin' ? 'Admin' : 'Organiser'}</strong>
+                {formattedDate && <span className="comment-date"> — {formattedDate}</span>}
               </div>
               <p className="comment-text">{comment.text}</p>
             </li>

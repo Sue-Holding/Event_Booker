@@ -1,11 +1,11 @@
 // new event post from organiser flow here
-import { useState } from "react";
+import { useState } from 'react';
 import '../styles/CommentThread.css';
 
 export default function AdminPendingActions() {
   const [events, setEvents] = useState([]);
   const [eventComments, setEventComments] = useState({});
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   const API_URL = process.env.REACT_APP_API_URL;
 
@@ -19,9 +19,9 @@ export default function AdminPendingActions() {
 
   const handleAction = async (id, action, comment) => {
     await fetch(`${API_URL}/admin/events/${id}/approve`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ action, comment }),
@@ -34,12 +34,12 @@ export default function AdminPendingActions() {
       {events.map((event) => (
         <div key={event._id} className="event-card">
           <h4>{event.title}</h4>
-          {event.status === "pending" && (
+          {event.status === 'pending' && (
             <div>
               <input
                 type="text"
                 placeholder="Comment for organiser..."
-                value={eventComments[event._id] || ""}
+                value={eventComments[event._id] || ''}
                 onChange={(e) =>
                   setEventComments((prev) => ({
                     ...prev,
@@ -47,11 +47,21 @@ export default function AdminPendingActions() {
                   }))
                 }
               />
-              <button onClick={() => handleAction(event._id, "needs-update", eventComments[event._id] || "Please fix details")}>
+              <button
+                onClick={() =>
+                  handleAction(
+                    event._id,
+                    'needs-update',
+                    eventComments[event._id] || 'Please fix details',
+                  )
+                }
+              >
                 ✏️ Needs Update
               </button>
-              <button onClick={() => handleAction(event._id, "approve")}>✅ Approve</button>
-              <button onClick={() => handleAction(event._id, "reject", "Not suitable")}>❌ Reject</button>
+              <button onClick={() => handleAction(event._id, 'approve')}>✅ Approve</button>
+              <button onClick={() => handleAction(event._id, 'reject', 'Not suitable')}>
+                ❌ Reject
+              </button>
             </div>
           )}
         </div>

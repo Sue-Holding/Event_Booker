@@ -1,13 +1,13 @@
-import { useEffect, useState, useCallback } from "react";
-import EventForm from "./EventForm";
-import CommentThread from "./CommentThread";
-import "../styles/button.css";
-import "../styles/PendingEvents.css"; // reuse same styles for consistency
+import { useEffect, useState, useCallback } from 'react';
+import EventForm from './EventForm';
+import CommentThread from './CommentThread';
+import '../styles/button.css';
+import '../styles/PendingEvents.css'; // reuse same styles for consistency
 
 export default function UpdatesRequired() {
   const [events, setEvents] = useState([]);
   const [editingEventId, setEditingEventId] = useState(null);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const API_URL = process.env.REACT_APP_API_URL;
 
   const fetchEvents = useCallback(async () => {
@@ -30,12 +30,12 @@ export default function UpdatesRequired() {
   const handleUpdate = async (eventId, updatedData) => {
     try {
       const dataToSend = new FormData();
-      Object.entries({ ...updatedData, status: "pending" }).forEach(([key, value]) => {
+      Object.entries({ ...updatedData, status: 'pending' }).forEach(([key, value]) => {
         if (value !== undefined && value !== null) dataToSend.append(key, value);
       });
 
       await fetch(`${API_URL}/organiser/events/${eventId}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: { Authorization: `Bearer ${token}` },
         body: dataToSend,
       });
@@ -44,7 +44,7 @@ export default function UpdatesRequired() {
       fetchEvents();
     } catch (err) {
       console.error(err);
-      alert("Failed to update event");
+      alert('Failed to update event');
     }
   };
 
@@ -63,7 +63,7 @@ export default function UpdatesRequired() {
               initialData={{
                 ...event,
                 date: event.date?.slice(0, 10),
-                organiserComment: "",
+                organiserComment: '',
               }}
               categories={[]}
               onSubmit={(updatedData) => handleUpdate(event._id, updatedData)}
@@ -72,11 +72,21 @@ export default function UpdatesRequired() {
           ) : (
             <div key={event._id} className="event-card">
               <h3>{event.title}</h3>
-              <p><strong>Status:</strong> {event.status}</p>
-              <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-              <p><strong>Location:</strong> {event.location}</p>
-              <p><strong>Price:</strong> {event.price} SEK</p>
-              <p><strong>Description:</strong> {event.description}</p>
+              <p>
+                <strong>Status:</strong> {event.status}
+              </p>
+              <p>
+                <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Location:</strong> {event.location}
+              </p>
+              <p>
+                <strong>Price:</strong> {event.price} SEK
+              </p>
+              <p>
+                <strong>Description:</strong> {event.description}
+              </p>
 
               <CommentThread comments={event.adminComments} />
 
@@ -87,7 +97,7 @@ export default function UpdatesRequired() {
                 ✏️ Edit & Resubmit
               </button>
             </div>
-          )
+          ),
         )
       )}
     </div>

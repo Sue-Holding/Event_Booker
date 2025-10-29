@@ -15,7 +15,8 @@
   backdrop-filter: blur(10px);
   margin-top: 1.5rem;
 }
-.event-card h3, p {
+.event-card h3,
+p {
   text-align: left;
 }
 
@@ -46,7 +47,7 @@
 
 /* Buttons */
 .pending-event-actions button,
-.pending-event-actions input[type="text"],
+.pending-event-actions input[type='text'],
 .pending-event-actions a.view-event-btn {
   flex: unset;
   min-width: 120px;
@@ -62,7 +63,7 @@
 }
 
 /* Input field */
-.pending-event-actions input[type="text"] {
+.pending-event-actions input[type='text'] {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff;
@@ -78,7 +79,7 @@
   }
 
   .pending-event-actions button,
-  .pending-event-actions input[type="text"],
+  .pending-event-actions input[type='text'],
   .pending-event-actions a.view-event-btn {
     width: 100%;
   }

@@ -1,8 +1,8 @@
-import { Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { Navigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 export default function ProtectedRoute({ children, allowedRoles }) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   if (!token) {
     return <Navigate to="/" replace />; // not logged in → back to landing
@@ -17,7 +17,7 @@ export default function ProtectedRoute({ children, allowedRoles }) {
 
     return children; // user is allowed
   } catch (err) {
-    console.error("Invalid token", err);
+    console.error('Invalid token', err);
     return <Navigate to="/" replace />;
   }
 }

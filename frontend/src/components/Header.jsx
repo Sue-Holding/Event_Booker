@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
-import { motion } from "framer-motion";
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { motion } from 'framer-motion';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -9,63 +9,60 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setUser(decoded);
       } catch {
-        localStorage.removeItem("token");
+        localStorage.removeItem('token');
       }
     }
   }, []);
 
   const roleLinks = {
     attendee: [
-      { name: "Home", path: "home" },
-      { name: "Search Events", path: "search-events" },
-      { name: "My Favourites", path: "favourites" },
-      { name: "My Booked Events", path: "booked-events" },
+      { name: 'Home', path: 'home' },
+      { name: 'Search Events', path: 'search-events' },
+      { name: 'My Favourites', path: 'favourites' },
+      { name: 'My Booked Events', path: 'booked-events' },
     ],
     organiser: [
-      { name: "Home", path: "home" },
-      { name: "Search Events", path: "search-events" },
-      { name: "My Favourites", path: "favourites" },
-      { name: "My Booked Events", path: "booked-events" },
-      { name: "My Events", path: "my-events" },
-      { name: "Add New Event", path: "events/new" },
+      { name: 'Home', path: 'home' },
+      { name: 'Search Events', path: 'search-events' },
+      { name: 'My Favourites', path: 'favourites' },
+      { name: 'My Booked Events', path: 'booked-events' },
+      { name: 'My Events', path: 'my-events' },
+      { name: 'Add New Event', path: 'events/new' },
     ],
     admin: [
-      { name: "Home", path: "home" },
-      { name: "Search Events", path: "search-events" },
-      { name: "My Favourites", path: "favourites" },
-      { name: "My Booked Events", path: "booked-events" },
-      { name: "My Events", path: "my-events" },
-      { name: "Add New Event", path: "events/new" },
-      { name: "Event Stats", path: "event-stats" },
-      { name: "User Settings", path: "user-settings" },
+      { name: 'Home', path: 'home' },
+      { name: 'Search Events', path: 'search-events' },
+      { name: 'My Favourites', path: 'favourites' },
+      { name: 'My Booked Events', path: 'booked-events' },
+      { name: 'My Events', path: 'my-events' },
+      { name: 'Add New Event', path: 'events/new' },
+      { name: 'Event Stats', path: 'event-stats' },
+      { name: 'User Settings', path: 'user-settings' },
     ],
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setUser(null);
-    navigate("/");
+    navigate('/');
   };
 
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       className="header"
     >
       <div className="header-left">
-        <div
-          className="hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span style={{ fontSize: "1.5rem" }}>☰</span>
+        <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          <span style={{ fontSize: '1.5rem' }}>☰</span>
         </div>
         <h2 className="logo">Eventure</h2>
       </div>
@@ -82,14 +79,11 @@ export default function Header() {
           },
         }}
       >
-        <ul className={`links ${menuOpen ? "show" : ""}`}>
+        <ul className={`links ${menuOpen ? 'show' : ''}`}>
           {user &&
             roleLinks[user.role]?.map((link) => (
               <motion.li key={link.path} whileHover={{ scale: 1.1 }}>
-                <Link
-                  to={`/dashboard/${link.path}`}
-                  onClick={() => setMenuOpen(false)}
-                >
+                <Link to={`/dashboard/${link.path}`} onClick={() => setMenuOpen(false)}>
                   {link.name}
                 </Link>
               </motion.li>

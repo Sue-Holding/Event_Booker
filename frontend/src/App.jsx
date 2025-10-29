@@ -1,19 +1,19 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import HomePage from "./pages/HomePage";
-import DashboardLayout from "./pages/DashboardLayout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./components/Home";
-import EventSearch from "./components/EventSearch";
-import EventDetails from "./components/EventDetails";
-import FavEvents from "./components/FavEvents";
-import BookedEvents from "./components/BookedEvents";
-import AddNewEvent from "./components/AddNewEvent";
-import MyEvents from "./components/MyEvents";
-import EventStats from "./components/EventStats";
-import UserSettings from "./components/UserSettings";
-import "./styles/styles.css";
-import "./styles/button.css";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import HomePage from './pages/HomePage';
+import DashboardLayout from './pages/DashboardLayout';
+import ProtectedRoute from './components/ProtectedRoute';
+import Home from './components/Home';
+import EventSearch from './components/EventSearch';
+import EventDetails from './components/EventDetails';
+import FavEvents from './components/FavEvents';
+import BookedEvents from './components/BookedEvents';
+import AddNewEvent from './components/AddNewEvent';
+import MyEvents from './components/MyEvents';
+import EventStats from './components/EventStats';
+import UserSettings from './components/UserSettings';
+import './styles/styles.css';
+import './styles/button.css';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
         <Route
           path="/dashboard/*"
           element={
-            <ProtectedRoute allowedRoles={["attendee", "organiser", "admin"]}>
+            <ProtectedRoute allowedRoles={['attendee', 'organiser', 'admin']}>
               <DashboardLayout />
             </ProtectedRoute>
           }
@@ -44,7 +44,7 @@ function App() {
           <Route
             path="events/new"
             element={
-              <ProtectedRoute allowedRoles={["organiser", "admin"]}>
+              <ProtectedRoute allowedRoles={['organiser', 'admin']}>
                 <AddNewEvent />
               </ProtectedRoute>
             }
@@ -52,7 +52,7 @@ function App() {
           <Route
             path="my-events"
             element={
-              <ProtectedRoute allowedRoles={["organiser", "admin"]}>
+              <ProtectedRoute allowedRoles={['organiser', 'admin']}>
                 <MyEvents />
               </ProtectedRoute>
             }
@@ -62,7 +62,7 @@ function App() {
           <Route
             path="event-stats"
             element={
-              <ProtectedRoute allowedRoles={["admin"]}>
+              <ProtectedRoute allowedRoles={['admin']}>
                 <EventStats />
               </ProtectedRoute>
             }
@@ -70,14 +70,14 @@ function App() {
           <Route
             path="user-settings"
             element={
-              <ProtectedRoute allowedRoles={["admin"]}>
+              <ProtectedRoute allowedRoles={['admin']}>
                 <UserSettings />
               </ProtectedRoute>
             }
           />
 
-            {/* redirect to homepage if not authorized to view a page */}
-          <Route path="*" element={<Navigate to ="/dashboard/home" />} />
+          {/* redirect to homepage if not authorized to view a page */}
+          <Route path="*" element={<Navigate to="/dashboard/home" />} />
         </Route>
       </Routes>
     </Router>

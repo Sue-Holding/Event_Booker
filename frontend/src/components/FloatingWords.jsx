@@ -1,11 +1,8 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
-const defaultCategories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
+const defaultCategories = ['Music', 'Kids', 'Sport', 'Food', 'Tech', 'Art'];
 
-export default function FloatingWords({ 
-  categories = defaultCategories, 
-  onSelect 
-}) {
+export default function FloatingWords({ categories = defaultCategories, onSelect }) {
   return (
     <div className="floating-words">
       {categories.map((cat, i) => (

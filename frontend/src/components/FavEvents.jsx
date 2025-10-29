@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import EventCard from "./EventCard";
-import SmallEventCard from "./SmallEventCard";
-import useViewport from "../hooks/useViewport";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import EventCard from './EventCard';
+import SmallEventCard from './SmallEventCard';
+import useViewport from '../hooks/useViewport';
 import '../styles/button.css';
 import '../styles/styles.css';
-import "../styles/grid.css";
+import '../styles/grid.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -17,7 +17,7 @@ export default function FavEvent() {
 
   useEffect(() => {
     const fetchFavorites = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       if (!token) {
         setLoading(false);
         return;
@@ -31,7 +31,7 @@ export default function FavEvent() {
         });
 
         const data = await res.json();
-        if (!res.ok) throw new Error(data.message || "Failed to fetch favourites");
+        if (!res.ok) throw new Error(data.message || 'Failed to fetch favourites');
 
         setFavorites(data.favorites || []);
       } catch (err) {
@@ -44,32 +44,31 @@ export default function FavEvent() {
     fetchFavorites();
   }, []);
 
-    const handleCardToggle = (id) => {
+  const handleCardToggle = (id) => {
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-
   const removeFavorite = async (eventId) => {
-      const token = localStorage.getItem("token");
-      if (!token) return;
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-      try {
-        const res = await fetch(`${API_URL}/users/favorites/${eventId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    try {
+      const res = await fetch(`${API_URL}/users/favorites/${eventId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || "Failed to remove favourite");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to remove favourite');
 
-        // Update local state to reflect removal
-        setFavorites((prev) => prev.filter((fav) => fav._id !== eventId));
-      } catch (err) {
-        console.error(err);
-      }
-    };
+      // Update local state to reflect removal
+      setFavorites((prev) => prev.filter((fav) => fav._id !== eventId));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
 
@@ -85,22 +84,22 @@ export default function FavEvent() {
       {favorites.length === 0 ? (
         <p>No favourite events yet.</p>
       ) : (
-        <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
+        <div className={isMobile || isTablet ? 'small-grid' : 'event-grid'}>
           {favorites.map((event) => (
             <motion.div
               key={event._id}
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
-              style={{ position: "relative" }}
+              style={{ position: 'relative' }}
               className="event-wrapper"
             >
               {isMobile || isTablet ? (
-                <SmallEventCard 
+                <SmallEventCard
                   event={event}
-                  showDetailsButton={true}
+                  showDetailsButton
                   isExpanded={expandedId === event._id}
                   onToggle={() => handleCardToggle(event._id)}
-                  >
+                >
                   <button
                     onClick={() => removeFavorite(event._id)}
                     className="button button--warning"
@@ -109,14 +108,14 @@ export default function FavEvent() {
                   </button>
                 </SmallEventCard>
               ) : (
-              <EventCard event={event}>
-                <button
-                  onClick={() => removeFavorite(event._id)}
-                  className="button button--warning"
-                >
-                  ✖ Remove from Favourites
-                </button>
-              </EventCard>
+                <EventCard event={event}>
+                  <button
+                    onClick={() => removeFavorite(event._id)}
+                    className="button button--warning"
+                  >
+                    ✖ Remove from Favourites
+                  </button>
+                </EventCard>
               )}
             </motion.div>
           ))}

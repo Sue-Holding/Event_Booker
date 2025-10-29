@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import "../styles/ImageDropZone.css";
+import { useState, useRef } from 'react';
+import '../styles/ImageDropZone.css';
 
 export default function ImageDropZone({ onFileSelect, defaultPreview }) {
   const [previewUrl, setPreviewUrl] = useState(defaultPreview || null);
@@ -12,7 +12,7 @@ export default function ImageDropZone({ onFileSelect, defaultPreview }) {
   };
 
   const handleFile = (file) => {
-    if (!file.type.startsWith("image/")) return;
+    if (!file.type.startsWith('image/')) return;
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreviewUrl(reader.result);

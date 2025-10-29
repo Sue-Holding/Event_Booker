@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import "../styles/smallEventCard.css"; // use the small card CSS
-import "../styles/button.css";
-import "../styles/grid.css";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/smallEventCard.css'; // use the small card CSS
+import '../styles/button.css';
+import '../styles/grid.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function MyEventsStats() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
-  const token = localStorage.getItem("token");
+  const [message, setMessage] = useState('');
+  const token = localStorage.getItem('token');
 
-  const role = token ? JSON.parse(atob(token.split(".")[1])).role : null;
+  const role = token ? JSON.parse(atob(token.split('.')[1])).role : null;
 
   useEffect(() => {
     fetchEvents();
@@ -25,7 +25,7 @@ export default function MyEventsStats() {
       });
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || "Failed to fetch events");
+      if (!res.ok) throw new Error(data.message || 'Failed to fetch events');
 
       setEvents(Array.isArray(data) ? data : data.events || []);
     } catch (err) {
@@ -46,11 +46,11 @@ export default function MyEventsStats() {
       <div className="small-grid">
         {events.map((event) => {
           const eventLink =
-            role === "organiser"
+            role === 'organiser'
               ? `/organiser-dashboard/events/${event._id}`
-              : role === "admin"
-              ? `/admin-dashboard/events/${event._id}`
-              : `/user-dashboard/events/${event._id}`;
+              : role === 'admin'
+                ? `/admin-dashboard/events/${event._id}`
+                : `/user-dashboard/events/${event._id}`;
 
           return (
             <div key={event._id} className="event-card small">

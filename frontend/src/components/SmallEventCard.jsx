@@ -1,59 +1,60 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import "../styles/smallEventCard.css";
-import "../styles/button.css";
-import "../styles/grid.css";
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import '../styles/smallEventCard.css';
+import '../styles/button.css';
+import '../styles/grid.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function SmallEventCard({ event, isExpanded, onToggle, children, fullExpand }) {
   // Get user role from localStorage or JWT token
   let role = null;
-  const storedUser = localStorage.getItem("user");
+  const storedUser = localStorage.getItem('user');
   if (storedUser) {
     role = JSON.parse(storedUser).role;
   }
 
   if (!role) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
+        const payload = JSON.parse(atob(token.split('.')[1]));
         role = payload.role;
       } catch (err) {
-        console.error("Failed to decode token for role", err);
+        console.error('Failed to decode token for role', err);
       }
     }
   }
 
   // Route based on role
   const eventLink =
-    role === "organiser"
+    role === 'organiser'
       ? `/dashboard/events/${event._id}`
-      : role === "admin"
-      ? `/dashboard/events/${event._id}`
-      : `/dashboard/events/${event._id}`;
+      : role === 'admin'
+        ? `/dashboard/events/${event._id}`
+        : `/dashboard/events/${event._id}`;
 
   const handleCardClick = (e) => {
     // Prevent toggling when clicking inside buttons or links
-    if (e.target.closest("button") || e.target.closest("a")) return;
+    if (e.target.closest('button') || e.target.closest('a')) return;
     onToggle?.();
   };
 
   return (
     <motion.div
-      className={`event-card small ${isExpanded ? "expanded" : ""} ${fullExpand ? "full-expand" : ""}`}
+      className={`event-card small ${isExpanded ? 'expanded' : ''} ${fullExpand ? 'full-expand' : ''}`}
       onClick={handleCardClick}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      whileHover={{ scale: fullExpand ? 1 : 1.03, boxShadow: fullExpand ? "none" : "0 8px 20px rgba(0,0,0,0.15)" }}
+      whileHover={{
+        scale: fullExpand ? 1 : 1.03,
+        boxShadow: fullExpand ? 'none' : '0 8px 20px rgba(0,0,0,0.15)',
+      }}
       transition={{ duration: 0.3 }}
     >
       {/* 🧩 When fullExpand, show only the children (like your UpdateEventForm) */}
       {fullExpand ? (
-        <div className="full-expand-content">
-          {children}
-        </div>
+        <div className="full-expand-content">{children}</div>
       ) : (
         <>
           {event.imageUrl && (

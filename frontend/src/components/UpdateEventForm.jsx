@@ -1,8 +1,8 @@
 // form sent to organiser after pending event comes back with comments for updates
-import { useState } from "react";
+import { useState } from 'react';
 import '../styles/button.css';
-import "../styles/UpdateEventForm.css";
-import ImageDropZone from "./ImageDropZone";
+import '../styles/UpdateEventForm.css';
+import ImageDropZone from './ImageDropZone';
 
 export default function UpdateEventForm({ event, onUpdate }) {
   const [formData, setFormData] = useState({
@@ -13,12 +13,12 @@ export default function UpdateEventForm({ event, onUpdate }) {
     location: event.location,
     category: event.category,
     price: event.price,
-    newCategory: "",
-    organiserComment: "",
+    newCategory: '',
+    organiserComment: '',
     image: null, // optional image upload
   });
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -34,7 +34,7 @@ export default function UpdateEventForm({ event, onUpdate }) {
     };
 
     onUpdate(event._id, payload);
-    setMessage("✅ Changes submitted! Waiting for admin approval.");
+    setMessage('✅ Changes submitted! Waiting for admin approval.');
   };
 
   return (
@@ -44,8 +44,7 @@ export default function UpdateEventForm({ event, onUpdate }) {
       {/* Show latest admin comment */}
       {event.adminComments?.length > 0 && (
         <p className="admin-feedback">
-          <strong>Admin comment:</strong>{" "}
-          {event.adminComments[event.adminComments.length - 1].text}
+          <strong>Admin comment:</strong> {event.adminComments[event.adminComments.length - 1].text}
         </p>
       )}
 
@@ -69,20 +68,9 @@ export default function UpdateEventForm({ event, onUpdate }) {
         />
 
         <div className="grid grid-cols-2 gap-3">
-          <input
-            type="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-          />
+          <input type="date" name="date" value={formData.date} onChange={handleChange} required />
 
-          <input
-            type="time"
-            name="time"
-            value={formData.time}
-            onChange={handleChange}
-          />
+          <input type="time" name="time" value={formData.time} onChange={handleChange} />
         </div>
 
         <input

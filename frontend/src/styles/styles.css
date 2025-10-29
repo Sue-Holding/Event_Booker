@@ -7,13 +7,14 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: #f8f9fb;
   color: #333;
   min-height: 100vh;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -68,7 +69,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 2px solid #ff69b4;;
+  border-bottom: 2px solid #ff69b4;
 }
 
 .header-left {
@@ -105,7 +106,7 @@ nav li {
 
 nav a:hover {
   color: #ff69b4;
-} 
+}
 
 nav a,
 .nav-link,
@@ -167,7 +168,7 @@ nav a:hover::after,
     width: calc(100% - 40px);
     gap: 0.8rem;
     margin-top: 0.5rem;
-    background: rgba(30,30,45,0.95);
+    background: rgba(30, 30, 45, 0.95);
     padding: 1rem 20px;
     position: absolute;
     top: 60px;
@@ -195,7 +196,6 @@ nav a:hover::after,
     /* padding-left: 20px;  */
   }
 }
-
 
 /* Footer */
 footer {
@@ -226,8 +226,17 @@ footer a:hover {
 }
 
 @keyframes neonPulse {
-  0%, 100% { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4; }
-  50% { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
+  0%,
+  100% {
+    text-shadow:
+      0 0 5px #ff69b4,
+      0 0 10px #ff69b4;
+  }
+  50% {
+    text-shadow:
+      0 0 10px #ff69b4,
+      0 0 20px #ff69b4;
+  }
 }
 
 header h2:hover {

@@ -121,7 +121,6 @@
   transition: background 0.2s;
 }
 
-
 /* Responsive */
 @media (max-width: 768px) {
   .filters {

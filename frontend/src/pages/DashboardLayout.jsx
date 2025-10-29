@@ -1,26 +1,26 @@
-import { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 // import FloatingWords from "../components/FloatingWords";
-import "../styles/dashboard.css";
+import '../styles/dashboard.css';
 
-const categories = ["Music", "Kids", "Sport", "Food", "Tech", "Art"];
+const categories = ['Music', 'Kids', 'Sport', 'Food', 'Tech', 'Art'];
 
 export default function DashboardLayout() {
   const [user, setUser] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) return;
 
     try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
+      const payload = JSON.parse(atob(token.split('.')[1]));
       setUser({ name: payload.name, role: payload.role });
     } catch (err) {
-      console.error("Invalid token");
-      localStorage.removeItem("token");
+      console.error('Invalid token');
+      localStorage.removeItem('token');
     }
   }, []);
 

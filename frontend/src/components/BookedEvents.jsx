@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import EventCard from "./EventCard";
-import SmallEventCard from "./SmallEventCard";
-import useViewport from "../hooks/useViewport";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import EventCard from './EventCard';
+import SmallEventCard from './SmallEventCard';
+import useViewport from '../hooks/useViewport';
 import '../styles/button.css';
 import '../styles/styles.css';
 
@@ -16,7 +16,7 @@ export default function BookedEvents() {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       if (!token) {
         setLoading(false);
         return;
@@ -30,7 +30,7 @@ export default function BookedEvents() {
         });
 
         const data = await res.json();
-        if (!res.ok) throw new Error(data.message || "Failed to fetch booked events");
+        if (!res.ok) throw new Error(data.message || 'Failed to fetch booked events');
 
         setBookings(data.bookedEvents || []);
       } catch (err) {
@@ -48,23 +48,23 @@ export default function BookedEvents() {
   };
 
   const cancelBooking = async (bookingId) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) return;
 
     try {
       const res = await fetch(`${API_URL}/users/bookings/${bookingId}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to cancel booking");
+      if (!res.ok) throw new Error(data.message || 'Failed to cancel booking');
 
       // Update local state
       setBookings((prev) => prev.filter((b) => b._id !== bookingId));
-      alert("Booking canceled successfully!");
+      alert('Booking canceled successfully!');
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -85,11 +85,11 @@ export default function BookedEvents() {
       {bookings.length === 0 ? (
         <p>You haven’t booked any events yet.</p>
       ) : (
-        <div className={isMobile || isTablet ? "small-grid" : "event-grid"}>
+        <div className={isMobile || isTablet ? 'small-grid' : 'event-grid'}>
           {bookings.map((b) => {
             // Check if event data exists
             if (!b.event || !b.event._id) {
-              console.error("Invalid event data:", b);
+              console.error('Invalid event data:', b);
               return null; // Skip rendering this booking
             }
 
@@ -101,32 +101,23 @@ export default function BookedEvents() {
                 className="event-wrapper"
               >
                 {isMobile || isTablet ? (
-                  <SmallEventCard 
-                    event={b.event} 
+                  <SmallEventCard
+                    event={b.event}
                     bookingRef={b.bookingRef}
-                    showDetailsButton={true}
+                    showDetailsButton
                     isExpanded={expandedId === b.event._id}
                     onToggle={() => handleCardToggle(b.event._id)}
                   >
-                    <button
-                      onClick={() => cancelBooking(b._id)}
-                      className="button button--warning"
-                    >
+                    <button onClick={() => cancelBooking(b._id)} className="button button--warning">
                       ❌ Cancel
                     </button>
                   </SmallEventCard>
                 ) : (
-                <EventCard
-                  event={b.event}
-                  bookingRef={b.bookingRef}
-                >
-                  <button
-                    onClick={() => cancelBooking(b._id)}
-                    className="button button--warning"
-                  >
-                    ❌ Cancel Booking
-                  </button>
-                </EventCard>
+                  <EventCard event={b.event} bookingRef={b.bookingRef}>
+                    <button onClick={() => cancelBooking(b._id)} className="button button--warning">
+                      ❌ Cancel Booking
+                    </button>
+                  </EventCard>
                 )}
               </motion.div>
             );

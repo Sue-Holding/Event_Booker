@@ -1,24 +1,24 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import "../styles/eventcard.css";
-import "../styles/button.css";
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import '../styles/eventcard.css';
+import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function EventCard({ event, bookingRef, onCancel, children, fullExpand }) {
   // Determine user role
   let role = null;
-  const storedUser = localStorage.getItem("user");
+  const storedUser = localStorage.getItem('user');
   if (storedUser) role = JSON.parse(storedUser).role;
 
   if (!role) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
+        const payload = JSON.parse(atob(token.split('.')[1]));
         role = payload.role;
       } catch (err) {
-        console.error("Failed to decode token for role", err);
+        console.error('Failed to decode token for role', err);
       }
     }
   }
@@ -28,10 +28,13 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
 
   return (
     <motion.div
-      className={`event-card ${fullExpand ? "full-expand" : ""}`}
+      className={`event-card ${fullExpand ? 'full-expand' : ''}`}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      whileHover={{ scale: fullExpand ? 1 : 1.03, boxShadow: fullExpand ? "none" : "0 8px 20px rgba(0,0,0,0.15)" }}
+      whileHover={{
+        scale: fullExpand ? 1 : 1.03,
+        boxShadow: fullExpand ? 'none' : '0 8px 20px rgba(0,0,0,0.15)',
+      }}
       transition={{ duration: 0.4 }}
     >
       {/* Desktop: when fullExpand, show only children */}
@@ -46,16 +49,32 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
           )}
           <h3>{event.title}</h3>
           <p>{event.category}</p>
-          <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-          <p><strong>Time:</strong> {event.time}</p>
-          <p><strong>Location:</strong> {event.location}</p>
-          <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}</p>
-          <p><strong>Event status:</strong> {event.status}</p>
+          <p>
+            <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+          </p>
+          <p>
+            <strong>Time:</strong> {event.time}
+          </p>
+          <p>
+            <strong>Location:</strong> {event.location}
+          </p>
+          <p>
+            <strong>Price:</strong> {event.price === 0 ? 'Free' : `${event.price} SEK`}
+          </p>
+          <p>
+            <strong>Event status:</strong> {event.status}
+          </p>
 
-          {bookingRef && <p><strong>Booking Ref:</strong> {bookingRef}</p>}
+          {bookingRef && (
+            <p>
+              <strong>Booking Ref:</strong> {bookingRef}
+            </p>
+          )}
 
           <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-            <Link to={eventLink} className="button button--primary">View Event</Link>
+            <Link to={eventLink} className="button button--primary">
+              View Event
+            </Link>
           </motion.div>
 
           {onCancel && (
@@ -65,7 +84,7 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {bookingRef ? "❌ Cancel Booking" : "✖ Remove from Favourites"}
+              {bookingRef ? '❌ Cancel Booking' : '✖ Remove from Favourites'}
             </motion.button>
           )}
 
@@ -75,21 +94,19 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
             </motion.div>
           )} */}
 
-            <motion.div 
-         className="card-footer"
-         initial={{ opacity: 0, height: 0}}
-         animate={{ opacity: 1, height: "auto" }}
-         transition={{ duration: 0.3 }}
-         >
-         {children}
-       </motion.div>
-
+          <motion.div
+            className="card-footer"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            transition={{ duration: 0.3 }}
+          >
+            {children}
+          </motion.div>
         </>
       )}
     </motion.div>
   );
 }
-
 
 // import { motion } from "framer-motion";
 // import { Link } from "react-router-dom";
@@ -100,7 +117,7 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
 // const API_URL = process.env.REACT_APP_API_URL;
 
 // export default function EventCard({ event, bookingRef, onCancel, children }) {
-  
+
 //   let role = null;
 //   const storedUser = localStorage.getItem("user");
 //   if (storedUser) {
@@ -163,7 +180,6 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
 //       <p>
 //         <strong>Event status:</strong> {event.status}
 //       </p>
-  
 
 //       {/* only show booking ref if is exists */}
 //         {bookingRef && (
@@ -172,15 +188,14 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
 //         </p>
 //       )}
 
-      
 //       <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
 //         <Link to={eventLink} className="button button--primary">
 //           View Event
 //         </Link>
 //       </motion.div>
-      
+
 //       {onCancel && (
-//         <motion.button 
+//         <motion.button
 //           className="button button--warning remove-btn inside-card"
 //           onClick={onCancel}
 //           whileHover={{ scale: 1.05 }}
@@ -190,7 +205,7 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
 //         </motion.button>
 //       )}
 
-//       <motion.div 
+//       <motion.div
 //         className="card-footer"
 //         initial={{ opacity: 0, height: 0}}
 //         animate={{ opacity: 1, height: "auto" }}
@@ -198,7 +213,7 @@ export default function EventCard({ event, bookingRef, onCancel, children, fullE
 //         >
 //         {children}
 //       </motion.div>
-      
+
 //     </motion.div>
 //   );
 // }

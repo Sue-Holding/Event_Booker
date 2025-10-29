@@ -2,7 +2,7 @@ export async function resizeImage(file, maxWidth = 800, maxHeight = 600, quality
   return new Promise((resolve, reject) => {
     const img = new Image();
     const reader = new FileReader();
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
 
     reader.onload = (e) => {
       img.onload = () => {
@@ -13,19 +13,19 @@ export async function resizeImage(file, maxWidth = 800, maxHeight = 600, quality
         canvas.width = width;
         canvas.height = height;
 
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
 
         canvas.toBlob(
           (blob) => {
             if (!blob) {
-              reject(new Error("Failed to resize image"));
+              reject(new Error('Failed to resize image'));
               return;
             }
-            resolve(new File([blob], file.name, { type: "image/jpeg" }));
+            resolve(new File([blob], file.name, { type: 'image/jpeg' }));
           },
-          "image/jpeg",
-          quality
+          'image/jpeg',
+          quality,
         );
       };
       img.src = e.target.result;
