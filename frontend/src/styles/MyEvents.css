@@ -1,8 +1,8 @@
-.my-events-container {
+/* .my-events-container {
   width: 90%;
   max-width: 1300px;
   margin: 2rem auto;
-  padding: 1rem 0;
+  padding: 1rem 0; */
   /* border-radius: 18px; */
   /* -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px); */
@@ -12,13 +12,13 @@
     rgba(255, 0, 255, 0.05), 
     rgba(102, 0, 255, 0.05)
   ); */
-  box-shadow: none;
+  /* box-shadow: none; */
   /* animation: fadeIn 0.8s ease;
   box-sizing: border-box;
   overflow-x: hidden; */
-}
+/* } */
 
-.my-events-container h2 {
+/* .my-events-container h2 {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
@@ -31,9 +31,9 @@
   text-align: center;
   color: #ddd;
   font-weight: 500;
-}
+} */
 
-/* gird layout */
+/* grid layout */
 .event-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -153,6 +153,8 @@
   border-radius: 10px;
   padding: 0.4rem 0.6rem;
 }
+
+
 
 /* responsiveness */
 /* Tablets */

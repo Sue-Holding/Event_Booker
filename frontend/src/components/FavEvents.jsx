@@ -12,6 +12,7 @@ export default function FavEvent() {
   const { isMobile, isTablet } = useViewport();
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -41,6 +42,11 @@ export default function FavEvent() {
 
     fetchFavorites();
   }, []);
+
+    const handleCardToggle = (id) => {
+    setExpandedId((prev) => (prev === id ? null : id));
+  };
+
 
   const removeFavorite = async (eventId) => {
       const token = localStorage.getItem("token");
@@ -88,7 +94,12 @@ export default function FavEvent() {
               className="event-wrapper"
             >
               {isMobile || isTablet ? (
-                <SmallEventCard event={event}>
+                <SmallEventCard 
+                  event={event}
+                  showDetailsButton={true}
+                  isExpanded={expandedId === event._id}
+                  onToggle={() => handleCardToggle(event._id)}
+                  >
                   <button
                     onClick={() => removeFavorite(event._id)}
                     className="button button--warning"

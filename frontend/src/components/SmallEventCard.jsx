@@ -5,7 +5,7 @@ import "../styles/button.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export default function SmallEventCard({ event }) {
+export default function SmallEventCard({ event, isExpanded, onToggle, children, fullExpand }) {
   // Get user role from localStorage or JWT token
   let role = null;
   const storedUser = localStorage.getItem("user");
@@ -28,14 +28,21 @@ export default function SmallEventCard({ event }) {
   // Route based on role
   const eventLink =
     role === "organiser"
-      ? `/organiser-dashboard/events/${event._id}`
+      ? `/dashboard/events/${event._id}`
       : role === "admin"
-      ? `/admin-dashboard/events/${event._id}`
-      : `/user-dashboard/events/${event._id}`;
+      ? `/dashboard/events/${event._id}`
+      : `/dashboard/events/${event._id}`;
+
+  const handleCardClick = (e) => {
+    // Prevent toggling when clicking inside buttons or links
+    if (e.target.closest("button") || e.target.closest("a")) return;
+    onToggle?.();
+  };
 
   return (
     <motion.div
-      className="event-card small"
+      className={`event-card small ${isExpanded ? "expanded" : ""} ${fullExpand ? "full-expand" : ""}`}
+      onClick={handleCardClick}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
@@ -52,11 +59,12 @@ export default function SmallEventCard({ event }) {
 
         <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
           <Link to={eventLink} 
-          // className="button small"
           className="button button--primary">
             View Event
           </Link>
         </motion.div>
+
+        {children && isExpanded && <div className="card-footer">{children}</div>}
       </div>
     </motion.div>
   );

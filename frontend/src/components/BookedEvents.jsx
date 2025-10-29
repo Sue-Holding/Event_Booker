@@ -12,6 +12,7 @@ export default function BookedEvents() {
   const { isMobile, isTablet } = useViewport();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -41,6 +42,10 @@ export default function BookedEvents() {
 
     fetchBookings();
   }, []);
+
+  const handleCardToggle = (id) => {
+    setExpandedId((prev) => (prev === id ? null : id));
+  };
 
   const cancelBooking = async (bookingId) => {
     const token = localStorage.getItem("token");
@@ -96,7 +101,13 @@ export default function BookedEvents() {
                 className="event-wrapper"
               >
                 {isMobile || isTablet ? (
-                  <SmallEventCard event={b.event} bookingRef={b.bookingRef}>
+                  <SmallEventCard 
+                    event={b.event} 
+                    bookingRef={b.bookingRef}
+                    showDetailsButton={true}
+                    isExpanded={expandedId === b.event._id}
+                    onToggle={() => handleCardToggle(b.event._id)}
+                  >
                     <button
                       onClick={() => cancelBooking(b._id)}
                       className="button button--warning"

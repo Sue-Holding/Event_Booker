@@ -28,6 +28,21 @@
   border-color: rgba(255, 105, 180, 0.8);
 }
 
+.event-card.small .card-footer {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.event-card.small.expanded .card-footer {
+  opacity: 1;
+  max-height: 100px;
+  transform: translateY(0);
+}
+
+
 /* Image */
 .event-card-image.small {
   width: 100%;
@@ -110,4 +125,25 @@
     font-size: 0.7rem;
     padding: 0.3rem 0.5rem;
   }
+}
+
+/* Small card fills mobile screen when fullExpand is true
+opens update form */
+.event-card.full-expand {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 1000;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.event-card.full-expand .small-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

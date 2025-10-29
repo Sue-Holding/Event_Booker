@@ -5,14 +5,8 @@ import "../styles/eventcard.css";
 import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
-// const MotionLink = motion(Link);
 
 export default function EventCard({ event, bookingRef, onCancel, children }) {
-  // Try to get role from localStorage user first
-  // const [isHovered, setIsHovered] = useState(false);
-
-  // const handleMouseEnter = () => setIsHovered(true);
-  // const handleMouseLeave = () => setIsHovered(false);
   
   let role = null;
   const storedUser = localStorage.getItem("user");
@@ -36,11 +30,17 @@ export default function EventCard({ event, bookingRef, onCancel, children }) {
   // Decide the route based on role
   const eventLink =
     role === "organiser"
-      ? `/organiser-dashboard/events/${event._id}`
+      ? `/dashboard/events/${event._id}`
       : role === "admin"
-      ? `/admin-dashboard/events/${event._id}`
-      : `/user-dashboard/events/${event._id}`;
+      ? `/dashboard/events/${event._id}`
+      : `/dashboard/events/${event._id}`;
 
+    //   const eventLink =
+    // role === "organiser"
+    //   ? `/organiser-dashboard/events/${event._id}`
+    //   : role === "admin"
+    //   ? `/admin-dashboard/events/${event._id}`
+    //   : `/user-dashboard/events/${event._id}`;
 
 
   return (
