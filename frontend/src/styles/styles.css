@@ -258,33 +258,49 @@ header h2:hover {
 /* Small reusable grid for mobile/tablet views */
 .small-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
-  margin-top: 1rem;
-  /* justify-items: center; */
-  align-items: start;
+  justify-content: center;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  padding: 1rem;
 }
 
-/* Flexible small grid for mobile/tablet/desktop */
-.small-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* min card width 150px */
-  gap: 1rem;
-  margin-top: 1rem;
-  justify-items: center;
-  align-items: start;
-}
 
 /* Optional: slightly larger cards on tablet */
 @media (min-width: 480px) {
   .small-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+}
+
+/* Force 1-column layout only for *very narrow* screens (like older phones) */
+@media (max-width: 360px) {
+  .small-grid {
+    grid-template-columns: 1fr;
   }
 }
 
 /* Desktop: more space for cards */
 @media (min-width: 1024px) {
   .small-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 }
+
+/* .small-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: start;
+} */
+
+/* Flexible small grid for mobile/tablet/desktop */
+/* .small-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-items: center;
+  align-items: start;
+} */
