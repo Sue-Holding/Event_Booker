@@ -2,17 +2,15 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: flex-start;
   /* width: 100%;
   min-height: 380px;
   max-height: fit-content; */
   width: 300px;
-  height: 460px;
-  /* overflow-y: visible;
-  overflow: hidden; */
-  overflow: visible; /* ✅ allow expanded content to show */
-  height: auto; /* ✅ let card grow when footer/button appears */
-  min-height: 460px; /* ✅ ensures consistent base height */
+  min-height: 460px;
+  overflow: visible;
+  height: auto;
   text-align: center;
   background: rgba(255, 255, 255, 0.08);
   border: 2px solid rgba(255, 105, 180, 0.15);
@@ -28,6 +26,32 @@
 
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+}
+
+/* When editing, let the event card stretch fully in the grid */
+.event-card.full-expand {
+  grid-column: 1 / -1;       /* span the entire grid width */
+  width: 100%;
+  max-width: 900px;          /* optional - control max expansion */
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Ensure the form itself uses full width of the expanded card */
+.event-card.full-expand form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Fix category dropdown or input overflow */
+.event-card.full-expand form select,
+.event-card.full-expand form input,
+.event-card.full-expand form textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .event-card:hover {
@@ -104,13 +128,21 @@
   font-size: 0.9rem;
 }
 
-.event-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 1rem;
-  /* overflow: visible; */
+.event-card-wrapper {
+  width: 100%;       /* span the available space */
+  grid-column: auto; /* normal flow unless edit-mode */
+  margin: 0;         /* remove any margin */
+  padding: 0;        /* remove padding */
+  display: block;    /* or flex if needed */
 }
+
+.event-card-wrapper.edit-mode {
+  grid-column: 1 / -1; /* span all columns in edit mode */
+  max-width: 100%;     /* prevent wrapping limits */
+  margin: 0 auto;      /* center in grid */
+  padding: 0;          /* remove padding */
+}
+
 
 /* Card footer hover reveal */
 .card-footer {
@@ -150,41 +182,3 @@
     transform: translateY(0) scale(1);
   }
 }
-
-/* Small version of event card */
-/* .event-card.small {
-  width: 220px;
-  height: 220px;
-  padding: 1rem;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.event-card-image.small img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-}
-
-.small-card-content h4 {
-  font-size: 1rem;
-  margin: 0.3rem 0;
-  color: #ff8fd8;
-}
-
-.small-card-content p {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 0.5rem;
-}
-
-.button.small {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-} */

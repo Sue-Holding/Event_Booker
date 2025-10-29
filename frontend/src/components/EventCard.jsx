@@ -1,20 +1,16 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-// import { useState } from "react";
 import "../styles/eventcard.css";
-import '../styles/button.css';
+import "../styles/button.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export default function EventCard({ event, bookingRef, onCancel, children }) {
-  
+export default function EventCard({ event, bookingRef, onCancel, children, fullExpand }) {
+  // Determine user role
   let role = null;
   const storedUser = localStorage.getItem("user");
-  if (storedUser) {
-    role = JSON.parse(storedUser).role;
-  }
+  if (storedUser) role = JSON.parse(storedUser).role;
 
-  // fallback: try decode token if localStorage user is missing
   if (!role) {
     const token = localStorage.getItem("token");
     if (token) {
@@ -27,93 +23,182 @@ export default function EventCard({ event, bookingRef, onCancel, children }) {
     }
   }
 
-  // Decide the route based on role
-  const eventLink =
-    role === "organiser"
-      ? `/dashboard/events/${event._id}`
-      : role === "admin"
-      ? `/dashboard/events/${event._id}`
-      : `/dashboard/events/${event._id}`;
-
-    //   const eventLink =
-    // role === "organiser"
-    //   ? `/organiser-dashboard/events/${event._id}`
-    //   : role === "admin"
-    //   ? `/admin-dashboard/events/${event._id}`
-    //   : `/user-dashboard/events/${event._id}`;
-
+  // Route based on role
+  const eventLink = `/dashboard/events/${event._id}`;
 
   return (
     <motion.div
+      className={`event-card ${fullExpand ? "full-expand" : ""}`}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
+      whileHover={{ scale: fullExpand ? 1 : 1.03, boxShadow: fullExpand ? "none" : "0 8px 20px rgba(0,0,0,0.15)" }}
       transition={{ duration: 0.4 }}
-      className="event-card"
     >
+      {/* Desktop: when fullExpand, show only children */}
+      {fullExpand ? (
+        <div className="full-expand-content">{children}</div>
+      ) : (
+        <>
+          {event.imageUrl && (
+            <div className="event-card-image">
+              <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
+            </div>
+          )}
+          <h3>{event.title}</h3>
+          <p>{event.category}</p>
+          <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+          <p><strong>Time:</strong> {event.time}</p>
+          <p><strong>Location:</strong> {event.location}</p>
+          <p><strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}</p>
+          <p><strong>Event status:</strong> {event.status}</p>
 
-      {event.imageUrl && (
-        <div className="event-card-image">
-          {event.imageUrl ? (
-          <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
-        ) : (
-          <span className="no-image">No image</span>
-        )}
-        </div>
+          {bookingRef && <p><strong>Booking Ref:</strong> {bookingRef}</p>}
+
+          <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
+            <Link to={eventLink} className="button button--primary">View Event</Link>
+          </motion.div>
+
+          {onCancel && (
+            <motion.button
+              className="button button--warning remove-btn inside-card"
+              onClick={onCancel}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {bookingRef ? "❌ Cancel Booking" : "✖ Remove from Favourites"}
+            </motion.button>
+          )}
+
+          {/* Default card-footer for buttons (non-expanded) */}
+          {/* {!children && (
+            <motion.div className="card-footer">
+            </motion.div>
+          )} */}
+
+            <motion.div 
+         className="card-footer"
+         initial={{ opacity: 0, height: 0}}
+         animate={{ opacity: 1, height: "auto" }}
+         transition={{ duration: 0.3 }}
+         >
+         {children}
+       </motion.div>
+
+        </>
       )}
-      <h3>{event.title}</h3>
-      <p>{event.category}</p>
-      <p>
-        <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
-      </p>
-      <p>
-        <strong>Time:</strong> {event.time}
-      </p>
-      <p>
-        <strong>Location:</strong> {event.location}
-      </p>
-      <p>
-        <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
-      </p>
-      <p>
-        <strong>Event status:</strong> {event.status}
-      </p>
-  
-
-      {/* only show booking ref if is exists */}
-        {bookingRef && (
-        <p>
-          <strong>Booking Ref:</strong> {bookingRef}
-        </p>
-      )}
-
-      
-      <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-        <Link to={eventLink} className="button button--primary">
-          View Event
-        </Link>
-      </motion.div>
-      
-      {onCancel && (
-        <motion.button 
-          className="button button--warning remove-btn inside-card"
-          onClick={onCancel}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {bookingRef ? "❌ Cancel Booking" : "✖ Remove from Favourites"}
-        </motion.button>
-      )}
-
-      <motion.div 
-        className="card-footer"
-        initial={{ opacity: 0, height: 0}}
-        animate={{ opacity: 1, height: "auto" }}
-        transition={{ duration: 0.3 }}
-        >
-        {children}
-      </motion.div>
-      
     </motion.div>
   );
 }
+
+
+// import { motion } from "framer-motion";
+// import { Link } from "react-router-dom";
+// // import { useState } from "react";
+// import "../styles/eventcard.css";
+// import '../styles/button.css';
+
+// const API_URL = process.env.REACT_APP_API_URL;
+
+// export default function EventCard({ event, bookingRef, onCancel, children }) {
+  
+//   let role = null;
+//   const storedUser = localStorage.getItem("user");
+//   if (storedUser) {
+//     role = JSON.parse(storedUser).role;
+//   }
+
+//   // fallback: try decode token if localStorage user is missing
+//   if (!role) {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//       try {
+//         const payload = JSON.parse(atob(token.split(".")[1]));
+//         role = payload.role;
+//       } catch (err) {
+//         console.error("Failed to decode token for role", err);
+//       }
+//     }
+//   }
+
+//   // Decide the route based on role
+//   const eventLink =
+//     role === "organiser"
+//       ? `/dashboard/events/${event._id}`
+//       : role === "admin"
+//       ? `/dashboard/events/${event._id}`
+//       : `/dashboard/events/${event._id}`;
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 20, scale: 0.95 }}
+//       animate={{ opacity: 1, y: 0, scale: 1 }}
+//       whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
+//       transition={{ duration: 0.4 }}
+//       className="event-card"
+//     >
+
+//       {event.imageUrl && (
+//         <div className="event-card-image">
+//           {event.imageUrl ? (
+//           <img src={`${API_URL}${event.imageUrl}`} alt={event.title} />
+//         ) : (
+//           <span className="no-image">No image</span>
+//         )}
+//         </div>
+//       )}
+//       <h3>{event.title}</h3>
+//       <p>{event.category}</p>
+//       <p>
+//         <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+//       </p>
+//       <p>
+//         <strong>Time:</strong> {event.time}
+//       </p>
+//       <p>
+//         <strong>Location:</strong> {event.location}
+//       </p>
+//       <p>
+//         <strong>Price:</strong> {event.price === 0 ? "Free" : `${event.price} SEK`}
+//       </p>
+//       <p>
+//         <strong>Event status:</strong> {event.status}
+//       </p>
+  
+
+//       {/* only show booking ref if is exists */}
+//         {bookingRef && (
+//         <p>
+//           <strong>Booking Ref:</strong> {bookingRef}
+//         </p>
+//       )}
+
+      
+//       <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
+//         <Link to={eventLink} className="button button--primary">
+//           View Event
+//         </Link>
+//       </motion.div>
+      
+//       {onCancel && (
+//         <motion.button 
+//           className="button button--warning remove-btn inside-card"
+//           onClick={onCancel}
+//           whileHover={{ scale: 1.05 }}
+//           whileTap={{ scale: 0.95 }}
+//         >
+//           {bookingRef ? "❌ Cancel Booking" : "✖ Remove from Favourites"}
+//         </motion.button>
+//       )}
+
+//       <motion.div 
+//         className="card-footer"
+//         initial={{ opacity: 0, height: 0}}
+//         animate={{ opacity: 1, height: "auto" }}
+//         transition={{ duration: 0.3 }}
+//         >
+//         {children}
+//       </motion.div>
+      
+//     </motion.div>
+//   );
+// }

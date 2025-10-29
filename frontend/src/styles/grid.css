@@ -19,6 +19,14 @@
   box-sizing: border-box;
 }
 
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  /* overflow: visible; */
+}
+
 /* grid for mobile/tablet and some components laptop */
 .small-grid {
   display: grid;
@@ -33,12 +41,12 @@
 }
 
 /* edit mode */
-.event-grid.editing,
+/* .event-grid.editing,
 .small-grid.editing {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 .event-grid.editing .event-card-wrapper:not(.edit-mode),
 .small-grid.editing .event-card:not(.full-expand) {
