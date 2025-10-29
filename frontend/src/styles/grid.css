@@ -1,0 +1,113 @@
+/* base grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* grid for laptop/desktop */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* gap: 2rem; */
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+/* grid for mobile/tablet and some components laptop */
+.small-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  justify-content: center;
+  justify-items: center;
+  padding: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* edit mode */
+.event-grid.editing,
+.small-grid.editing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-grid.editing .event-card-wrapper:not(.edit-mode),
+.small-grid.editing .event-card:not(.full-expand) {
+  opacity: 0.3;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+
+/* Responsiveness */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .event-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .small-grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+}
+
+/* Medium sized devices - Large Phones / Small Tablets */
+@media (max-width: 768px) {
+  .event-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .small-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 600px) {
+  .event-grid {
+    grid-template-columns: 1fr;
+    /* gap: 1rem; */
+  }
+
+  .small-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+/* Very Narrow Phones (old/small devices) */
+@media (max-width: 360px) {
+  .small-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Desktop (larger cards, more space) */
+@media (min-width: 1024px) {
+  .small-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+.title {
+  color:#ff69b4
+}
+

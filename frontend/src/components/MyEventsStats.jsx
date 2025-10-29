@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/smallEventCard.css"; // use the small card CSS
 import "../styles/button.css";
+import "../styles/grid.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 

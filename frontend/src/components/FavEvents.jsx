@@ -5,6 +5,7 @@ import SmallEventCard from "./SmallEventCard";
 import useViewport from "../hooks/useViewport";
 import '../styles/button.css';
 import '../styles/styles.css';
+import "../styles/grid.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 

@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
+import "../styles/grid.css";
 
 import EventCard from "./EventCard";
 import SmallEventCard from "./SmallEventCard";

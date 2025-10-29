@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import SmallEventCard from "./SmallEventCard";
+import "../styles/grid.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 

@@ -3,9 +3,6 @@
   width: 100%;
   max-width: 180px; /* was 200px */
   min-height: 220px;
-  /* width: 200px;
-  min-height: 240px;
-  max-height: fit-content; */
   padding: 0.8rem;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);
@@ -41,7 +38,6 @@
   max-height: 100px;
   transform: translateY(0);
 }
-
 
 /* Image */
 .event-card-image.small {
@@ -129,21 +125,21 @@
 
 /* Small card fills mobile screen when fullExpand is true
 opens update form */
-.event-card.full-expand {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
-  z-index: 1000;
-  background-color: white;
-  padding: 1rem;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+.small.full-expand {
+  width: 100%;
+  max-width: 700px;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
+  transition: all 0.3s ease;
+  overflow: visible;
 }
 
-.event-card.full-expand .small-card-content {
+.full-expand-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: 1rem;
 }

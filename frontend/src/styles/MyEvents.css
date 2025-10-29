@@ -34,13 +34,13 @@
 } */
 
 /* grid layout */
-.event-grid {
+/* .event-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
   width: 100%;
   box-sizing: border-box;
-}
+} */
 
 /* ✨ Neon glass style for each event card */
 .event-card-wrapper {
@@ -154,7 +154,46 @@
   padding: 0.4rem 0.6rem;
 }
 
+/* Make the card expand in place */
+.event-card-wrapper.edit-mode,
+.event-card.full-expand {
+  width: 100%;            /* fill the grid column */
+  max-width: 700px;       /* optional: limit width */
+  padding: 2rem;          /* more padding for form */
+  min-height: 350px;      /* enough space for form */
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
+  transition: all 0.3s ease;
+  margin: 1rem auto;      /* center in grid */
+}
 
+/* Make form inputs bigger and easier to read */
+.event-card-wrapper.edit-mode input,
+.event-card-wrapper.edit-mode textarea,
+.event-card-wrapper.edit-mode select,
+.event-card.full-expand input,
+.event-card.full-expand textarea,
+.event-card.full-expand select {
+  font-size: 1rem;
+  padding: 0.8rem;
+  border-radius: 12px;
+}
+
+
+/* Ensure the expanded mobile/tablet card spans full width cleanly */
+.event-card.small.full-expand {
+  width: 100%;
+  max-width: 700px;
+  grid-column: 1 / -1;
+  margin: 1rem auto;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
+  padding: 1.5rem;
+  border-radius: 16px;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+}
 
 /* responsiveness */
 /* Tablets */
@@ -162,11 +201,6 @@
   .my-events-container {
     width: 92%;
     padding: 1.5rem;
-  }
-
-  .event-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
   }
 
   .event-card-wrapper {
@@ -179,11 +213,6 @@
   .my-events-container {
     width: 95%;
     padding: 1rem;
-  }
-
-  .event-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
   }
 
   .event-card-wrapper {
@@ -207,11 +236,6 @@
     width: 95%;
     padding: 0.8rem;
     margin: 1rem auto;
-  }
-
-  .event-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
   }
 
   .event-card-wrapper {
@@ -261,12 +285,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Responsive tweaks */
-@media (max-width: 700px) {
-  .event-grid {
-    grid-template-columns: 1fr;
   }
 }
