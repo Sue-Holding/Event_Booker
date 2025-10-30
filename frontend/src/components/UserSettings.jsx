@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import '../styles/button.css';
 import '../styles/UserSettings.css';
 
@@ -19,7 +19,7 @@ export default function UserSettings() {
   const token = localStorage.getItem('token');
 
   // Fetch all users
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`${API_URL}/admin/users`, {
@@ -40,11 +40,11 @@ export default function UserSettings() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   // Handle input change
   const handleChange = (e) => {

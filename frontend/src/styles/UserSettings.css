@@ -19,6 +19,7 @@
   flex-wrap: wrap;
   gap: 0.8rem;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .user-form input,
@@ -32,6 +33,7 @@
   min-width: 150px;
 }
 
+.user-table-wrapper select,
 .user-form select {
   background: rgba(255, 255, 255, 0.15); /* base background */
   color: #fff; /* selected text color */
@@ -44,6 +46,7 @@
   appearance: none;
 }
 
+.user-table-wrapper select option,
 .user-form select option {
   background-color: rgba(20, 20, 30, 0.9); /* dropdown options bg */
   color: #fff; /* text in dropdown */

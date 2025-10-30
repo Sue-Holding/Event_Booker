@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ImageDropZone from './ImageDropZone';
 import '../styles/addEvent.css';
@@ -24,8 +24,6 @@ export default function EventForm({
     imagePreview: null,
     ...initialData,
   });
-
-  const fileInputRef = useRef();
 
   useEffect(() => {
     if (initialData.imagePreview) {

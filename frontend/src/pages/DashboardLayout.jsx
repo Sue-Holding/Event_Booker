@@ -5,11 +5,11 @@ import Footer from '../components/Footer';
 // import FloatingWords from "../components/FloatingWords";
 import '../styles/dashboard.css';
 
-const categories = ['Music', 'Kids', 'Sport', 'Food', 'Tech', 'Art'];
+// const categories = ['Music', 'Kids', 'Sport', 'Food', 'Tech', 'Art'];
 
 export default function DashboardLayout() {
   const [user, setUser] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  // const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -31,7 +31,7 @@ export default function DashboardLayout() {
       {/* <FloatingWords categories={categories} onSelect={setSelectedCategory} /> */}
 
       <main className="dashboard-content full-width">
-        <Outlet context={{ user, selectedCategory }} />
+        <Outlet context={{ user }} />
       </main>
 
       <Footer />

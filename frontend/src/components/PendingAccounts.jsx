@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import '../styles/button.css';
 import '../styles/PendingAccounts.css';
 
@@ -12,7 +12,7 @@ export default function PendingAccounts() {
   const token = localStorage.getItem('token');
 
   // Fetch all users
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`${API_URL}/admin/users`, {
@@ -32,6 +32,7 @@ export default function PendingAccounts() {
       const pendingOrganisers = data.filter(
         (user) => user.role === 'attendee' && user.status === 'pending',
       );
+
       setUsers(pendingOrganisers);
       setError('');
     } catch (err) {
@@ -40,11 +41,11 @@ export default function PendingAccounts() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   const approveUser = async (id) => {
     console.log('Approving user ID:', id);
@@ -60,7 +61,6 @@ export default function PendingAccounts() {
 
       const data = await res.json();
       console.log('Backend response:', data);
-      // console.log(res.status, res.statusText);
 
       if (!res.ok) {
         throw new Error(data.message || 'Action failed');

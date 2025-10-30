@@ -1,12 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-// import EventCard from "./EventCard";
 import '../styles/button.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export default function EventDetails(bookingRef) {
+export default function EventDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
@@ -98,7 +97,6 @@ export default function EventDetails(bookingRef) {
       </motion.button>
 
       {/* Event Info and buttons */}
-      {/* <EventCard event={event}> */}
       {event.imageUrl && (
         <div className="event-card-image">
           {event.imageUrl ? (
@@ -125,13 +123,6 @@ export default function EventDetails(bookingRef) {
       <p>
         <strong>Event status:</strong> {event.status}
       </p>
-
-      {/* only show booking ref if is exists */}
-      {/* {bookingRef && (
-        <p>
-          <strong>Booking Ref:</strong> {bookingRef}
-        </p>
-      )} */}
       <p>
         <strong>Description:</strong> {event.description}
       </p>
@@ -162,7 +153,6 @@ export default function EventDetails(bookingRef) {
           🎟️ Book Event
         </motion.button>
       </div>
-      {/* </EventCard> */}
     </motion.div>
   );
 }

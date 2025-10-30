@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import EventCard from './EventCard';
@@ -22,7 +22,7 @@ export default function EventStats() {
 
   const token = localStorage.getItem('token');
 
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     try {
       const res = await fetch(`${API_URL}/admin/events`, {
         headers: {
@@ -41,11 +41,11 @@ export default function EventStats() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [fetchEvents]);
 
   const handleAction = async (id, action, comment) => {
     try {

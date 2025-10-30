@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/smallEventCard.css'; // use the small card CSS
+import '../styles/smallEventCard.css';
 import '../styles/button.css';
 import '../styles/grid.css';
 
@@ -15,25 +15,25 @@ export default function MyEventsStats() {
   const role = token ? JSON.parse(atob(token.split('.')[1])).role : null;
 
   useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch(`${API_URL}/organiser/events`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.message || 'Failed to fetch events');
+
+        setEvents(Array.isArray(data) ? data : data.events || []);
+      } catch (err) {
+        setMessage(`❌ ${err.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchEvents();
-  }, []);
-
-  const fetchEvents = async () => {
-    try {
-      const res = await fetch(`${API_URL}/organiser/events`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || 'Failed to fetch events');
-
-      setEvents(Array.isArray(data) ? data : data.events || []);
-    } catch (err) {
-      setMessage(`❌ ${err.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [token]);
 
   if (loading) return <p>Loading event stats...</p>;
   if (events.length === 0) return <p>No events found.</p>;

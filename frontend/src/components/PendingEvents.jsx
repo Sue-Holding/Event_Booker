@@ -1,5 +1,5 @@
 // updated already approved events come into pending flow here
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import CommentThread from './CommentThread';
 import '../styles/PendingEvents.css';
@@ -15,7 +15,7 @@ export default function PendingEvents() {
 
   const token = localStorage.getItem('token');
 
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     try {
       const res = await fetch(`${API_URL}/admin/events?status=pending`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -30,11 +30,11 @@ export default function PendingEvents() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [fetchEvents]);
 
   const handleAction = async (id, action, comment) => {
     try {

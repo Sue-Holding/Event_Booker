@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import EventForm from './EventForm';
 import CommentThread from './CommentThread';
 import '../styles/button.css';
-import '../styles/PendingEvents.css'; // reuse same styles for consistency
+import '../styles/PendingEvents.css';
 
 export default function UpdatesRequired() {
   const [events, setEvents] = useState([]);
