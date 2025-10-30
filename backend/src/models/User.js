@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ["pending", "approved"],
+            enum: ["pending", "approved", "rejected"],
             default: "approved"
         },
         favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
