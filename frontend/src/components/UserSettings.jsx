@@ -138,7 +138,9 @@ export default function UserSettings() {
             value={formData.name}
             onChange={handleChange}
             required
+            autoComplete='name'
           />
+
           <input
             type="email"
             name="email"
@@ -146,12 +148,15 @@ export default function UserSettings() {
             value={formData.email}
             onChange={handleChange}
             required
+            autoComplete='email'
           />
+
           <select name="role" value={formData.role} onChange={handleChange}>
             <option value="user">User</option>
             <option value="organiser">Organiser</option>
             <option value="admin">Admin</option>
           </select>
+
           <input
             type="password"
             name="password"
@@ -159,7 +164,9 @@ export default function UserSettings() {
             value={formData.password}
             onChange={handleChange}
             required
+            autoComplete='new-password'
           />
+
           <button type="submit" className="button button--primary">
             Create
           </button>
@@ -194,6 +201,7 @@ export default function UserSettings() {
                       user.name
                     )}
                   </td>
+
                   <td data-label="Email">
                     {editingUserId === user._id ? (
                       <input
@@ -204,6 +212,7 @@ export default function UserSettings() {
                       user.email
                     )}
                   </td>
+
                   <td data-label="Role">
                     {editingUserId === user._id ? (
                       <select
@@ -218,6 +227,7 @@ export default function UserSettings() {
                       user.role
                     )}
                   </td>
+                  
                   <td data-label="Actions" className="user-actions">
                     {editingUserId === user._id ? (
                       <>
