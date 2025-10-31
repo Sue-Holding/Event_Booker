@@ -53,29 +53,30 @@ export default function EventForm({
       transition={{ duration: 0.6 }}
     >
       <div className="form-group">
-        <label>Title*</label>
-        <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+        <label htmlFor="title">Title*</label>
+        <input id="title" type="text" name="title" value={formData.title} onChange={handleChange} required />
       </div>
 
       <div className="form-group">
-        <label>Description</label>
+        <label htmlFor='description'>Description</label>
         <textarea name="description" value={formData.description} onChange={handleChange} />
       </div>
 
       <div className="form-row">
         <div className="form-group">
-          <label>Date*</label>
-          <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+          <label htmlFor='date'>Date*</label>
+          <input id="date" type="date" name="date" value={formData.date} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label>Time*</label>
-          <input type="time" name="time" value={formData.time} onChange={handleChange} required />
+          <label htmlFor='time'>Time*</label>
+          <input id="time" type="time" name="time" value={formData.time} onChange={handleChange} required />
         </div>
       </div>
 
       <div className="form-group">
-        <label>Location*</label>
+        <label htmlFor='location'>Location*</label>
         <input
+          id="location"
           type="text"
           name="location"
           value={formData.location}
@@ -86,8 +87,9 @@ export default function EventForm({
 
       <div className="form-row">
         <div className="form-group">
-          <label>Price</label>
+          <label htmlFor='price'>Price</label>
           <input
+            id="price"
             type="number"
             name="price"
             value={formData.price}
@@ -97,8 +99,10 @@ export default function EventForm({
           />
         </div>
         <div className="form-group">
-          <label>Category</label>
+          <label htmlFor='category'>Category</label>
           <input
+            id="category"
+            type="text"
             list="category-options"
             name="category"
             value={formData.category}

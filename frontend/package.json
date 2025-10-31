@@ -22,8 +22,26 @@
     "format": "prettier --write .",
     "start": "react-scripts start",
     "build": "cross-env CI=false react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+  "testEnvironment": "jsdom",
+  "transform": {
+    "^.+\\.[t|j]sx?$": "babel-jest"
+  },
+    "transformIgnorePatterns": [
+    "node_modules/(?!react-router-dom)"
+    ],
+    "moduleNameMapper": {
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "^react-router-dom$": "<rootDir>/src/__mocks__/react-router-dom.js"
+  },
+  "setupFilesAfterEnv": ["<rootDir>/src/setupJest.js"]
+  },
+  "moduleNameMapper": {
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "^react-router-dom$": "<rootDir>/src/__mocks__/react-router-dom.js"
   },
   "eslintConfig": {
     "extends": [

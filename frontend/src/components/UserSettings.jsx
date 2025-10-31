@@ -138,7 +138,7 @@ export default function UserSettings() {
             value={formData.name}
             onChange={handleChange}
             required
-            autoComplete='name'
+            autoComplete="name"
           />
 
           <input
@@ -148,7 +148,7 @@ export default function UserSettings() {
             value={formData.email}
             onChange={handleChange}
             required
-            autoComplete='email'
+            autoComplete="email"
           />
 
           <select name="role" value={formData.role} onChange={handleChange}>
@@ -164,7 +164,7 @@ export default function UserSettings() {
             value={formData.password}
             onChange={handleChange}
             required
-            autoComplete='new-password'
+            autoComplete="new-password"
           />
 
           <button type="submit" className="button button--primary">
