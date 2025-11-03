@@ -58,23 +58,23 @@ export default function EventForm({
       </div>
 
       <div className="form-group">
-        <label htmlFor='description'>Description</label>
+        <label htmlFor="description">Description</label>
         <textarea name="description" value={formData.description} onChange={handleChange} />
       </div>
 
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor='date'>Date*</label>
+          <label htmlFor="date">Date*</label>
           <input id="date" type="date" name="date" value={formData.date} onChange={handleChange} required />
         </div>
         <div className="form-group">
-          <label htmlFor='time'>Time*</label>
+          <label htmlFor="time">Time*</label>
           <input id="time" type="time" name="time" value={formData.time} onChange={handleChange} required />
         </div>
       </div>
 
       <div className="form-group">
-        <label htmlFor='location'>Location*</label>
+        <label htmlFor="location">Location*</label>
         <input
           id="location"
           type="text"
@@ -87,7 +87,7 @@ export default function EventForm({
 
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor='price'>Price</label>
+          <label htmlFor="price">Price</label>
           <input
             id="price"
             type="number"
@@ -99,7 +99,7 @@ export default function EventForm({
           />
         </div>
         <div className="form-group">
-          <label htmlFor='category'>Category</label>
+          <label htmlFor="category">Category</label>
           <input
             id="category"
             type="text"
