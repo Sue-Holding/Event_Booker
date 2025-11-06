@@ -4,15 +4,15 @@ import sgMail from "@sendgrid/mail";
 export const sendEmail = async (to, subject, html) => {
   try {
     if (process.env.NODE_ENV === "production") {
-      // ✅ Production → SendGrid Web API
+      // Production SendGrid Web API
       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
       const msg = {
         to,
-        from: process.env.EMAIL_FROM, // must match verified sender
+        from: process.env.EMAIL_FROM, 
         subject,
         html,
-        replyTo: process.env.REPLY_TO || "sue.holding55@gmail.com", // optional but safe
+        replyTo: process.env.REPLY_TO || "sue.holding55@gmail.com", 
       };
 
       const [response] = await sgMail.send(msg);
@@ -20,7 +20,7 @@ export const sendEmail = async (to, subject, html) => {
       return response;
 
     } else {
-      // ✅ Development → Mailtrap via Nodemailer SMTP
+      // Development → Mailtrap via Nodemailer SMTP
       const transporter = nodemailer.createTransport({
         host: process.env.DEV_EMAIL_HOST,
         port: Number(process.env.DEV_EMAIL_PORT) || 2525,
@@ -42,12 +42,12 @@ export const sendEmail = async (to, subject, html) => {
     }
     
   } catch (err) {
-    // 🔎 Log the full error response if available
+    // error response 
     if (err.response && err.response.body) {
       console.error("❌ Failed to send email:", JSON.stringify(err.response.body, null, 2));
     } else {
       console.error("❌ Failed to send email:", err.message);
     }
-    return null; // allow booking to still succeed
+    return null; // allow booking to succeed
   }
 };

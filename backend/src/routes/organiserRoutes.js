@@ -130,20 +130,6 @@ router.put(
   }
 );
 
-    // re-pending after update
-//     if (event.status === "approved" || event.status === "needs-update") {
-//         event.status = "pending"; // requires re-approval from admin
-//     }
-
-//     const updatedEvent = await Event.findByIdAndUpdate(eventId, updates, { new: true });
-//     res.json(updatedEvent);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// });
-
-
 // soft delete / cancel an event DELETE http://localhost:5050/organiser/events/:eventId
 router.delete(
     "/events/:eventId", 

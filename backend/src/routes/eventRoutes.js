@@ -3,16 +3,6 @@ import Event from "../models/Event.js";
 
 const router = express.Router();
 
-// Get all events
-// router.get("/", async (req, res) => {
-//   try {
-//     const events = await Event.find();
-//     res.json(events);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
-
 // Get all events (with optional query filtering)
 router.get("/", async (req, res) => {
   try {
