@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { saveUser, getUser } from '../idb';
 import '../styles/landing.css';
 
 const images = [
@@ -32,14 +33,27 @@ export default function LandingPage() {
     const API_URL = process.env.REACT_APP_API_URL;
     const endpoint = isLogin ? 'login' : 'register';
     try {
+      // try to log in online first
       const res = await fetch(`${API_URL}/auth/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
+
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || 'Something went wrong');
+      
+      // save user to IndexedDB
+      await saveUser({ 
+        email: form.email, 
+        password: form.password,
+        name: data.name, 
+        role: data.role, 
+        token: data.token 
+      });
+      console.log('User saved to IndexedDB!', form.email);
+      
       setMessage(isLogin ? `Welcome back, ${data.name || 'User'}!` : '🎉 Registration successful!');
 
       // Handle messages for pending organiser approval
@@ -59,12 +73,23 @@ export default function LandingPage() {
       // loging redirect
       if (data.token) {
         localStorage.setItem('token', data.token);
-        if (data.role === 'admin') window.location.href = '/dashboard';
-        else if (data.role === 'organiser') window.location.href = '/dashboard';
-        else window.location.href = '/dashboard';
+        // if (data.role === 'admin') window.location.href = '/dashboard';
+        // else if (data.role === 'organiser') window.location.href = '/dashboard';
+        window.location.href = '/dashboard';
       }
+
     } catch (err) {
-      setMessage(err.message);
+      console.warn('Online login failed, trying offline...', err);
+
+      // Offline login fallback
+      const cachedUser = await getUser(form.email);
+      if (cachedUser && cachedUser.password === form.password) {
+        setMessage(`Offline login successful! Welcome back, ${cachedUser.name || 'User'}!`);
+        localStorage.setItem('token', cachedUser.token);
+        window.location.href = '/dashboard';
+      } else {
+        setMessage('Login failed (offline and not cached)');
+      }
     }
   };
 
