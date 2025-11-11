@@ -7,6 +7,8 @@ import '../styles/button.css';
 import '../styles/styles.css';
 import '../styles/grid.css';
 
+import { getUser, getFavorites, saveFavorites } from '../idb';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function FavEvent() {
@@ -43,6 +45,41 @@ export default function FavEvent() {
 
     fetchFavorites();
   }, []);
+
+  // new version with offline support - not fetching yet
+  // useEffect(() => {
+  //   const fetchFavorites = async () => {
+  //     const token = localStorage.getItem('token');
+  //     if (!token) return setLoading(false);
+
+  //     const cachedUser = await getUser(token); 
+  //     if (!cachedUser) return setLoading(false);
+
+  //     if (navigator.onLine) {
+  //       try {
+  //         const res = await fetch(`${API_URL}/users/me`, {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         });
+  //         const data = await res.json();
+  //         if (res.ok) {
+  //           setFavorites(data.favorites || []);
+  //           await saveFavorites(cachedUser.email, data.favorites || []);
+  //         }
+  //       } catch (err) {
+  //         console.error(err);
+  //         const cachedFavs = await getFavorites(cachedUser.email);
+  //         setFavorites(cachedFavs || []);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     } else {
+  //       const cachedFavs = await getFavorites(cachedUser.email);
+  //       setFavorites(cachedFavs || []);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchFavorites();
+  // }, []);
 
   const handleCardToggle = (id) => {
     setExpandedId((prev) => (prev === id ? null : id));

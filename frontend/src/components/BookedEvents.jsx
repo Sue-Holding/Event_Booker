@@ -6,6 +6,8 @@ import useViewport from '../hooks/useViewport';
 import '../styles/button.css';
 import '../styles/styles.css';
 
+import { getUser, getBookedEvents } from '../idb';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function BookedEvents() {
@@ -42,6 +44,40 @@ export default function BookedEvents() {
 
     fetchBookings();
   }, []);
+
+  // new version with offline support - not fetching yet
+  // useEffect(() => {
+  //   const fetchBookings = async () => {
+  //     const token = localStorage.getItem('token');
+  //     if (!token) return setLoading(false);
+
+  //     const cachedUser = await getUser(token);
+  //     if (!cachedUser) return setLoading(false);
+
+  //     if (navigator.onLine) {
+  //       try {
+  //         const res = await fetch(`${API_URL}/users/me`, {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         });
+  //         const data = await res.json();
+  //         if (res.ok) {
+  //           setBookings(data.bookedEvents || []);
+  //         }
+  //       } catch (err) {
+  //         console.error(err);
+  //         const cachedBookings = await getBookedEvents(cachedUser.email);
+  //         setBookings(cachedBookings || []);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     } else {
+  //       const cachedBookings = await getBookedEvents(cachedUser.email);
+  //       setBookings(cachedBookings || []);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchBookings();
+  // }, []);
 
   const handleCardToggle = (id) => {
     setExpandedId((prev) => (prev === id ? null : id));

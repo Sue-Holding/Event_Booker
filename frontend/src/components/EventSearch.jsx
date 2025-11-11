@@ -14,6 +14,8 @@ import useViewport from '../hooks/useViewport';
 import '../styles/eventsearch.css';
 import '../styles/styles.css';
 
+import { savePublicEvents, getPublicEvents } from '../idb';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function EventSearch({ category: selectedCategory }) {
@@ -25,15 +27,39 @@ export default function EventSearch({ category: selectedCategory }) {
   const [date, setDate] = useState('');
   const [viewMode, setViewMode] = useState('carousel'); // carousel view by default
 
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     try {
+  //       const res = await fetch(`${API_URL}/event?status=approved`);
+  //       const data = await res.json();
+  //       setEvents(data);
+  //       setFilteredEvents(data);
+  //     } catch (err) {
+  //       console.error('Error fetching events:', err);
+  //     }
+  //   };
+  //   fetchEvents();
+  // }, []);
+  
+  // new with offline support
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch(`${API_URL}/event?status=approved`);
-        const data = await res.json();
+        let data = [];
+        if (navigator.onLine) {
+          const res = await fetch(`${API_URL}/event?status=approved`);
+          data = await res.json();
+          await savePublicEvents(data); // save for offline
+        } else {
+          data = await getPublicEvents(); // offline fallback
+        }
         setEvents(data);
         setFilteredEvents(data);
       } catch (err) {
         console.error('Error fetching events:', err);
+        const offlineData = await getPublicEvents();
+        setEvents(offlineData);
+        setFilteredEvents(offlineData);
       }
     };
     fetchEvents();
