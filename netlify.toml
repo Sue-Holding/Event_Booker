@@ -1,6 +1,6 @@
 [build]
   base = "frontend"
-  publish = "frontend/build"
+  publish = "build"
   command = "npm ci --legacy-peer-deps && npm run build"
 
 [build.environment]
