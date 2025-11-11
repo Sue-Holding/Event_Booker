@@ -1,7 +1,7 @@
 [build]
   base = "frontend"
   publish = "build"
-  command = "npm ci --omit=dev && npm run build"
+  command = "npm install --omit=dev && npm run build"
 
 [build.environment]
   NODE_ENV = "production"
