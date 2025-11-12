@@ -37,13 +37,19 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
-  // GET requests
-  if (request.method === 'GET') {
+    // Navigation requests (SPA)
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      caches.match('/index.html')
+      .then((cached) => cached || fetch('/index.html'))
+      .catch(() => caches.match('/index.html'))
+    );
+    return;
+  }
 
-    // API caching
-    if (
-      request.url.startsWith('http://localhost:5050/') || 
-      request.url.startsWith('https://eventure-ji0r.onrender.com/')
+  // API GET requests
+  if (request.method === 'GET' && 
+      (request.url.startsWith('http://localhost:5050/') || request.url.startsWith('https://eventure-ji0r.onrender.com/'))
     ) {
       event.respondWith(
         caches.open(API_CACHE).then(async (cache) => {
@@ -67,19 +73,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
     
-    // Navigation requests (SPA)
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      caches.match('/index.html')
-      .then((cached) => cached || fetch('/index.html'))
-    );
-    return;
-  }
-
     // Static assets
+    if (request.method === 'GET') {
     event.respondWith(
       caches.match(request)
-        .then((cached) => cached || fetch(request)));
+        .then((cached) => cached || fetch(request))
+        .catch(() => caches.match(request))
+      );
         return;
   }
 });
