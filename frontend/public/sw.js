@@ -6,16 +6,26 @@ const FILES_TO_CACHE = [
   "/manifest.webmanifest",
   "/icons/logo2-192.png",
   "/icons/logo-512.png",
-  "/static/js/main.3b9f63ec.js",
-  "/static/js/453.70e15c7.chunk.js",
-  "/static/css/main.2bd68fc1.css"
+  // "/static/js/main.3b9f63ec.js",
+  // "/static/js/453.70e15c7.chunk.js",
+  // "/static/css/main.2bd68fc1.css"
 ];
 
 // INSTALL
 self.addEventListener('install', (event) => {
   console.log('[SW] Installing...');
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => cache.addAll(FILES_TO_CACHE))
+    caches.open(STATIC_CACHE).then( async (cache) => {
+      cache.addAll(FILES_TO_CACHE);
+
+      const assets = [
+        "/static/js/main.3b9f63ec.js",
+        "/static/css/main.2bd68fc1.css",
+        "/static/js/453.70e15c7.chunk.js",
+      ];
+      await cache.addAll(assets);
+    })
+
   );
   self.skipWaiting();
 });
@@ -94,14 +104,22 @@ self.addEventListener('fetch', (event) => {
         if (cached) return cached;
 
         return fetch(request).catch(() => {
-          // Ensure we always return a valid Response
           const ext = request.url.split(".").pop();
           if (ext === "js") {
-            return new Response("", { status: 200, headers: { "Content-Type": "application/javascript" } });
+            return new Response("", {
+              status: 200,
+              headers: { "Content-Type": "application/javascript" },
+            });
           } else if (ext === "css") {
-            return new Response("", { status: 200, headers: { "Content-Type": "text/css" } });
+            return new Response("", {
+              status: 200,
+              headers: { "Content-Type": "text/css" },
+            });
           } else {
-            return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
+            return new Response("Offline", {
+              status: 503,
+              headers: { "Content-Type": "text/plain" },
+            });
           }
         });
       })
@@ -109,13 +127,24 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 });
-//         caches.match(request)
-//           .then(cached => cached || fetch(request))
-//           .catch(() => caches.match(request))
-//         );
-//         return;
-//     }
+
+//         return fetch(request).catch(() => {
+//           // Ensure we always return a valid Response
+//           const ext = request.url.split(".").pop();
+//           if (ext === "js") {
+//             return new Response("", { status: 200, headers: { "Content-Type": "application/javascript" } });
+//           } else if (ext === "css") {
+//             return new Response("", { status: 200, headers: { "Content-Type": "text/css" } });
+//           } else {
+//             return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
+//           }
+//         });
+//       })
+//     );
+//     return;
+//   }
 // });
+
     
 
 
