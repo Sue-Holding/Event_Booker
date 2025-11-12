@@ -5,7 +5,9 @@ const FILES_TO_CACHE = [
   "/index.html",
   "/manifest.webmanifest",
   "/icons/logo2-192.png",
-  "/icons/logo-512.png"
+  "/icons/logo-512.png",
+  '/static/js/main.3b9f63ec.js',
+  '/static/css/main.2bd68fc1.css'
 ];
 
 // INSTALL
