@@ -3,7 +3,6 @@ const API_CACHE = "eventbooker-api-v1";
 const FILES_TO_CACHE = [
   "/",
   "/index.html",
-  "/offline.html",
   "/manifest.webmanifest",
   "/icons/logo2-192.png",
   "/icons/logo-512.png"
@@ -75,7 +74,7 @@ self.addEventListener('fetch', (event) => {
     // Navigation requests (SPA)
     if (request.mode === 'navigate') {
       event.respondWith(
-        fetch(request).catch(() => caches.match('/offline.html'))
+        fetch(request).catch(() => caches.match('/index.html'))
       );
       return;
     }
@@ -83,7 +82,7 @@ self.addEventListener('fetch', (event) => {
     // Static assets
     event.respondWith(
       caches.match(request).then((cached) =>
-        cached || fetch(request).catch(() => caches.match('/offline.html'))
+        cached || fetch(request).catch(() => caches.match('/index.html'))
       )
     );
     return;

@@ -14,9 +14,13 @@ import EventStats from './components/EventStats';
 import UserSettings from './components/UserSettings';
 import './styles/styles.css';
 import './styles/button.css';
+import OfflineBanner from './components/OfflineBanner';
 
 function App() {
   return (
+    <>
+    <OfflineBanner />
+
     <Router>
       <Routes>
         {/* Public routes */}
@@ -81,6 +85,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
+    </>
   );
 }
 
