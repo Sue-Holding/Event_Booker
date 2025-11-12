@@ -106,6 +106,10 @@ I spend some time conducting user research and planing my site map and lofi desi
 - Lighthouse performance and Accessbiity
 - 4 tests on AddNewEvent and EventForm
 
-# Features Coming Soon!!
+# New Features!!
 
-- PWA 
+- PWA installation is complete!
+
+You can now download this app to your device and once you've logged in and search through the events you have access to this offline too!
+
+Currently only caches search events, any saved events and data to your profile will not show offline yet.
