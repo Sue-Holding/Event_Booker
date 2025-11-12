@@ -29,7 +29,7 @@ export default function OfflineBanner() {
       padding: "0.5rem",
       zIndex: 9999
     }}>
-      You’re offline 😕 Your changes will sync when back online.
+      You’re offline for now 😕 You can still search our events and make updates once you're back online.
     </div>
   );
 }

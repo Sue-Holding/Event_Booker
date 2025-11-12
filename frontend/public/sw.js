@@ -6,9 +6,6 @@ const FILES_TO_CACHE = [
   "/manifest.webmanifest",
   "/icons/logo2-192.png",
   "/icons/logo-512.png",
-  // "/static/js/main.3b9f63ec.js",
-  // "/static/js/453.70e15c7.chunk.js",
-  // "/static/css/main.2bd68fc1.css"
 ];
 
 // INSTALL
@@ -31,16 +28,6 @@ self.addEventListener('install', (event) => {
         console.warn("[SW] Could not fetch asset-manifest.json", err);
       }
     })()
-    // caches.open(STATIC_CACHE).then( async (cache) => {
-    //   cache.addAll(FILES_TO_CACHE);
-
-    //   const assets = [
-    //     "/static/js/main.3b9f63ec.js",
-    //     "/static/css/main.2bd68fc1.css",
-    //     "/static/js/453.70e15c7.chunk.js",
-    //   ];
-    //   await cache.addAll(assets);
-    // })
   );
   self.skipWaiting();
 });
@@ -67,14 +54,6 @@ self.addEventListener('fetch', (event) => {
   if (request.mode === 'navigate') {
     event.respondWith(
       caches.match("/index.html").then((cached) => cached || fetch("/index.html"))
-
-      // caches.match("/index.html").then((cachedIndex) => {
-      // return cachedIndex || fetch("/index.html").catch(() => caches.match("/index.html"));
-      // })
-
-      // caches.match('/index.html')
-      // .then((cached) => cached || fetch(request))
-      // .catch(() => caches.match('/index.html'))
     );
     return;
   }
@@ -139,24 +118,6 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-//         return fetch(request).catch(() => {
-//           // Ensure we always return a valid Response
-//           const ext = request.url.split(".").pop();
-//           if (ext === "js") {
-//             return new Response("", { status: 200, headers: { "Content-Type": "application/javascript" } });
-//           } else if (ext === "css") {
-//             return new Response("", { status: 200, headers: { "Content-Type": "text/css" } });
-//           } else {
-//             return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
-//           }
-//         });
-//       })
-//     );
-//     return;
-//   }
-// });
-
-    
 
 
 // sync logic to work on later
