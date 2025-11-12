@@ -36,7 +36,8 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   // GET requests
-  if (request.method === 'GET') {
+  if (request.method !== 'GET') return;
+  // if (request.method === 'GET') {
     // API caching
     if (
       request.url.startsWith('http://localhost:5050/') || 
@@ -54,22 +55,31 @@ self.addEventListener('fetch', (event) => {
             }
             return response;
           } catch (err) {
-            const cached = await cache.match(request);
-            return (
-              cached ||
-              new Response(
-                JSON.stringify({ message: 'Offline: API unavailable' }),
-                {
-                  status: 503,
-                  headers: { 'Content-Type': 'application/json' },
-                }
-              )
-            );
-          }
-        })
-      );
-      return;
-    }
+            return cache.match(request) || new Response(
+            JSON.stringify({ message: 'Offline: API unavailable' }),
+            { status: 503, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+      })
+    );
+    return;
+  }
+    //         const cached = await cache.match(request);
+    //         return (
+    //           cached ||
+    //           new Response(
+    //             JSON.stringify({ message: 'Offline: API unavailable' }),
+    //             {
+    //               status: 503,
+    //               headers: { 'Content-Type': 'application/json' },
+    //             }
+    //           )
+    //         );
+    //       }
+    //     })
+    //   );
+    //   return;
+    // }
 
     // Navigation requests (SPA)
     if (request.mode === 'navigate') {
@@ -81,12 +91,16 @@ self.addEventListener('fetch', (event) => {
 
     // Static assets
     event.respondWith(
-      caches.match(request).then((cached) =>
-        cached || fetch(request).catch(() => caches.match('/index.html'))
-      )
+      caches.match(request).then((cached) => cached || fetch(request))
     );
-    return;
-  }
+  });
+    // event.respondWith(
+    //   caches.match(request).then((cached) =>
+    //     cached || fetch(request).catch(() => caches.match('/index.html'))
+    //   )
+    // );
+    // return;
+  // }
 
   // POST/PUT/DELETE → queue when offline
   if (['POST', 'PUT', 'DELETE'].includes(request.method)) {
