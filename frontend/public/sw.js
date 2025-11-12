@@ -15,17 +15,32 @@ const FILES_TO_CACHE = [
 self.addEventListener('install', (event) => {
   console.log('[SW] Installing...');
   event.waitUntil(
-    caches.open(STATIC_CACHE).then( async (cache) => {
-      cache.addAll(FILES_TO_CACHE);
+    (async () => {
+      const cache = await caches.open(STATIC_CACHE);
 
-      const assets = [
-        "/static/js/main.3b9f63ec.js",
-        "/static/css/main.2bd68fc1.css",
-        "/static/js/453.70e15c7.chunk.js",
-      ];
-      await cache.addAll(assets);
-    })
+      // Cache main static files
+      await cache.addAll(FILES_TO_CACHE);
 
+      // Fetch CRA asset-manifest.json to cache all JS/CSS chunks
+      try {
+        const manifest = await fetch("/asset-manifest.json").then((res) => res.json());
+        const urlsToCache = Object.values(manifest.files); // all JS/CSS
+        await cache.addAll(urlsToCache);
+        console.log("[SW] Cached build assets from asset-manifest.json");
+      } catch (err) {
+        console.warn("[SW] Could not fetch asset-manifest.json", err);
+      }
+    })()
+    // caches.open(STATIC_CACHE).then( async (cache) => {
+    //   cache.addAll(FILES_TO_CACHE);
+
+    //   const assets = [
+    //     "/static/js/main.3b9f63ec.js",
+    //     "/static/css/main.2bd68fc1.css",
+    //     "/static/js/453.70e15c7.chunk.js",
+    //   ];
+    //   await cache.addAll(assets);
+    // })
   );
   self.skipWaiting();
 });
@@ -51,9 +66,12 @@ self.addEventListener('fetch', (event) => {
     // Navigation requests (SPA)
   if (request.mode === 'navigate') {
     event.respondWith(
-      caches.match("/index.html").then((cachedIndex) => {
-      return cachedIndex || fetch("/index.html").catch(() => caches.match("/index.html"));
-      })
+      caches.match("/index.html").then((cached) => cached || fetch("/index.html"))
+
+      // caches.match("/index.html").then((cachedIndex) => {
+      // return cachedIndex || fetch("/index.html").catch(() => caches.match("/index.html"));
+      // })
+
       // caches.match('/index.html')
       // .then((cached) => cached || fetch(request))
       // .catch(() => caches.match('/index.html'))
@@ -79,18 +97,11 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         } catch {
-          const cached = await cache.match(request);
-          return (
-            cached ||
+          return cache.match(request) ||
             new Response(JSON.stringify({ message: "Offline: API unavailable" }), {
               status: 503,
               headers: { "Content-Type": "application/json" },
             })
-          );
-          // return cache.match(request) || new Response(
-          //   JSON.stringify({ message: 'Offline: API unavailable' }),
-          //   { status: 503, headers: { 'Content-Type': 'application/json' } }
-          // );
         }
       })
     );
