@@ -41,7 +41,7 @@ self.addEventListener('fetch', (event) => {
   if (request.mode === 'navigate') {
     event.respondWith(
       caches.match('/index.html')
-      .then((cached) => cached || fetch('/index.html'))
+      .then((cached) => cached || fetch(request))
       .catch(() => caches.match('/index.html'))
     );
     return;
@@ -52,18 +52,18 @@ self.addEventListener('fetch', (event) => {
       (request.url.startsWith('http://localhost:5050/') || request.url.startsWith('https://eventure-ji0r.onrender.com/'))
     ) {
       event.respondWith(
-        caches.open(API_CACHE).then(async (cache) => {
-          try {
-            const response = await fetch(request);
-            if (
-              response.ok && 
-              response.headers.get('Content-Type')?.includes('application/json')
-            ) {
-              cache.put(request, response.clone());
-            }
-            return response;
-          } catch {
-            return cache.match(request) || new Response(
+      caches.open(API_CACHE).then(async (cache) => {
+        try {
+          const response = await fetch(request);
+          if (
+            response.ok &&
+            response.headers.get('Content-Type')?.includes('application/json')
+          ) {
+            cache.put(request, response.clone());
+          }
+          return response;
+        } catch {
+          return cache.match(request) || new Response(
             JSON.stringify({ message: 'Offline: API unavailable' }),
             { status: 503, headers: { 'Content-Type': 'application/json' } }
           );
@@ -75,13 +75,13 @@ self.addEventListener('fetch', (event) => {
     
     // Static assets
     if (request.method === 'GET') {
-    event.respondWith(
-      caches.match(request)
-        .then((cached) => cached || fetch(request))
-        .catch(() => caches.match(request))
-      );
+      event.respondWith(
+        caches.match(request)
+          .then(cached => cached || fetch(request))
+          .catch(() => caches.match(request))
+        );
         return;
-  }
+    }
 });
     
   // POST/PUT/DELETE → queue when offline
