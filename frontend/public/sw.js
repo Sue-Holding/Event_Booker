@@ -40,16 +40,21 @@ self.addEventListener('fetch', (event) => {
     // Navigation requests (SPA)
   if (request.mode === 'navigate') {
     event.respondWith(
-      caches.match('/index.html')
-      .then((cached) => cached || fetch(request))
-      .catch(() => caches.match('/index.html'))
+      caches.match("/index.html").then((cachedIndex) => {
+      return cachedIndex || fetch("/index.html").catch(() => caches.match("/index.html"));
+      })
+      // caches.match('/index.html')
+      // .then((cached) => cached || fetch(request))
+      // .catch(() => caches.match('/index.html'))
     );
     return;
   }
 
   // API GET requests
-  if (request.method === 'GET' && 
-      (request.url.startsWith('http://localhost:5050/') || request.url.startsWith('https://eventure-ji0r.onrender.com/'))
+  if (
+    request.method === 'GET' && 
+      (request.url.startsWith('http://localhost:5050/') || 
+      request.url.startsWith('https://eventure-ji0r.onrender.com/'))
     ) {
       event.respondWith(
       caches.open(API_CACHE).then(async (cache) => {
@@ -63,10 +68,18 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         } catch {
-          return cache.match(request) || new Response(
-            JSON.stringify({ message: 'Offline: API unavailable' }),
-            { status: 503, headers: { 'Content-Type': 'application/json' } }
+          const cached = await cache.match(request);
+          return (
+            cached ||
+            new Response(JSON.stringify({ message: "Offline: API unavailable" }), {
+              status: 503,
+              headers: { "Content-Type": "application/json" },
+            })
           );
+          // return cache.match(request) || new Response(
+          //   JSON.stringify({ message: 'Offline: API unavailable' }),
+          //   { status: 503, headers: { 'Content-Type': 'application/json' } }
+          // );
         }
       })
     );
@@ -76,14 +89,36 @@ self.addEventListener('fetch', (event) => {
     // Static assets
     if (request.method === 'GET') {
       event.respondWith(
-        caches.match(request)
-          .then(cached => cached || fetch(request))
-          .catch(() => caches.match(request))
-        );
-        return;
-    }
+        caches.match(request).then((cached) => {
+        if (cached) return cached;
+
+        return fetch(request).catch(() => {
+          // Ensure we always return a valid Response
+          const ext = request.url.split(".").pop();
+          if (ext === "js") {
+            return new Response("", { status: 200, headers: { "Content-Type": "application/javascript" } });
+          } else if (ext === "css") {
+            return new Response("", { status: 200, headers: { "Content-Type": "text/css" } });
+          } else {
+            return new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
+          }
+        });
+      })
+    );
+    return;
+  }
 });
+//         caches.match(request)
+//           .then(cached => cached || fetch(request))
+//           .catch(() => caches.match(request))
+//         );
+//         return;
+//     }
+// });
     
+
+
+// sync logic to work on later
   // POST/PUT/DELETE → queue when offline
 //   if (['POST', 'PUT', 'DELETE'].includes(request.method)) {
 //     event.respondWith(
