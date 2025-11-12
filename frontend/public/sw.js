@@ -36,8 +36,8 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   // GET requests
-  if (request.method !== 'GET') return;
-  // if (request.method === 'GET') {
+  if (request.method === 'GET') {
+
     // API caching
     if (
       request.url.startsWith('http://localhost:5050/') || 
@@ -54,7 +54,7 @@ self.addEventListener('fetch', (event) => {
               cache.put(request, response.clone());
             }
             return response;
-          } catch (err) {
+          } catch {
             return cache.match(request) || new Response(
             JSON.stringify({ message: 'Offline: API unavailable' }),
             { status: 503, headers: { 'Content-Type': 'application/json' } }
@@ -64,138 +64,118 @@ self.addEventListener('fetch', (event) => {
     );
     return;
   }
-    //         const cached = await cache.match(request);
-    //         return (
-    //           cached ||
-    //           new Response(
-    //             JSON.stringify({ message: 'Offline: API unavailable' }),
-    //             {
-    //               status: 503,
-    //               headers: { 'Content-Type': 'application/json' },
-    //             }
-    //           )
-    //         );
-    //       }
-    //     })
-    //   );
-    //   return;
-    // }
-
+    
     // Navigation requests (SPA)
-    if (request.mode === 'navigate') {
-      event.respondWith(
-        fetch(request).catch(() => caches.match('/index.html'))
-      );
-      return;
-    }
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      caches.match('/index.html')
+      .then((cached) => cached || fetch('/index.html'))
+    );
+    return;
+  }
 
     // Static assets
     event.respondWith(
-      caches.match(request).then((cached) => cached || fetch(request))
-    );
-  });
-    // event.respondWith(
-    //   caches.match(request).then((cached) =>
-    //     cached || fetch(request).catch(() => caches.match('/index.html'))
-    //   )
-    // );
-    // return;
-  // }
-
-  // POST/PUT/DELETE → queue when offline
-  if (['POST', 'PUT', 'DELETE'].includes(request.method)) {
-    event.respondWith(
-      fetch(request).catch(async () => {
-        await saveRequestOffline(request);
-
-        if ('sync' in self.registration) {
-          await self.registration.sync.register('sync-requests');
-        }
-
-        return new Response(
-          JSON.stringify({ message: 'Offline: request saved for sync' }),
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-      })
-    );
+      caches.match(request)
+        .then((cached) => cached || fetch(request)));
+        return;
   }
 });
+    
+  // POST/PUT/DELETE → queue when offline
+//   if (['POST', 'PUT', 'DELETE'].includes(request.method)) {
+//     event.respondWith(
+//       fetch(request).catch(async () => {
+//         await saveRequestOffline(request);
+
+//         if ('sync' in self.registration) {
+//           await self.registration.sync.register('sync-requests');
+//         }
+
+//         return new Response(
+//           JSON.stringify({ message: 'Offline: request saved for sync' }),
+//           { headers: { 'Content-Type': 'application/json' } }
+//         );
+//       })
+//     );
+//   }
+// });
 
 // SYNC
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'sync-requests') {
-    event.waitUntil(syncOfflineRequests());
-  }
-});
+// self.addEventListener('sync', (event) => {
+//   if (event.tag === 'sync-requests') {
+//     event.waitUntil(syncOfflineRequests());
+//   }
+// });
 
 // IndexedDB helpers
-function openDatabase() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open('eventure-offline-requests', 1);
+// function openDatabase() {
+//   return new Promise((resolve, reject) => {
+//     const request = indexedDB.open('eventure-offline-requests', 1);
 
-    request.onupgradeneeded = (e) => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains('requests')) {
-        db.createObjectStore('requests', { autoIncrement: true });
-      }
-    };
+//     request.onupgradeneeded = (e) => {
+//       const db = e.target.result;
+//       if (!db.objectStoreNames.contains('requests')) {
+//         db.createObjectStore('requests', { autoIncrement: true });
+//       }
+//     };
 
-    request.onsuccess = (e) => resolve(e.target.result);
-    request.onerror = (e) => reject(e.target.error);
-  });
-}
+//     request.onsuccess = (e) => resolve(e.target.result);
+//     request.onerror = (e) => reject(e.target.error);
+//   });
+// }
 
-async function saveRequestOffline(request) {
-  const db = await openDatabase();
-  const tx = db.transaction('requests', 'readwrite');
-  const store = tx.objectStore('requests');
+// async function saveRequestOffline(request) {
+//   const db = await openDatabase();
+//   const tx = db.transaction('requests', 'readwrite');
+//   const store = tx.objectStore('requests');
 
-  const clone = request.clone();
-  const body = await clone.text();
+//   const clone = request.clone();
+//   const body = await clone.text();
 
-  store.add({
-    url: request.url,
-    method: request.method,
-    body,
-    headers: [...request.headers],
-  });
+//   store.add({
+//     url: request.url,
+//     method: request.method,
+//     body,
+//     headers: [...request.headers],
+//   });
 
-  return tx.complete;
-}
+//   return tx.complete;
+// }
 
-async function syncOfflineRequests() {
-  console.log('[SW] Syncing offline requests...');
-  const db = await openDatabase();
-  const tx = db.transaction('requests', 'readwrite');
-  const store = tx.objectStore('requests');
+// async function syncOfflineRequests() {
+//   console.log('[SW] Syncing offline requests...');
+//   const db = await openDatabase();
+//   const tx = db.transaction('requests', 'readwrite');
+//   const store = tx.objectStore('requests');
 
-  const allRequests = await new Promise((resolve) => {
-    const items = [];
-    const cursor = store.openCursor();
-    cursor.onsuccess = (event) => {
-      const current = event.target.result;
-      if (current) {
-        items.push({ id: current.key, ...current.value });
-        current.continue();
-      } else {
-        resolve(items);
-      }
-    };
-  });
+//   const allRequests = await new Promise((resolve) => {
+//     const items = [];
+//     const cursor = store.openCursor();
+//     cursor.onsuccess = (event) => {
+//       const current = event.target.result;
+//       if (current) {
+//         items.push({ id: current.key, ...current.value });
+//         current.continue();
+//       } else {
+//         resolve(items);
+//       }
+//     };
+//   });
 
-  for (const req of allRequests) {
-    try {
-      await fetch(req.url, {
-        method: req.method,
-        body: req.body,
-        headers: req.headers,
-      });
-      store.delete(req.id);
-    } catch (err) {
-      console.warn('[SW] Still offline, retry later:', req.url);
-      return;
-    }
-  }
+//   for (const req of allRequests) {
+//     try {
+//       await fetch(req.url, {
+//         method: req.method,
+//         body: req.body,
+//         headers: req.headers,
+//       });
+//       store.delete(req.id);
+//     } catch (err) {
+//       console.warn('[SW] Still offline, retry later:', req.url);
+//       return;
+//     }
+//   }
 
-  console.log('[SW] All offline requests synced!');
-}
+//   console.log('[SW] All offline requests synced!');
+// }
